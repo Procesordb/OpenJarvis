@@ -262,3 +262,12 @@ class TestCheckForUpdates:
         # Best-effort: a broken check must not break the user's command.
         check_for_updates("ask")
         mock_do.assert_called_once()
+
+
+@pytest.fixture(autouse=True)
+def _release_feed_configured(monkeypatch):
+    # AGI PROCESOR ships with the check off (no release feed); these tests cover
+    # the check itself once a feed is configured.
+    monkeypatch.setattr(
+        _version_check, "_PYPI_API", "https://pypi.org/pypi/agi-procesor/json"
+    )

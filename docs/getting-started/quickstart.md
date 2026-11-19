@@ -66,6 +66,16 @@ AGI PROCESOR is a modular AI assistant framework. Here's what developers build w
     # Plays a spoken daily briefing with your email, calendar, health, and news
     ```
 
+=== "Inteligencja AGI"
+
+    ```bash
+    agi init --preset inteligencja-agi --force
+    agi memory index ~/Documents/
+    agi ask "Explain this Windows Defender warning: <paste the warning>"
+    # Analyses and proposes next steps; no shell, no file writes, no admin commands.
+    # Answers in Polish unless you write in another language.
+    ```
+
 === "Deep Research"
 
     ```bash
@@ -103,6 +113,7 @@ Copy one of these to `~/.agi-procesor/config.toml` to get a pre-configured setup
 
 | Config | For | What it does |
 |--------|-----|-------------|
+| [`inteligencja-agi.toml`](https://github.com/Procesordb/OpenJarvis/blob/main/configs/agi_procesor/examples/inteligencja-agi.toml) | Any machine | AGI PROCESOR intelligence: analyses and proposes, never changes the system -- search and thinking tools only |
 | [`chat-simple.toml`](https://github.com/Procesordb/OpenJarvis/blob/main/configs/agi_procesor/examples/chat-simple.toml) | Any machine | Lightweight chat, no tools -- simplest setup |
 | [`code-assistant.toml`](https://github.com/Procesordb/OpenJarvis/blob/main/configs/agi_procesor/examples/code-assistant.toml) | Any machine | Orchestrator agent with code execution, file I/O, shell |
 | [`deep-research.toml`](https://github.com/Procesordb/OpenJarvis/blob/main/configs/agi_procesor/examples/deep-research.toml) | Any machine | Multi-hop research across indexed documents with citations |

@@ -1,3 +1,4 @@
+import { LEADERBOARD_ENABLED } from './supabase';
 import { fetchAnalyticsIdentity } from './analytics';
 
 const ANALYTICS_SEEN_KEY = 'agi-procesor-analytics-choice-seen';
@@ -7,13 +8,16 @@ interface AnalyticsInvitation {
   sharingModalSeen: boolean;
   open: () => void;
   markSharingModalSeen: () => void;
+  sharingAvailable?: boolean;
 }
 
 /** Offer the sharing dialog only after the app can actually display it. */
 export function offerAnalyticsChoice({
-  ready, sharingModalSeen, open, markSharingModalSeen,
+  ready, sharingModalSeen, open, markSharingModalSeen, sharingAvailable = LEADERBOARD_ENABLED,
 }: AnalyticsInvitation): (() => void) | undefined {
   if (!ready) return;
+  // AGI PROCESOR: nothing to offer unless this build has its own sharing service.
+  if (!sharingAvailable) return;
   if (!sharingModalSeen) {
     open();
     markSharingModalSeen();

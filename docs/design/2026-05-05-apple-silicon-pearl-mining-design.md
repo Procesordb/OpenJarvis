@@ -4,7 +4,7 @@
 |---|---|
 | **Date** | 2026-05-05 |
 | **Status** | Design — Phase 0 investigation complete; v1 scope reduced (see §1.5) |
-| **Owner** | AGI PROCESOR team (parallel-agent friendly) |
+| **Owner** | upstream OpenJarvis team (parallel-agent friendly) |
 | **Companion spec** | [Spec A — vLLM-Pearl mining integration (v1)](2026-05-05-vllm-pearl-mining-integration-design.md) |
 | **Repos referenced** | `AGI PROCESOR`, `pearl-research-labs/pearl`, possibly upstream `ml-explore/mlx`, `ggerganov/llama.cpp` |
 

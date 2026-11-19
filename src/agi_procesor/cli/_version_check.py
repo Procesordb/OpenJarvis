@@ -15,7 +15,10 @@ logger = logging.getLogger(__name__)
 
 _CACHE_PATH = get_config_dir() / "version-check.json"
 _CACHE_TTL = 86400  # 24 hours
-_PYPI_API = "https://pypi.org/pypi/agi_procesor/json"
+# AGI PROCESOR is not published on PyPI. The check stays off until a release
+# feed is set here; a lookup of an unclaimed package name could point users
+# at a stranger's upload.
+_PYPI_API = ""
 
 
 def _config_path() -> Path:
@@ -57,6 +60,8 @@ _OPT_OUT_ENV_VARS = ("AGI_PROCESOR_NO_UPDATE_CHECK",)
 
 def _check_disabled() -> bool:
     """Return True when the user has opted out of update checks."""
+    if not _PYPI_API:
+        return True
     for name in _OPT_OUT_ENV_VARS:
         raw = os.environ.get(name, "")
         if raw and raw.strip().lower() not in ("", "0", "false", "no", "off"):

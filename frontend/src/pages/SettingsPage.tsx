@@ -979,10 +979,10 @@ export function SettingsPage() {
           <Section title="About">
             <div className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
               <p className="mb-2">
-                <span className="font-semibold" style={{ color: 'var(--color-text)' }}>AGI PROCESOR</span> — Programming abstractions for on-device AI.
+                <span className="font-semibold" style={{ color: 'var(--color-text)' }}>AGI PROCESOR</span> — AGI intelligence that runs on your own computer.
               </p>
               <p className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>
-                Part of Intelligence Per Watt, a research initiative at Stanford SAIL.
+                Built on OpenJarvis (Stanford SAIL, Apache-2.0).
               </p>
               <div className="flex gap-3 mt-3 text-xs">
                 <a

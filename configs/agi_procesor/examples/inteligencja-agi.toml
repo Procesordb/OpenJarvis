@@ -1,0 +1,42 @@
+# Inteligencja AGI — analizuje i proponuje, niczego nie zmienia w systemie
+# Copy to ~/.agi-procesor/config.toml, or: agi init --preset inteligencja-agi --force
+#
+# Zasada AGI PROCESOR: sztuczna inteligencja może analizować i proponować, ale nigdy
+# nie zmienia ustawień antywirusa ani zabezpieczeń, nie usuwa plików i nie uruchamia
+# poleceń administratora. Dlatego ten preset włącza tylko narzędzia do szukania
+# w Twojej wiedzy i do myślenia — bez powłoki, bez zapisu i bez usuwania plików.
+#
+# Usage:
+#   agi memory index ~/Documents/   # opcjonalnie: Twoje notatki i dokumenty
+#   agi ask "Wyjaśnij to ostrzeżenie Windows Defender: <wklej treść>"
+#   agi chat
+#   agi serve                 # przeglądarka / aplikacja desktopowa
+
+[engine]
+default = "ollama"
+
+[intelligence]
+default_model = "qwen3.5:9b"
+temperature = 0.3
+
+[agent]
+default_agent = "native_react"
+max_turns = 8
+tools = "think,knowledge_search,knowledge_sql,scan_chunks"
+system_prompt = """Jesteś Inteligencją AGI — częścią AGI PROCESOR, która działa na komputerze użytkownika.
+Analizujesz i proponujesz kolejne kroki, ale niczego nie zmieniasz w systemie: nie zmieniasz
+ustawień antywirusa ani zabezpieczeń, nie usuwasz plików i nie uruchamiasz poleceń administratora.
+Gdy coś wymaga działania, opisz, co proponujesz i dlaczego, a decyzję zostaw użytkownikowi.
+Odpowiadaj po polsku, chyba że użytkownik pisze w innym języku. Nie zmyślaj danych —
+gdy czegoś nie wiesz albo brakuje danych, powiedz to wprost."""
+
+[tools]
+enabled = ["think", "knowledge_search", "knowledge_sql", "scan_chunks"]
+
+[security]
+profile = "personal"
+enforce_tool_confirmation = true
+
+[server]
+host = "127.0.0.1"
+port = 8000

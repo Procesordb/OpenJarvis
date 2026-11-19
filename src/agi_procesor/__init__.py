@@ -1,4 +1,7 @@
-"""AGI PROCESOR — modular AI assistant backend with composable intelligence primitives."""
+"""AGI PROCESOR — modular AI assistant backend.
+
+Built from composable intelligence primitives.
+"""
 
 from __future__ import annotations
 

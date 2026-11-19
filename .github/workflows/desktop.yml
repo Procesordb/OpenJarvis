@@ -567,6 +567,7 @@ jobs:
           # tauri-action runs beforeBuildCommand (npm run build:tauri -> vite
           # build), which requires this at build time (#587). Strict for
           # releases: a missing/empty secret fails the build by design.
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         with:
           projectPath: frontend

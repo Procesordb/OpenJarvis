@@ -635,7 +635,8 @@ def test_config_root_error_returns_fail_without_local_store_scan(tmp_path):
         config,
         None,
         root_error=(
-            "ConfigurationError: bad AGI_PROCESOR_HOME at /Users/alice/private/agi_procesor"
+            "ConfigurationError: bad AGI_PROCESOR_HOME at "
+            "/Users/alice/private/agi_procesor"
         ),
     )
 

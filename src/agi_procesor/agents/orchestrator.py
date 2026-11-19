@@ -198,7 +198,7 @@ class OrchestratorAgent(ToolUsingAgent):
         if self._system_prompt:
             sys_prompt = self._system_prompt
         else:
-            from agi_procesor.learning.intelligence.orchestrator.prompt_registry import (
+            from agi_procesor.learning.intelligence.orchestrator.prompt_registry import (  # noqa: E501
                 build_system_prompt,
             )
 

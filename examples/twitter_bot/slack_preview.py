@@ -41,12 +41,12 @@ TOPICS = [
 
 FACTS = [
     "In the 70s and 80s computing moved from mainframes to personal computers. Not because PCs were more powerful, but because they became efficient enough for what people actually needed. AI is reaching a similar moment.",
-    "In our Intelligence Per Watt study, we found that local language models can accurately service 88.7 percent of single-turn chat and reasoning queries at interactive latencies, with intelligence efficiency improving 5.3 times from 2023 to 2025.",
+    "The Intelligence Per Watt study found that local language models can accurately service 88.7 percent of single-turn chat and reasoning queries at interactive latencies, with intelligence efficiency improving 5.3 times from 2023 to 2025.",
     "In nearly all personal AI projects today, the local component is a thin orchestration layer, while the brain lives in someone else data center. Your most personal data routes through cloud APIs, with their latency, their cost, and their terms of service. We built AGI PROCESOR to fix this.",
     "AGI PROCESOR is structured around five composable primitives: Intelligence, Engine, Agents, Tools and Memory, and Learning. Each primitive can be benchmarked, substituted, and optimized independently.",
     "AGI PROCESOR includes hardware-agnostic telemetry that profiles energy consumption across NVIDIA GPUs, AMD GPUs, and Apple Silicon. Energy and dollar cost are first-class design constraints alongside accuracy.",
     "The learning loop uses personal traces to synthesize training data, refine agent behavior, and improve model selection over time. Four optimization layers: model weights, LM prompts, agentic logic, inference engine.",
-    "AGI PROCESOR is open source under Apache 2.0, built at Stanford at Hazy Research and the Scaling Intelligence Lab at SAIL. Because the tools for studying and building local-first AI should be available to everyone.",
+    "AGI PROCESOR is open source under Apache 2.0 and built on OpenJarvis from Stanford's Hazy Research and the Scaling Intelligence Lab at SAIL. Because the tools for studying and building local-first AI should be available to everyone.",
     "AGI PROCESOR supports 27 channel integrations including Slack, Discord, Telegram, WhatsApp. Adding a new channel is one file implementing BaseChannel with connect, send, and disconnect.",
     "AGI PROCESOR supports multiple inference engines: Ollama, vLLM, SGLang, llama.cpp. agi init picks the right one for your hardware.",
     "Install AGI PROCESOR by running git clone https://github.com/Procesordb/OpenJarvis.git agi-procesor then cd agi-procesor then uv sync. Use agi init to auto-detect hardware and configure the engine.",

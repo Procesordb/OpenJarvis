@@ -92,6 +92,9 @@ cd agi-procesor
 
 **Step 2.** Download and open the desktop app:
 
+!!! warning "No AGI PROCESOR desktop release yet"
+    These downloads work after the first AGI PROCESOR desktop release. Until then, use the browser app.
+
 | Platform | Download |
 |----------|----------|
 | macOS (Universal) | [:material-download: **AGI-PROCESOR.dmg**](https://github.com/Procesordb/OpenJarvis/releases/latest/download/AGI-PROCESOR_universal.dmg) |

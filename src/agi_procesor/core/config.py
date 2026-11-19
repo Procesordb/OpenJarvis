@@ -1213,8 +1213,14 @@ class AnalyticsConfig:
 
     Separate concern from :class:`TelemetryConfig`, which stores local
     FLOPs/energy/inference metrics in SQLite. This controls anonymized
-    usage events sent to the AGI PROCESOR team's PostHog instance to
-    measure setup success, retention, feature usage, and churn.
+    usage events sent to a PostHog instance to measure setup success,
+    retention, feature usage, and churn.
+
+    AGI PROCESOR ships with no analytics destination: ``host`` and ``key``
+    are empty, so nothing can be sent and nobody is asked for consent until
+    the owner of an installation configures their own PostHog project
+    (``[analytics]`` in config.toml, or ``AGI_PROCESOR_ANALYTICS_HOST`` and
+    ``AGI_PROCESOR_ANALYTICS_KEY``).
 
     Backend properties are limited to declared usage metadata; external
     SDKs may add environment metadata. See ``docs/telemetry.md`` for the
@@ -1223,8 +1229,12 @@ class AnalyticsConfig:
 
     enabled: bool = False
     choice_recorded: bool = False
-    host: str = "https://34.231.106.201.sslip.io"
-    key: str = "phc_ysKu72QaxzYNmDpHFcesD2ZZAe68zkdWJEKoYYkc5e3n"
+    host: str = field(
+        default_factory=lambda: os.environ.get("AGI_PROCESOR_ANALYTICS_HOST", "")
+    )
+    key: str = field(
+        default_factory=lambda: os.environ.get("AGI_PROCESOR_ANALYTICS_KEY", "")
+    )
     anon_id_path: str = field(default_factory=lambda: str(get_config_dir() / "anon_id"))
     flush_interval_seconds: int = 30
     flush_at_size: int = 100

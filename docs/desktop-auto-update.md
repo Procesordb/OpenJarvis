@@ -5,6 +5,13 @@ plugin](https://v2.tauri.app/plugin/updater/), which checks for new
 versions on launch and every 30 minutes. When a newer signed build is
 available, the app prompts the user to download and install it.
 
+!!! note "Off in AGI PROCESOR"
+    AGI PROCESOR builds ship with the updater turned off (`"active": false`, no
+    endpoints, no public key) because this fork has no signing key or release feed
+    yet. To turn it on, set `pubkey`, `endpoints` and `active` in
+    `frontend/src-tauri/tauri.conf.json` and build the app with
+    `VITE_AGI_PROCESOR_UPDATER=1`.
+
 ## How it works
 
 ```

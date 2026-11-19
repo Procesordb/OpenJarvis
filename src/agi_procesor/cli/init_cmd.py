@@ -278,6 +278,7 @@ def _do_download(engine: str, model: str, spec, console: Console) -> None:
     "--preset",
     type=click.Choice(
         [
+            "inteligencja-agi",
             "morning-digest-mac",
             "morning-digest-linux",
             "morning-digest-minimal",
@@ -522,7 +523,8 @@ sources = ["hackernews", "news_rss"]
     soul_path = DEFAULT_CONFIG_DIR / "SOUL.md"
     if not soul_path.exists():
         soul_path.write_text(
-            "# Agent Persona\n\nYou are AGI PROCESOR, a helpful personal AI assistant.\n",
+            "# Agent Persona\n\nYou are AGI PROCESOR, "
+            "a helpful personal AI assistant.\n",
             encoding="utf-8",
         )
 

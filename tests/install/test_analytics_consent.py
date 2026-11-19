@@ -122,3 +122,11 @@ def test_prompt_discloses_configured_destination(monkeypatch, capsys) -> None:
     result = _analytics_consent.apply_analytics_choice(content, None, prompt=True)
     assert "https://analytics.example.org" in capsys.readouterr().err
     assert tomllib.loads(result)["analytics"]["enabled"] is False
+
+
+@pytest.fixture(autouse=True)
+def _configured_analytics_destination(monkeypatch):
+    # AGI PROCESOR ships without an analytics destination; these tests cover the
+    # consent and sharing flow once the owner of an installation configures one.
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_HOST", "https://analytics.example.com")
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_KEY", "phc_test_key")

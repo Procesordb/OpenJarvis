@@ -51,3 +51,11 @@ def test_identity_gates_frontend_and_id_creation(
     assert bool(data["key"]) is enabled
     assert bool(data["anon_id"]) is enabled
     assert Path(cfg.analytics.anon_id_path).exists() is enabled
+
+
+@pytest.fixture(autouse=True)
+def _configured_analytics_destination(monkeypatch):
+    # AGI PROCESOR ships without an analytics destination; these tests cover the
+    # consent and sharing flow once the owner of an installation configures one.
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_HOST", "https://analytics.example.com")
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_KEY", "phc_test_key")

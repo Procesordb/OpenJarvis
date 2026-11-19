@@ -9,7 +9,14 @@ from agi_procesor.core.config import AnalyticsConfig
 
 
 def ask_analytics_consent(host: str | None = None) -> bool:
-    """Ask once per init; a deliberate Enter/Y consents, EOF/cancellation does not."""
+    """Ask once per init; a deliberate Enter/Y consents, EOF/cancellation does not.
+
+    AGI PROCESOR: without a configured analytics host and key there is nothing
+    to share, so no question is asked and the answer is "no".
+    """
+    cfg = AnalyticsConfig()
+    if not ((host or cfg.host) and cfg.key):
+        return False
     stream = click.get_text_stream("stdin")
     if not stream.isatty():
         return False
@@ -17,7 +24,7 @@ def ask_analytics_consent(host: str | None = None) -> bool:
         "\nHelp improve AGI PROCESOR by sharing optional usage statistics.\n"
         "Data includes feature usage, timings, token counts, error categories,\n"
         "environment metadata, and a random installation ID.\n"
-        "Recipient: the AGI PROCESOR team's PostHog analytics endpoint.\n"
+        "Recipient: the PostHog endpoint configured for this installation.\n"
         "Privacy details: https://procesordb.github.io/OpenJarvis/telemetry/\n"
         "You can disable sharing later: agi config set analytics.enabled false\n"
         "(then restart the server and reload the app).\n"

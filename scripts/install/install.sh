@@ -249,13 +249,15 @@ fi
 
 # ---- analytics consent and install beacons ----
 #
-# Posts a small JSON event to PostHog at each install stage so the
-# AGI PROCESOR team can see where users drop off during install.
+# Posts a small JSON event at each install stage to the PostHog endpoint
+# configured for this installation (AGI_PROCESOR_ANALYTICS_HOST and
+# AGI_PROCESOR_ANALYTICS_KEY). AGI PROCESOR ships without one, so by
+# default the installer asks nothing and sends nothing.
 # Install payloads contain OS, arch, elapsed time, stage name, and a
 # random installation ID. Beacons are disabled until consent is given.
 #
-ANALYTICS_HOST="${AGI_PROCESOR_ANALYTICS_HOST:-https://34.231.106.201.sslip.io}"
-ANALYTICS_KEY="${AGI_PROCESOR_ANALYTICS_KEY:-phc_ysKu72QaxzYNmDpHFcesD2ZZAe68zkdWJEKoYYkc5e3n}"
+ANALYTICS_HOST="${AGI_PROCESOR_ANALYTICS_HOST:-}"
+ANALYTICS_KEY="${AGI_PROCESOR_ANALYTICS_KEY:-}"
 ANON_ID_FILE="$AGI_PROCESOR_HOME/anon_id"
 INSTALL_START_EPOCH="$(date +%s)"
 CURRENT_STAGE=""
@@ -265,6 +267,14 @@ analytics_enabled() {
 }
 
 choose_analytics() {
+    # Without a configured destination there is nothing to consent to.
+    if [[ -z "$ANALYTICS_HOST" || -z "$ANALYTICS_KEY" ]]; then
+        if [[ "$ANALYTICS_CHOICE" == "--analytics" ]]; then
+            echo "Analytics stay off: no analytics destination is configured." >&2
+            ANALYTICS_CHOICE=""
+        fi
+        return
+    fi
     # The usual curl | bash entry point occupies stdin. Read a real
     # controlling terminal instead; EOF/unattended runs never consent.
     case "$ANALYTICS_CHOICE" in
@@ -281,7 +291,7 @@ choose_analytics() {
 Help improve AGI PROCESOR by sharing optional install and usage statistics.
 Data includes installation and feature usage, timings, token counts, error
 categories, environment metadata, and a random installation ID.
-Recipient: the AGI PROCESOR team's PostHog analytics endpoint.
+Recipient: the PostHog endpoint configured for this installation.
 Privacy details: https://procesordb.github.io/OpenJarvis/telemetry/
 You can disable sharing later: agi config set analytics.enabled false
 (then restart the server and reload the app).

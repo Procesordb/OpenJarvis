@@ -4,7 +4,7 @@
 |---|---|
 | **Date** | 2026-05-05 |
 | **Status** | Design — pending implementation plan |
-| **Owner** | AGI PROCESOR team |
+| **Owner** | upstream OpenJarvis team |
 | **Companion spec** | [Spec B — Apple Silicon enablement](2026-05-05-apple-silicon-pearl-mining-design.md) (separate effort, runs in parallel) |
 | **Repos referenced** | `AGI PROCESOR` (this repo), `pearl-research-labs/pearl` |
 

@@ -24,10 +24,7 @@ model. **You don't need to install uv or any other prerequisite first.**
 
 !!! info "Install URL"
     This script is served straight from the project's own GitHub Pages site,
-    so HTTPS always works. You may also see `https://example.com/install.sh`
-    referenced in older docs — that domain is community-operated and has had
-    intermittent TLS issues ([#337](https://github.com/Procesordb/OpenJarvis/issues/337)).
-    The `procesordb.github.io` URL above is the canonical one.
+    so HTTPS always works. The `procesordb.github.io` URL above is the canonical one.
 
 About 3 minutes on a typical broadband connection. Type `agi` to start chatting.
 

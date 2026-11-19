@@ -62,6 +62,13 @@ export function UpdateChecker() {
     if (noUpdater === '1' || noUpdater === 'true') {
       return;
     }
+    // AGI PROCESOR builds have no signed update feed yet, so polling stays off
+    // until a build sets VITE_AGI_PROCESOR_UPDATER=1 together with its own
+    // updater endpoint and public key in tauri.conf.json.
+    const updaterOn = (import.meta as any).env?.VITE_AGI_PROCESOR_UPDATER;
+    if (updaterOn !== '1' && updaterOn !== 'true') {
+      return;
+    }
 
     checkForUpdate();
     const interval = setInterval(checkForUpdate, CHECK_INTERVAL_MS);

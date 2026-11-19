@@ -5,10 +5,10 @@ hide:
 
 # Savings Leaderboard
 
-See how the AGI PROCESOR community saves money, energy, and compute by running AI locally instead of using cloud providers.
+Savings shared from AGI PROCESOR installations: money, energy, and compute saved by running AI locally instead of using cloud providers.
 
-!!! info "Win a Mac Mini!"
-    Opt in to share your savings from the AGI PROCESOR browser app or desktop app for a chance to win a Mac Mini. Your data is fully anonymous — no email, no IP, no hardware info.
+!!! info "Needs a leaderboard service"
+    AGI PROCESOR ships without a leaderboard service. The table fills in once the owner of this site configures one; until then it reads "Leaderboard not configured yet."
 
 <div id="leaderboard-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:24px 0;">
   <div class="lb-stat-card">

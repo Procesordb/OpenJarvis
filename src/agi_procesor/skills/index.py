@@ -36,7 +36,7 @@ class SkillIndex:
         version = "0.1.0"
         description = "Research a topic"
         author = "agi_procesor"
-        source = "github.com/agi_procesor/skills/research"
+        source = "github.com/<owner>/<repo>/skills/research"
         sha256 = "abc123"
         tags = ["research"]
         required_capabilities = ["network:fetch"]

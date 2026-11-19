@@ -23,6 +23,9 @@ processing happens on your local machine — the app connects to the backend you
 
 ### Download
 
+!!! warning "No AGI PROCESOR desktop release yet"
+    These downloads work after the first AGI PROCESOR desktop release. Until then, use the browser app.
+
 | Platform | Download | Notes |
 |----------|----------|-------|
 | macOS (Universal) | [:material-download: **AGI-PROCESOR.dmg**](https://github.com/Procesordb/OpenJarvis/releases/latest/download/AGI-PROCESOR_universal.dmg) | Apple Silicon + Intel |

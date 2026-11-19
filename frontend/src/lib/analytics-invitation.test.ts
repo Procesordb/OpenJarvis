@@ -22,6 +22,7 @@ const invitation = (sharingModalSeen: boolean) => ({
   sharingModalSeen,
   open: vi.fn(),
   markSharingModalSeen: vi.fn(),
+  sharingAvailable: true,
 });
 
 describe('analytics invitation after setup', () => {
@@ -83,5 +84,15 @@ describe('analytics invitation after setup', () => {
     offerAnalyticsChoice({ ...request, ready: true });
     await vi.waitFor(() => expect(request.open).toHaveBeenCalledOnce());
     expect(stored.get(seenKey)).toBe('true');
+  });
+});
+
+describe('AGI PROCESOR defaults', () => {
+  it('offers nothing when the build has no sharing service', () => {
+    const request = { ...invitation(false), ready: true, sharingAvailable: false };
+    offerAnalyticsChoice(request);
+    expect(request.open).not.toHaveBeenCalled();
+    expect(request.markSharingModalSeen).not.toHaveBeenCalled();
+    expect(mocks.fetchIdentity).not.toHaveBeenCalled();
   });
 });

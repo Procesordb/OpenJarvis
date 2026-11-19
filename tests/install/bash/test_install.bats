@@ -12,6 +12,10 @@ setup() {
     mkdir -p "$FAKE_HOME"
     export HOME="$FAKE_HOME"
     export AGI_PROCESOR_HOME="$FAKE_HOME/.agi-procesor"
+    # AGI PROCESOR ships without an analytics destination; these tests run the
+    # consent flow against a configured one.
+    export AGI_PROCESOR_ANALYTICS_HOST="https://analytics.example.test"
+    export AGI_PROCESOR_ANALYTICS_KEY="phc_test_key"
 
     export STUBS_DIR="$BATS_TEST_DIRNAME/stubs"
     # Use a copy of stubs without uv-style real binaries that might be on the host.
@@ -105,6 +109,16 @@ PY
 @test "unattended install sends no analytics and persists disabled" {
     run bash "$SCRIPT" --no-bg-orchestrator --minimal
     [ "$status" -eq 0 ]
+    ! grep -q '/i/v0/e/' "$CURL_STUB_LOG"
+    [ ! -f "$AGI_PROCESOR_HOME/anon_id" ]
+    assert_analytics_preference "$AGI_PROCESOR_HOME/config.toml" false false
+}
+
+@test "without a configured destination nothing is asked or sent" {
+    unset AGI_PROCESOR_ANALYTICS_HOST AGI_PROCESOR_ANALYTICS_KEY
+    run bash "$SCRIPT" --no-bg-orchestrator --minimal --analytics
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"no analytics destination is configured"* ]]
     ! grep -q '/i/v0/e/' "$CURL_STUB_LOG"
     [ ! -f "$AGI_PROCESOR_HOME/anon_id" ]
     assert_analytics_preference "$AGI_PROCESOR_HOME/config.toml" false false

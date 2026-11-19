@@ -7,6 +7,9 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import App from './App';
 import { initApiBase } from './lib/api';
 import { initAnalytics } from './lib/analytics';
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/unbounded';
+import '@fontsource-variable/jetbrains-mono';
 import './index.css';
 
 function applyTheme() {

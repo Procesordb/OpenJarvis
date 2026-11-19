@@ -416,14 +416,14 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
 
       {error && <div style={styles.errorBanner}>{error}</div>}
 
-      {/* Leaderboard Opt-in */}
-      {showOptIn ? (
+      {/* Leaderboard opt-in: only when this build has its own leaderboard service */}
+      {LEADERBOARD_ENABLED && (showOptIn ? (
         <div style={{ ...styles.statCard, marginBottom: 24, padding: 20 }}>
           <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: colors.text }}>
             Share Your Savings
           </div>
           <div style={{ fontSize: 13, color: colors.textMuted, marginBottom: 14, lineHeight: 1.5 }}>
-            Opt in to privately share your savings for the chance to win a Mac Mini!
+            Add your savings to the leaderboard run by this AGI PROCESOR installation.
           </div>
           <div style={{ marginBottom: 8 }}>
             <input
@@ -551,7 +551,7 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
             View Leaderboard ↗
           </a>
         </div>
-      )}
+      ))}
 
       {/* Stat cards row */}
       <div style={styles.statsGrid}>

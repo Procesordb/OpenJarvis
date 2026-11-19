@@ -199,3 +199,11 @@ def test_preference_uses_existing_api_authentication(preference_app):
     )
     assert response.status_code == 200
     assert tomllib.loads(path.read_text())["analytics"]["choice_recorded"] is True
+
+
+@pytest.fixture(autouse=True)
+def _configured_analytics_destination(monkeypatch):
+    # AGI PROCESOR ships without an analytics destination; these tests cover the
+    # consent and sharing flow once the owner of an installation configures one.
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_HOST", "https://analytics.example.com")
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_KEY", "phc_test_key")

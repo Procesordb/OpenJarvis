@@ -1,9 +1,9 @@
 """External anonymous usage analytics.
 
-Sends anonymized events to PostHog so the AGI PROCESOR team can measure
-setup success, retention, feature usage, and churn — without ever
-collecting chat content, prompts, file paths, emails, IPs, or hardware
-identifiers.
+Sends anonymized events to the PostHog service configured for this
+installation (none by default) to measure setup success, retention,
+feature usage, and churn — without ever collecting chat content,
+prompts, file paths, emails, IPs, or hardware identifiers.
 
 Distinct from :mod:`agi_procesor.telemetry`, which stores local FLOPs and
 energy metrics in a SQLite DB and never leaves the machine.

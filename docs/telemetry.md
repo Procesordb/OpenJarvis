@@ -1,12 +1,17 @@
 # Telemetry
 
-AGI PROCESOR offers **optional external usage analytics** so the team can
-see where the product breaks, what features people actually use, and
-how to make it better. This page documents exactly what is and isn't
-collected, where the data goes, and how to enable or disable it.
+AGI PROCESOR can send **optional usage analytics** to a PostHog service that
+the owner of an installation configures, to see where the product breaks and
+which features people actually use. None is configured by default. This page
+documents exactly what is and isn't collected, where the data goes, and how
+to enable or disable it.
 
 ## TL;DR
 
+- **No destination by default.** AGI PROCESOR ships without an analytics
+  endpoint, so the installer and `agi init` ask nothing and send nothing until
+  `[analytics] host` and `key` (or `AGI_PROCESOR_ANALYTICS_HOST` and
+  `AGI_PROCESOR_ANALYTICS_KEY`) are set.
 - **Off until you choose to share.** In an interactive Bash installation or
   `agi init`, the dedicated prompt says: **Press Enter or Y to consent,
   or N to decline**. Enter at that prompt enables sharing; EOF, cancellation,
@@ -49,19 +54,18 @@ changed. Configurations without an analytics setting now default to off.
 Local performance telemetry and Savings Leaderboard participation remain
 separate settings.
 
-In the browser and desktop apps, the existing **Share Your Savings** dialog
+In the browser and desktop apps, the **Share your savings** dialog
 offers explicit buttons without a checkbox. Displaying or closing the dialog
 does not enable analytics. Confirm with **Enable analytics only** or
-**Enable analytics & enter giveaway**, or use **Continue without sharing**
+**Enable analytics & join leaderboard**, or use **Continue without sharing**
 to turn analytics off. A saved UI choice takes effect immediately in both
 the frontend and the running backend.
 
 Joining the leaderboard requires a display name and contact email submitted
 with savings to the configured Supabase leaderboard. Analytics preferences
 send only the on/off choice to the local server; names and emails are not
-attached to PostHog usage events by this form. The existing Mac mini
-promotion concerns leaderboard participation, not analytics consent.
-Use **Enter giveaway only** to join with analytics off; submitting the
+attached to PostHog usage events by this form.
+Use **Join leaderboard only** to join with analytics off; submitting the
 name/email form with Enter also uses that option. Stopping leaderboard
 updates and disabling usage analytics are separate actions. Stopping updates
 does not delete previously submitted entries from Supabase.
@@ -135,12 +139,11 @@ recording are disabled. Installer beacons use fixed fields assembled separately.
 
 ## Where the data goes
 
-- The default runtime and Bash installer endpoint is
-  `https://34.231.106.201.sslip.io`, configured for the AGI PROCESOR team's
-  PostHog project.
-- Runtime deployments can override `[analytics] host`; installer deployments
-  can override `AGI_PROCESOR_ANALYTICS_HOST`. A configured endpoint alone does
-  not establish its hosting provider or server logging settings.
+- AGI PROCESOR has no default endpoint. Events go only to the PostHog service
+  set in `[analytics] host` and `key`, or in `AGI_PROCESOR_ANALYTICS_HOST` and
+  `AGI_PROCESOR_ANALYTICS_KEY` (which the Bash installer reads too). A
+  configured endpoint alone does not establish its hosting provider or server
+  logging settings.
 - **Never** sold, shared with advertisers, or used for anything other
   than improving AGI PROCESOR.
 

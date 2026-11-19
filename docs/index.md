@@ -14,23 +14,11 @@ AGI PROCESOR is a research framework for composable, on-device AI systems.
 Build personal AI that runs on your hardware. Cloud APIs are optional.
 </p>
 
-<div class="grid cards" markdown>
-
--   :material-image-multiple:{ .lg .middle } **See what people use it for**
-
-    ---
-
-    A gallery of real setups — morning briefs that summarize your overnight Slack and email, a Discord companion that knows your calendar, a code reviewer that works at 30,000 feet. Outcome-first, with links to the docs that explain how to build each one.
-
-    [:octicons-arrow-right-24: Browse the Showcase](showcase/index.md)
-
-</div>
-
 ---
 
 ## Why AGI PROCESOR?
 
-Personal AI agents are exploding in popularity, but nearly all of them still route intelligence through cloud APIs. Your "personal" AI continues to depend on someone else's server. At the same time, our [Intelligence Per Watt](https://www.intelligence-per-watt.ai/) research showed that local language models already handle 88.7% of single-turn chat and reasoning queries, with intelligence efficiency improving 5.3× from 2023 to 2025. The models and hardware are increasingly ready. What has been missing is the software stack to make local-first personal AI practical.
+Personal AI agents are exploding in popularity, but nearly all of them still route intelligence through cloud APIs. Your "personal" AI continues to depend on someone else's server. At the same time, the [Intelligence Per Watt](https://www.intelligence-per-watt.ai/) research showed that local language models already handle 88.7% of single-turn chat and reasoning queries, with intelligence efficiency improving 5.3× from 2023 to 2025. The models and hardware are increasingly ready. What has been missing is the software stack to make local-first personal AI practical.
 
 AGI PROCESOR is that stack. It is a framework for local-first personal AI, built around three core ideas: shared primitives for building on-device agents; evaluations that treat energy, FLOPs, latency, and dollar cost as first-class constraints alongside accuracy; and a learning loop that improves models using local trace data. The goal is simple: make it possible to build personal AI agents that run locally by default, calling the cloud only when truly necessary. AGI PROCESOR aims to be both a research platform and a production foundation for local AI, in the spirit of PyTorch.
 
@@ -65,6 +53,9 @@ AGI PROCESOR is that stack. It is a framework for local-first personal AI, built
     ```
 
     **Step 2.** Download and open the desktop app:
+
+    !!! warning "No AGI PROCESOR desktop release yet"
+        These downloads work after the first AGI PROCESOR desktop release. Until then, use the browser app.
 
     [Download for macOS](https://github.com/Procesordb/OpenJarvis/releases/latest/download/AGI-PROCESOR_universal.dmg){ .md-button .md-button--primary }
 
@@ -213,11 +204,11 @@ AGI PROCESOR is built around five composable layers. Each has a clean interface 
 
 ## Research
 
-AGI PROCESOR is part of [Intelligence Per Watt](https://www.intelligence-per-watt.ai/), a research initiative studying the efficiency of on-device AI systems. Developed at [Hazy Research](https://hazyresearch.stanford.edu/) and the [Scaling Intelligence Lab](https://scalingintelligence.stanford.edu/) at [Stanford SAIL](https://ai.stanford.edu/).
-
-Read the [blog post](https://procesor.com/) for the full research motivation, architecture details, and experimental results.
+AGI PROCESOR is built on [OpenJarvis](https://github.com/open-jarvis/OpenJarvis), an open-source framework (Apache 2.0) from [Hazy Research](https://hazyresearch.stanford.edu/) and the [Scaling Intelligence Lab](https://scalingintelligence.stanford.edu/) at [Stanford SAIL](https://ai.stanford.edu/), part of the [Intelligence Per Watt](https://www.intelligence-per-watt.ai/) research initiative. The [upstream project site](https://openjarvis.stanford.edu/) describes the research motivation, architecture details, and experimental results.
 
 ## Citation
+
+Research that relies on the underlying framework should cite the upstream OpenJarvis paper:
 
 ```bibtex
 @misc{saadfalcon2026openjarvispersonalaipersonal,
@@ -230,17 +221,3 @@ Read the [blog post](https://procesor.com/) for the full research motivation, ar
       url={https://arxiv.org/abs/2605.17172}, 
 }
 ```
-
-## Sponsors
-
-<p>
-  <a href="https://www.laude.org/">Laude Institute</a> &bull;
-  <a href="https://datascience.stanford.edu/marlowe">Stanford Marlowe</a> &bull;
-  <a href="https://cloud.google.com/">Google Cloud Platform</a> &bull;
-  <a href="https://lambda.ai/">Lambda Labs</a> &bull;
-  <a href="https://ollama.com/">Ollama</a> &bull;
-  <a href="https://research.ibm.com/">IBM Research</a> &bull;
-  <a href="https://hai.stanford.edu/">Stanford HAI</a>
-</p>
-
-Follow [@YOUR_X_HANDLE](https://x.com/OpenJarvisAI) on X for updates.
