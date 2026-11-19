@@ -1,3 +1,5 @@
+> **AGI PROCESOR:** poniżej jest niezmieniona historia projektu źródłowego OpenJarvis sprzed zmiany nazwy. Zmiany AGI PROCESOR opisują [NOTICE](NOTICE) i [README](README.md).
+
 # Changelog
 
 All notable changes to OpenJarvis are documented in this file.

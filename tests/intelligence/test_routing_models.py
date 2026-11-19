@@ -2,9 +2,9 @@
 
 from __future__ import annotations
 
-from openjarvis.intelligence.model_catalog import register_builtin_models
-from openjarvis.learning._stubs import RoutingContext
-from openjarvis.learning.routing.router import (
+from agi_procesor.intelligence.model_catalog import register_builtin_models
+from agi_procesor.learning._stubs import RoutingContext
+from agi_procesor.learning.routing.router import (
     HeuristicRouter,
     build_routing_context,
 )

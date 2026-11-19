@@ -1,14 +1,19 @@
 # Telemetry
 
-OpenJarvis offers **optional external usage analytics** so the team can
-see where the product breaks, what features people actually use, and
-how to make it better. This page documents exactly what is and isn't
-collected, where the data goes, and how to enable or disable it.
+AGI PROCESOR can send **optional usage analytics** to a PostHog service that
+the owner of an installation configures, to see where the product breaks and
+which features people actually use. None is configured by default. This page
+documents exactly what is and isn't collected, where the data goes, and how
+to enable or disable it.
 
 ## TL;DR
 
+- **No destination by default.** AGI PROCESOR ships without an analytics
+  endpoint, so the installer and `agi init` ask nothing and send nothing until
+  `[analytics] host` and `key` (or `AGI_PROCESOR_ANALYTICS_HOST` and
+  `AGI_PROCESOR_ANALYTICS_KEY`) are set.
 - **Off until you choose to share.** In an interactive Bash installation or
-  `jarvis init`, the dedicated prompt says: **Press Enter or Y to consent,
+  `agi init`, the dedicated prompt says: **Press Enter or Y to consent,
   or N to decline**. Enter at that prompt enables sharing; EOF, cancellation,
   or an unattended run does not.
 - **Installation ID** — one random UUID links install and usage events.
@@ -30,17 +35,17 @@ For unattended installs, consent explicitly with `--analytics` or decline with
 `--no-analytics`:
 
 ```bash
-curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash -s -- --analytics
+curl -fsSL https://procesordb.github.io/OpenJarvis/install.sh | bash -s -- --analytics
 # Or: ... | bash -s -- --no-analytics
-jarvis init --analytics
-# Or: jarvis init --no-analytics
+agi init --analytics
+# Or: agi init --no-analytics
 ```
 
 To change your choice later:
 
 ```bash
-jarvis config set analytics.enabled false
-# To enable: jarvis config set analytics.enabled true
+agi config set analytics.enabled false
+# To enable: agi config set analytics.enabled true
 ```
 
 Restart the server and reload the frontend after changing the setting.
@@ -49,19 +54,18 @@ changed. Configurations without an analytics setting now default to off.
 Local performance telemetry and Savings Leaderboard participation remain
 separate settings.
 
-In the browser and desktop apps, the existing **Share Your Savings** dialog
+In the browser and desktop apps, the **Share your savings** dialog
 offers explicit buttons without a checkbox. Displaying or closing the dialog
 does not enable analytics. Confirm with **Enable analytics only** or
-**Enable analytics & enter giveaway**, or use **Continue without sharing**
+**Enable analytics & join leaderboard**, or use **Continue without sharing**
 to turn analytics off. A saved UI choice takes effect immediately in both
 the frontend and the running backend.
 
 Joining the leaderboard requires a display name and contact email submitted
 with savings to the configured Supabase leaderboard. Analytics preferences
 send only the on/off choice to the local server; names and emails are not
-attached to PostHog usage events by this form. The existing Mac mini
-promotion concerns leaderboard participation, not analytics consent.
-Use **Enter giveaway only** to join with analytics off; submitting the
+attached to PostHog usage events by this form.
+Use **Join leaderboard only** to join with analytics off; submitting the
 name/email form with Enter also uses that option. Stopping leaderboard
 updates and disabling usage analytics are separate actions. Stopping updates
 does not delete previously submitted entries from Supabase.
@@ -97,7 +101,7 @@ does not delete previously submitted entries from Supabase.
 
 The canonical, authoritative list with every property name and its
 type validator lives in
-[`src/openjarvis/analytics/events.py`](../src/openjarvis/analytics/events.py).
+[`src/agi_procesor/analytics/events.py`](../src/agi_procesor/analytics/events.py).
 That file is the only place new events can be added — PR review is
 the gate.
 
@@ -122,8 +126,8 @@ Backend events use a property allowlist and value-level redaction:
 
 Two independent filters run before backend event properties are sent:
 
-1. [`src/openjarvis/analytics/redaction.py`](../src/openjarvis/analytics/redaction.py) — value-level pattern matching (20+ regexes for PII).
-2. [`src/openjarvis/analytics/events.py`](../src/openjarvis/analytics/events.py) — structural allowlist (event name + property name + type validator).
+1. [`src/agi_procesor/analytics/redaction.py`](../src/agi_procesor/analytics/redaction.py) — value-level pattern matching (20+ regexes for PII).
+2. [`src/agi_procesor/analytics/events.py`](../src/agi_procesor/analytics/events.py) — structural allowlist (event name + property name + type validator).
 
 Any failure at either layer → the event or property is silently
 dropped. Tests covering the patterns: [`tests/analytics/test_redaction.py`](../tests/analytics/test_redaction.py).
@@ -135,14 +139,13 @@ recording are disabled. Installer beacons use fixed fields assembled separately.
 
 ## Where the data goes
 
-- The default runtime and Bash installer endpoint is
-  `https://34.231.106.201.sslip.io`, configured for the OpenJarvis team's
-  PostHog project.
-- Runtime deployments can override `[analytics] host`; installer deployments
-  can override `OPENJARVIS_ANALYTICS_HOST`. A configured endpoint alone does
-  not establish its hosting provider or server logging settings.
+- AGI PROCESOR has no default endpoint. Events go only to the PostHog service
+  set in `[analytics] host` and `key`, or in `AGI_PROCESOR_ANALYTICS_HOST` and
+  `AGI_PROCESOR_ANALYTICS_KEY` (which the Bash installer reads too). A
+  configured endpoint alone does not establish its hosting provider or server
+  logging settings.
 - **Never** sold, shared with advertisers, or used for anything other
-  than improving OpenJarvis.
+  than improving AGI PROCESOR.
 
 ## Retention
 
@@ -154,32 +157,32 @@ recording are disabled. Installer beacons use fixed fields assembled separately.
 ## How identity works
 
 A single UUID v4 is generated when sharing is first enabled and stored at
-`~/.openjarvis/anon_id`. The install script, backend, and frontend all
+`~/.agi-procesor/anon_id`. The install script, backend, and frontend all
 read the same file so events across the lifecycle can be linked to the
 same installation.
 
-Delete the file (`rm ~/.openjarvis/anon_id`) and a fresh UUID will be
+Delete the file (`rm ~/.agi-procesor/anon_id`) and a fresh UUID will be
 generated next time analytics are enabled. Events associated with the
 previous UUID remain on the receiving service until deleted there.
 
 ## For researchers and contributors
 
-- **Adding an event**: edit `src/openjarvis/analytics/events.py`,
+- **Adding an event**: edit `src/agi_procesor/analytics/events.py`,
   declare the spec, then update this page. PR review enforces both.
-- **Adding a PII pattern**: edit `src/openjarvis/analytics/redaction.py`
+- **Adding a PII pattern**: edit `src/agi_procesor/analytics/redaction.py`
   and add a test case in `tests/analytics/test_redaction.py`.
 - **Inspecting what your install sends**: run with
-  `OPENJARVIS_LOG_LEVEL=DEBUG` and grep for `Analytics`. You'll see
+  `AGI_PROCESOR_LOG_LEVEL=DEBUG` and grep for `Analytics`. You'll see
   every event name and (redacted) property dict before it ships.
 
 ## Related
 
 - Local telemetry (FLOPs, energy, latency stored in
-  `~/.openjarvis/telemetry.db`) is a **separate** subsystem documented
-  in [`src/openjarvis/telemetry/`](../src/openjarvis/telemetry/). It
+  `~/.agi-procesor/telemetry.db`) is a **separate** subsystem documented
+  in [`src/agi_procesor/telemetry/`](../src/agi_procesor/telemetry/). It
   never leaves the machine and is controlled by `[telemetry]` (not
   `[analytics]`) in `config.toml`.
 - The leaderboard / contest opt-in (`OptInModal.tsx`) is a separate,
   voluntary feature that publicly shares your energy and savings on
-  the OpenJarvis leaderboard. It is **not** the same as analytics and
+  the AGI PROCESOR leaderboard. It is **not** the same as analytics and
   requires explicit opt-in with a display name and email.

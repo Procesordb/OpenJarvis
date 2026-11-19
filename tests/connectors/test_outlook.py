@@ -5,9 +5,9 @@ from __future__ import annotations
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from openjarvis.connectors.oauth import load_tokens
-from openjarvis.connectors.outlook import OutlookConnector
-from openjarvis.core.registry import ConnectorRegistry
+from agi_procesor.connectors.oauth import load_tokens
+from agi_procesor.connectors.outlook import OutlookConnector
+from agi_procesor.core.registry import ConnectorRegistry
 
 
 def test_outlook_registered() -> None:

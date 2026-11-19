@@ -1,11 +1,7 @@
 name: Publish to PyPI
 
+# AGI PROCESOR: manual only — the package is not registered on PyPI under this name.
 on:
-  release:
-    types: [published]
-  push:
-    tags:
-      - "v*"
   workflow_dispatch:
     inputs:
       tag:
@@ -61,19 +57,20 @@ jobs:
 
       - name: Build frontend and bundle into package
         env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
         run: |
           set -euo pipefail
           cd frontend
           npm ci
           # Vite is configured (frontend/vite.config.ts) with
-          # `outDir: '../src/openjarvis/server/static'` and
+          # `outDir: '../src/agi_procesor/server/static'` and
           # `emptyOutDir: true`, so the build writes directly into the
           # Python package's static dir and clears stale assets itself.
           # No rm/cp is needed — and the previous `dist/`-assuming logic
           # was broken because `frontend/dist/` is never produced.
           npm run build
-          STATIC=../src/openjarvis/server/static
+          STATIC=../src/agi_procesor/server/static
           test -s "$STATIC/index.html" || {
             echo "::error::${STATIC}/index.html missing or empty after build"
             exit 1

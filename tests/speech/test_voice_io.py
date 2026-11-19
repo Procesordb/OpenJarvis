@@ -9,7 +9,7 @@ from unittest.mock import Mock
 
 import pytest
 
-from openjarvis.speech.voice_io import play_audio_file, record_until_silence
+from agi_procesor.speech.voice_io import play_audio_file, record_until_silence
 
 
 class _FakeStream:

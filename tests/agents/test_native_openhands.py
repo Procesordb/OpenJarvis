@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from unittest.mock import MagicMock
 
-from openjarvis.agents._stubs import AgentContext
-from openjarvis.agents.native_openhands import NativeOpenHandsAgent
-from openjarvis.core.events import EventBus, EventType
-from openjarvis.core.registry import AgentRegistry
-from openjarvis.core.types import Conversation, Message, Role, ToolCall, ToolResult
-from openjarvis.tools._stubs import BaseTool, ToolSpec
+from agi_procesor.agents._stubs import AgentContext
+from agi_procesor.agents.native_openhands import NativeOpenHandsAgent
+from agi_procesor.core.events import EventBus, EventType
+from agi_procesor.core.registry import AgentRegistry
+from agi_procesor.core.types import Conversation, Message, Role, ToolCall, ToolResult
+from agi_procesor.tools._stubs import BaseTool, ToolSpec
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -579,8 +579,8 @@ class TestUrlExpansion:
     ):
         import httpx
 
-        from openjarvis.core.events import EventBus, EventType
-        from openjarvis.security.capabilities import CapabilityPolicy
+        from agi_procesor.core.events import EventBus, EventType
+        from agi_procesor.security.capabilities import CapabilityPolicy
 
         class _RecordingLimiter:
             def __init__(self):

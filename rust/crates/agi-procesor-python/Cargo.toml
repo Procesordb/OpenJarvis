@@ -1,0 +1,32 @@
+[package]
+name = "agi-procesor-python"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "agi_procesor_rust"
+crate-type = ["cdylib"]
+
+[dependencies]
+agi-procesor-core = { path = "../agi-procesor-core" }
+agi-procesor-engine = { path = "../agi-procesor-engine" }
+agi-procesor-security = { path = "../agi-procesor-security" }
+agi-procesor-tools = { path = "../agi-procesor-tools" }
+agi-procesor-agents = { path = "../agi-procesor-agents" }
+agi-procesor-traces = { path = "../agi-procesor-traces" }
+agi-procesor-telemetry = { path = "../agi-procesor-telemetry" }
+agi-procesor-learning = { path = "../agi-procesor-learning" }
+agi-procesor-mcp = { path = "../agi-procesor-mcp" }
+agi-procesor-sessions = { path = "../agi-procesor-sessions" }
+agi-procesor-workflow = { path = "../agi-procesor-workflow" }
+agi-procesor-skills = { path = "../agi-procesor-skills" }
+agi-procesor-recipes = { path = "../agi-procesor-recipes" }
+agi-procesor-templates = { path = "../agi-procesor-templates" }
+agi-procesor-a2a = { path = "../agi-procesor-a2a" }
+agi-procesor-scheduler = { path = "../agi-procesor-scheduler" }
+pyo3 = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+once_cell = { workspace = true }
+parking_lot = { workspace = true }

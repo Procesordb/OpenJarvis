@@ -4,50 +4,50 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * OpenJarvis design tokens.
- * Zinc/slate neutrals, blue accent. Light default, dark via class or system pref.
+ * AGI PROCESOR design tokens.
+ * Deep navy, cool blue and gold, as on procesor.com. Light default, dark via class or system pref.
  */
 
 @layer base {
   :root {
-    --color-bg: #f9f9f9;
-    --color-bg-secondary: #f4f4f5;
-    --color-bg-tertiary: #e4e4e7;
+    --color-bg: #f5f8fb;
+    --color-bg-secondary: #edf2f7;
+    --color-bg-tertiary: #dee6ee;
     --color-surface: #ffffff;
     --color-sidebar: rgba(250, 250, 250, 0.85);
     --color-border: rgba(0, 0, 0, 0.08);
     --color-border-subtle: rgba(0, 0, 0, 0.04);
 
-    --color-text: #09090b;
-    --color-text-secondary: #71717a;
-    --color-text-tertiary: #a1a1aa;
+    --color-text: #0b1b2e;
+    --color-text-secondary: #4c6178;
+    --color-text-tertiary: #8396ab;
     --color-text-inverse: #fafafa;
 
-    --color-accent: #0891b2;
-    --color-accent-hover: #0e7490;
-    --color-accent-subtle: rgba(8, 145, 178, 0.08);
-    --color-accent-glow: rgba(8, 145, 178, 0.25);
+    --color-accent: #1f6f9f;
+    --color-accent-hover: #185a82;
+    --color-accent-subtle: rgba(31, 111, 159, 0.08);
+    --color-accent-glow: rgba(31, 111, 159, 0.25);
 
-    --color-accent-amber: #f59e0b;
-    --color-accent-amber-hover: #d97706;
-    --color-accent-amber-subtle: rgba(245, 158, 11, 0.1);
+    --color-accent-amber: #c99a3e;
+    --color-accent-amber-hover: #a87d2c;
+    --color-accent-amber-subtle: rgba(201, 154, 62, 0.12);
     --color-accent-purple: #8b5cf6;
     --color-accent-purple-hover: #7c3aed;
     --color-accent-purple-subtle: rgba(139, 92, 246, 0.1);
-    --color-accent-blue-subtle: rgba(8, 145, 178, 0.08);
+    --color-accent-blue-subtle: rgba(31, 111, 159, 0.08);
 
     --color-success: #16a34a;
     --color-warning: #ca8a04;
     --color-error: #dc2626;
 
-    --color-code-bg: #f4f4f5;
+    --color-code-bg: #edf2f7;
     --color-input-bg: #ffffff;
     --color-input-border: #d4d4d8;
 
-    --color-user-bubble: #0891b2;
+    --color-user-bubble: #1f6f9f;
     --color-user-bubble-text: #ffffff;
     --color-on-accent: #ffffff;
-    --color-disabled-bg: #e4e4e7;
+    --color-disabled-bg: #dee6ee;
 
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -62,103 +62,104 @@
     --sidebar-width: 260px;
     --chat-max-width: 720px;
 
-    --font-display: 'Chakra Petch', 'Space Grotesk', system-ui, sans-serif;
-    --font-hud: 'IBM Plex Mono', 'SF Mono', 'JetBrains Mono', ui-monospace, monospace;
+    --font-display: 'Unbounded Variable', 'Unbounded', system-ui, sans-serif;
+    --font-hud: 'JetBrains Mono Variable', 'JetBrains Mono', 'SF Mono', ui-monospace, monospace;
+    --font-body: 'Manrope Variable', 'Manrope', system-ui, sans-serif;
 
     color-scheme: light;
   }
 
   .dark {
-    --color-bg: #0a0a0b;
-    --color-bg-secondary: #121214;
-    --color-bg-tertiary: #18181b;
-    --color-surface: #121214;
-    --color-sidebar: rgba(12, 12, 14, 0.72);
-    --color-border: rgba(255, 255, 255, 0.09);
-    --color-border-subtle: rgba(255, 255, 255, 0.05);
+    --color-bg: #000610;
+    --color-bg-secondary: #041122;
+    --color-bg-tertiary: #0a1c33;
+    --color-surface: #041122;
+    --color-sidebar: rgba(1, 8, 20, 0.78);
+    --color-border: rgba(140, 214, 248, 0.16);
+    --color-border-subtle: rgba(140, 214, 248, 0.08);
 
-    --color-text: #ededef;
-    --color-text-secondary: #8d8d93;
-    --color-text-tertiary: #5c5c63;
-    --color-text-inverse: #0a0a0b;
+    --color-text: #eaf6ff;
+    --color-text-secondary: #a9c4da;
+    --color-text-tertiary: #7f9eba;
+    --color-text-inverse: #000610;
 
-    --color-accent: #22d3ee;
-    --color-accent-hover: #67e8f9;
-    --color-accent-subtle: rgba(34, 211, 238, 0.1);
-    --color-accent-glow: rgba(34, 211, 238, 0.3);
+    --color-accent: #7ccbf2;
+    --color-accent-hover: #9fdcf7;
+    --color-accent-subtle: rgba(124, 203, 242, 0.12);
+    --color-accent-glow: rgba(124, 203, 242, 0.32);
 
-    --color-accent-amber: #f5a524;
-    --color-accent-amber-hover: #fbbf24;
-    --color-accent-amber-subtle: rgba(245, 165, 36, 0.12);
+    --color-accent-amber: #f2c46d;
+    --color-accent-amber-hover: #f7d58f;
+    --color-accent-amber-subtle: rgba(242, 196, 109, 0.12);
     --color-accent-purple: #b794ff;
     --color-accent-purple-hover: #c9b0ff;
     --color-accent-purple-subtle: rgba(183, 148, 255, 0.12);
-    --color-accent-blue-subtle: rgba(79, 209, 255, 0.12);
+    --color-accent-blue-subtle: rgba(124, 203, 242, 0.12);
 
-    --color-success: #3ddc97;
-    --color-warning: #f5a524;
-    --color-error: #ff6b6b;
+    --color-success: #7ff0d2;
+    --color-warning: #f2c46d;
+    --color-error: #ff6b5e;
 
-    --color-code-bg: #0c121a;
-    --color-input-bg: #0c121a;
-    --color-input-border: rgba(79, 209, 255, 0.12);
+    --color-code-bg: #01060d;
+    --color-input-bg: #01060d;
+    --color-input-border: rgba(124, 203, 242, 0.12);
 
-    --color-user-bubble: rgba(79, 209, 255, 0.14);
-    --color-user-bubble-text: #e6f1ff;
-    --color-on-accent: #070b11;
-    --color-disabled-bg: #121a24;
+    --color-user-bubble: rgba(124, 203, 242, 0.14);
+    --color-user-bubble-text: #eaf6ff;
+    --color-on-accent: #000610;
+    --color-disabled-bg: #0a1c33;
 
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
-    --shadow-md: 0 4px 14px -2px rgb(0 0 0 / 0.5), 0 0 0 1px rgba(79, 209, 255, 0.04);
-    --shadow-lg: 0 18px 40px -12px rgb(0 0 0 / 0.7), 0 0 0 1px rgba(79, 209, 255, 0.06);
+    --shadow-md: 0 4px 14px -2px rgb(0 0 0 / 0.5), 0 0 0 1px rgba(124, 203, 242, 0.04);
+    --shadow-lg: 0 18px 40px -12px rgb(0 0 0 / 0.7), 0 0 0 1px rgba(124, 203, 242, 0.06);
 
     color-scheme: dark;
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not(.light) {
-      --color-bg: #0a0a0b;
-      --color-bg-secondary: #121214;
-      --color-bg-tertiary: #18181b;
-      --color-surface: #121214;
-      --color-sidebar: rgba(12, 12, 14, 0.72);
-      --color-border: rgba(255, 255, 255, 0.09);
-      --color-border-subtle: rgba(255, 255, 255, 0.05);
+      --color-bg: #000610;
+      --color-bg-secondary: #041122;
+      --color-bg-tertiary: #0a1c33;
+      --color-surface: #041122;
+      --color-sidebar: rgba(1, 8, 20, 0.78);
+      --color-border: rgba(140, 214, 248, 0.16);
+      --color-border-subtle: rgba(140, 214, 248, 0.08);
 
-      --color-text: #ededef;
-      --color-text-secondary: #8d8d93;
-      --color-text-tertiary: #5c5c63;
-      --color-text-inverse: #0a0a0b;
+      --color-text: #eaf6ff;
+      --color-text-secondary: #a9c4da;
+      --color-text-tertiary: #7f9eba;
+      --color-text-inverse: #000610;
 
-      --color-accent: #22d3ee;
-      --color-accent-hover: #67e8f9;
-      --color-accent-subtle: rgba(34, 211, 238, 0.1);
-      --color-accent-glow: rgba(34, 211, 238, 0.3);
+      --color-accent: #7ccbf2;
+      --color-accent-hover: #9fdcf7;
+      --color-accent-subtle: rgba(124, 203, 242, 0.12);
+      --color-accent-glow: rgba(124, 203, 242, 0.32);
 
-      --color-accent-amber: #f5a524;
-      --color-accent-amber-hover: #fbbf24;
-      --color-accent-amber-subtle: rgba(245, 165, 36, 0.12);
+      --color-accent-amber: #f2c46d;
+      --color-accent-amber-hover: #f7d58f;
+      --color-accent-amber-subtle: rgba(242, 196, 109, 0.12);
       --color-accent-purple: #b794ff;
       --color-accent-purple-hover: #c9b0ff;
       --color-accent-purple-subtle: rgba(183, 148, 255, 0.12);
-      --color-accent-blue-subtle: rgba(79, 209, 255, 0.12);
+      --color-accent-blue-subtle: rgba(124, 203, 242, 0.12);
 
-      --color-success: #3ddc97;
-      --color-warning: #f5a524;
-      --color-error: #ff6b6b;
+      --color-success: #7ff0d2;
+      --color-warning: #f2c46d;
+      --color-error: #ff6b5e;
 
-      --color-code-bg: #0c121a;
-      --color-input-bg: #0c121a;
-      --color-input-border: rgba(79, 209, 255, 0.12);
+      --color-code-bg: #01060d;
+      --color-input-bg: #01060d;
+      --color-input-border: rgba(124, 203, 242, 0.12);
 
-      --color-user-bubble: rgba(79, 209, 255, 0.14);
-      --color-user-bubble-text: #e6f1ff;
-      --color-on-accent: #070b11;
-      --color-disabled-bg: #121a24;
+      --color-user-bubble: rgba(124, 203, 242, 0.14);
+      --color-user-bubble-text: #eaf6ff;
+      --color-on-accent: #000610;
+      --color-disabled-bg: #0a1c33;
 
       --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.4);
-      --shadow-md: 0 4px 14px -2px rgb(0 0 0 / 0.5), 0 0 0 1px rgba(79, 209, 255, 0.04);
-      --shadow-lg: 0 18px 40px -12px rgb(0 0 0 / 0.7), 0 0 0 1px rgba(79, 209, 255, 0.06);
+      --shadow-md: 0 4px 14px -2px rgb(0 0 0 / 0.5), 0 0 0 1px rgba(124, 203, 242, 0.04);
+      --shadow-lg: 0 18px 40px -12px rgb(0 0 0 / 0.7), 0 0 0 1px rgba(124, 203, 242, 0.06);
 
       color-scheme: dark;
     }
@@ -265,16 +266,16 @@
   .hljs-comment,
   .hljs-quote,
   .hljs-deletion,
-  .hljs-meta { color: #a1a1aa; }
+  .hljs-meta { color: #8396ab; }
 
   .hljs-number,
   .hljs-regexp,
   .hljs-built_in,
-  .hljs-params { color: #d97706; }
+  .hljs-params { color: #a87d2c; }
   .dark .hljs-number,
   .dark .hljs-regexp,
   .dark .hljs-built_in,
-  .dark .hljs-params { color: #fbbf24; }
+  .dark .hljs-params { color: #f7d58f; }
 
   .hljs-function { color: #2563eb; }
   .dark .hljs-function { color: #60a5fa; }
@@ -674,7 +675,7 @@
 }
 @theme inline {
   --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  /* shadcn component tokens — namespaced to avoid collision with OpenJarvis design tokens */
+  /* shadcn component tokens — namespaced to avoid collision with AGI PROCESOR design tokens */
   --color-cn-sidebar-ring: var(--sidebar-ring);
   --color-cn-sidebar-border: var(--sidebar-border);
   --color-cn-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -710,22 +711,22 @@
 }
 
 /* Deep Research timeline — pending-step shimmer */
-@keyframes openjarvis-research-shimmer {
+@keyframes agi-procesor-research-shimmer {
   0% { transform: translateX(-120%); }
   100% { transform: translateX(420%); }
 }
 .research-shimmer {
-  animation: openjarvis-research-shimmer 1.6s ease-in-out infinite;
+  animation: agi-procesor-research-shimmer 1.6s ease-in-out infinite;
 }
 
 /* Sync progress pulse — fires on each items_synced bump so the
    "12,450 / 99,840" label visibly breathes between polls. */
-@keyframes openjarvis-sync-bump {
+@keyframes agi-procesor-sync-bump {
   0% { opacity: 0.55; }
   100% { opacity: 1; }
 }
 .sync-bump {
-  animation: openjarvis-sync-bump 400ms ease-out;
+  animation: agi-procesor-sync-bump 400ms ease-out;
 }
 
 /* Deep Research inline citation pills — small rounded chips that flow
@@ -753,4 +754,9 @@
   color: var(--color-on-accent, #ffffff);
   background: var(--color-accent);
   text-decoration: none;
+}
+
+/* AGI PROCESOR typography */
+body {
+  font-family: var(--font-body);
 }

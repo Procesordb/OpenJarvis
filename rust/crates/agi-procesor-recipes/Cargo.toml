@@ -1,0 +1,10 @@
+[package]
+name = "agi-procesor-recipes"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+agi-procesor-core = { path = "../agi-procesor-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+toml = { workspace = true }

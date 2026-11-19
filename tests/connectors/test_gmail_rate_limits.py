@@ -5,7 +5,7 @@ from unittest.mock import patch
 import httpx
 import pytest
 
-from openjarvis.connectors import gmail
+from agi_procesor.connectors import gmail
 
 
 def _response(status, reason=None):

@@ -1,6 +1,6 @@
 # Interactive CLI model and runtime picker (TUI)
 
-Optional terminal UX for `jarvis chat` and bare `jarvis` on an interactive TTY.
+Optional terminal UX for `agi chat` and bare `agi` on an interactive TTY.
 Upstream previously relied on `default_model` in config or `-m` / `--model` only.
 
 ## Who may find this useful
@@ -26,9 +26,9 @@ On a TTY (unless skipped):
 
 Skip picker:
 
-- `JARVIS_SKIP_MODEL_PICK=1`
-- `jarvis chat` without bare `jarvis` (picker only auto-runs on bare `jarvis` unless `--pick-model`)
-- `jarvis chat --pick-model` forces the list
+- `AGI_SKIP_MODEL_PICK=1`
+- `agi chat` without bare `agi` (picker only auto-runs on bare `agi` unless `--pick-model`)
+- `agi chat --pick-model` forces the list
 
 ### Runtime panel (Ollama-focused)
 
@@ -39,7 +39,7 @@ After model selection, optional prompts:
 
 Skip panel:
 
-- `JARVIS_SKIP_RUNTIME_PANEL=1`
+- `AGI_SKIP_RUNTIME_PANEL=1`
 - `--skip-runtime-panel`
 - `--num-ctx` / `--num-gpu` (values applied directly, no prompts)
 
@@ -67,6 +67,6 @@ model_code = ""
 
 | Command | Role |
 |---------|------|
-| `jarvis model list` | Inspect models without starting chat |
-| `jarvis chat -m MODEL` | Skip picker, fixed model |
-| `jarvis chat --num-ctx N --num-gpu N` | Skip runtime panel |
+| `agi model list` | Inspect models without starting chat |
+| `agi chat -m MODEL` | Skip picker, fixed model |
+| `agi chat --num-ctx N --num-gpu N` | Skip runtime panel |

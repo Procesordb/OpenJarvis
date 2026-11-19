@@ -2,7 +2,7 @@
 
 import textwrap
 
-from openjarvis.evals.datasets.pinchbench import _parse_task_markdown
+from agi_procesor.evals.datasets.pinchbench import _parse_task_markdown
 
 
 def test_parse_task_markdown_basic():

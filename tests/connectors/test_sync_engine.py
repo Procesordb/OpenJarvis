@@ -10,10 +10,10 @@ from typing import Iterator, List, Optional
 
 import pytest
 
-from openjarvis.connectors._stubs import BaseConnector, Document, SyncStatus
-from openjarvis.connectors.pipeline import IngestionPipeline
-from openjarvis.connectors.store import KnowledgeStore
-from openjarvis.connectors.sync_engine import SyncEngine
+from agi_procesor.connectors._stubs import BaseConnector, Document, SyncStatus
+from agi_procesor.connectors.pipeline import IngestionPipeline
+from agi_procesor.connectors.store import KnowledgeStore
+from agi_procesor.connectors.sync_engine import SyncEngine
 
 # ---------------------------------------------------------------------------
 # StubConnector test helper

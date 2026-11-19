@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import pytest
 
-from openjarvis.tools.apply_patch import ApplyPatchTool
+from agi_procesor.tools.apply_patch import ApplyPatchTool
 
 
 class TestApplyPatchTool:

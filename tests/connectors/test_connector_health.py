@@ -10,20 +10,20 @@ import pytest
 
 # All connectors that should be testable without credentials
 _LOCAL_CONNECTORS = [
-    ("apple_notes", "openjarvis.connectors.apple_notes", "AppleNotesConnector"),
-    ("imessage", "openjarvis.connectors.imessage", "IMessageConnector"),
+    ("apple_notes", "agi_procesor.connectors.apple_notes", "AppleNotesConnector"),
+    ("imessage", "agi_procesor.connectors.imessage", "IMessageConnector"),
 ]
 
 _TOKEN_CONNECTORS = [
-    ("gmail_imap", "openjarvis.connectors.gmail_imap", "GmailIMAPConnector"),
-    ("outlook", "openjarvis.connectors.outlook", "OutlookConnector"),
-    ("slack", "openjarvis.connectors.slack_connector", "SlackConnector"),
-    ("notion", "openjarvis.connectors.notion", "NotionConnector"),
-    ("granola", "openjarvis.connectors.granola", "GranolaConnector"),
-    ("gdrive", "openjarvis.connectors.gdrive", "GDriveConnector"),
-    ("gcalendar", "openjarvis.connectors.gcalendar", "GCalendarConnector"),
-    ("gcontacts", "openjarvis.connectors.gcontacts", "GContactsConnector"),
-    ("dropbox", "openjarvis.connectors.dropbox", "DropboxConnector"),
+    ("gmail_imap", "agi_procesor.connectors.gmail_imap", "GmailIMAPConnector"),
+    ("outlook", "agi_procesor.connectors.outlook", "OutlookConnector"),
+    ("slack", "agi_procesor.connectors.slack_connector", "SlackConnector"),
+    ("notion", "agi_procesor.connectors.notion", "NotionConnector"),
+    ("granola", "agi_procesor.connectors.granola", "GranolaConnector"),
+    ("gdrive", "agi_procesor.connectors.gdrive", "GDriveConnector"),
+    ("gcalendar", "agi_procesor.connectors.gcalendar", "GCalendarConnector"),
+    ("gcontacts", "agi_procesor.connectors.gcontacts", "GContactsConnector"),
+    ("dropbox", "agi_procesor.connectors.dropbox", "DropboxConnector"),
 ]
 
 _ALL_CONNECTORS = _LOCAL_CONNECTORS + _TOKEN_CONNECTORS
@@ -124,8 +124,8 @@ def test_knowledge_store_has_data() -> None:
 
     Skips if the DB is missing or has no indexed rows (fresh install / empty store).
     """
-    from openjarvis.connectors.store import KnowledgeStore
-    from openjarvis.core.config import DEFAULT_CONFIG_DIR
+    from agi_procesor.connectors.store import KnowledgeStore
+    from agi_procesor.core.config import DEFAULT_CONFIG_DIR
 
     db_path = DEFAULT_CONFIG_DIR / "knowledge.db"
     if not db_path.exists():
@@ -152,8 +152,8 @@ def test_knowledge_store_sources_have_chunks() -> None:
 
     Skips if the DB is missing or empty (same as test_knowledge_store_has_data).
     """
-    from openjarvis.connectors.store import KnowledgeStore
-    from openjarvis.core.config import DEFAULT_CONFIG_DIR
+    from agi_procesor.connectors.store import KnowledgeStore
+    from agi_procesor.core.config import DEFAULT_CONFIG_DIR
 
     db_path = DEFAULT_CONFIG_DIR / "knowledge.db"
     if not db_path.exists():

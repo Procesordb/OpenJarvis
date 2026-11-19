@@ -267,10 +267,10 @@ function isProfane(text: string): boolean {
   return false;
 }
 
-const OPTIN_KEY = 'openjarvis-desktop-optin';
-const OPTIN_NAME_KEY = 'openjarvis-desktop-display-name';
-const OPTIN_EMAIL_KEY = 'openjarvis-desktop-email';
-const OPTIN_ANONID_KEY = 'openjarvis-desktop-anon-id';
+const OPTIN_KEY = 'agi-procesor-desktop-optin';
+const OPTIN_NAME_KEY = 'agi-procesor-desktop-display-name';
+const OPTIN_EMAIL_KEY = 'agi-procesor-desktop-email';
+const OPTIN_ANONID_KEY = 'agi-procesor-desktop-anon-id';
 
 function getOrCreateAnonId(): string {
   const stored = localStorage.getItem(OPTIN_ANONID_KEY);
@@ -416,14 +416,14 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
 
       {error && <div style={styles.errorBanner}>{error}</div>}
 
-      {/* Leaderboard Opt-in */}
-      {showOptIn ? (
+      {/* Leaderboard opt-in: only when this build has its own leaderboard service */}
+      {LEADERBOARD_ENABLED && (showOptIn ? (
         <div style={{ ...styles.statCard, marginBottom: 24, padding: 20 }}>
           <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: colors.text }}>
             Share Your Savings
           </div>
           <div style={{ fontSize: 13, color: colors.textMuted, marginBottom: 14, lineHeight: 1.5 }}>
-            Opt in to privately share your savings for the chance to win a Mac Mini!
+            Add your savings to the leaderboard run by this AGI PROCESOR installation.
           </div>
           <div style={{ marginBottom: 8 }}>
             <input
@@ -543,7 +543,7 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
             {optInEnabled ? `Sharing as "${displayName}"` : 'Share Your Savings'}
           </button>
           <a
-            href="https://open-jarvis.github.io/OpenJarvis/leaderboard"
+            href="https://procesordb.github.io/OpenJarvis/leaderboard"
             target="_blank"
             rel="noopener noreferrer"
             style={{ fontSize: 12, color: colors.accent, textDecoration: 'none' }}
@@ -551,7 +551,7 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
             View Leaderboard ↗
           </a>
         </div>
-      )}
+      ))}
 
       {/* Stat cards row */}
       <div style={styles.statsGrid}>

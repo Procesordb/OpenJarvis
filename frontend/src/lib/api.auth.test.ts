@@ -1,11 +1,11 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Regression for #266: the frontend must send the local API key as a Bearer
-// token on /v1 + /api requests, or `jarvis serve` with a key configured 401s
+// token on /v1 + /api requests, or `agi serve` with a key configured 401s
 // every data-plane call. These tests cover the pure helpers (getApiKey,
 // authHeaders) that source the key and build the header.
 
-const SETTINGS_KEY = 'openjarvis-settings';
+const SETTINGS_KEY = 'agi-procesor-settings';
 const fetchMock = vi.fn<typeof fetch>();
 
 // Minimal in-memory localStorage stub so the helpers can run under node
@@ -52,7 +52,7 @@ describe('getApiKey', () => {
     expect(getApiKey()).toBe('');
   });
 
-  it('reads apiKey from the openjarvis-settings localStorage blob', async () => {
+  it('reads apiKey from the agi-procesor-settings localStorage blob', async () => {
     localStorage.setItem(
       SETTINGS_KEY,
       JSON.stringify({ apiUrl: 'http://x', apiKey: 'sk-local-123' }),
@@ -94,7 +94,7 @@ describe('managed agent channels', () => {
   beforeEach(() => {
     localStorage.setItem(
       SETTINGS_KEY,
-      JSON.stringify({ apiUrl: 'https://jarvis.example', apiKey: 'test-key' }),
+      JSON.stringify({ apiUrl: 'https://agi.example', apiKey: 'test-key' }),
     );
   });
 
@@ -105,7 +105,7 @@ describe('managed agent channels', () => {
     await bindAgentChannel('agent-1', 'sendblue', { phone: '+15555550123' });
 
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://jarvis.example/v1/managed-agents/agent-1/channels',
+      'https://agi.example/v1/managed-agents/agent-1/channels',
       {
         method: 'POST',
         headers: {
@@ -128,7 +128,7 @@ describe('managed agent channels', () => {
     await unbindAgentChannel('agent-1', 'binding-1');
 
     expect(fetchMock).toHaveBeenCalledWith(
-      'https://jarvis.example/v1/managed-agents/agent-1/channels/binding-1',
+      'https://agi.example/v1/managed-agents/agent-1/channels/binding-1',
       { method: 'DELETE', headers: { Authorization: 'Bearer test-key' } },
     );
   });

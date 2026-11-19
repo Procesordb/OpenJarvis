@@ -7,18 +7,18 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from openjarvis.channels._stubs import ChannelStatus
-from openjarvis.channels.line_channel import LineChannel
-from openjarvis.channels.mastodon_channel import MastodonChannel
-from openjarvis.channels.messenger_channel import MessengerChannel
-from openjarvis.channels.nostr_channel import NostrChannel
-from openjarvis.channels.reddit_channel import RedditChannel
-from openjarvis.channels.rocketchat_channel import RocketChatChannel
-from openjarvis.channels.twitch_channel import TwitchChannel
-from openjarvis.channels.viber_channel import ViberChannel
-from openjarvis.channels.xmpp_channel import XMPPChannel
-from openjarvis.channels.zulip_channel import ZulipChannel
-from openjarvis.core.registry import ChannelRegistry
+from agi_procesor.channels._stubs import ChannelStatus
+from agi_procesor.channels.line_channel import LineChannel
+from agi_procesor.channels.mastodon_channel import MastodonChannel
+from agi_procesor.channels.messenger_channel import MessengerChannel
+from agi_procesor.channels.nostr_channel import NostrChannel
+from agi_procesor.channels.reddit_channel import RedditChannel
+from agi_procesor.channels.rocketchat_channel import RocketChatChannel
+from agi_procesor.channels.twitch_channel import TwitchChannel
+from agi_procesor.channels.viber_channel import ViberChannel
+from agi_procesor.channels.xmpp_channel import XMPPChannel
+from agi_procesor.channels.zulip_channel import ZulipChannel
+from agi_procesor.core.registry import ChannelRegistry
 
 # (class, registry key, library module name, pip package name)
 CHANNELS = [

@@ -2,7 +2,7 @@
 
 import pytest
 
-from openjarvis.agents.manager import AgentManager
+from agi_procesor.agents.manager import AgentManager
 
 
 @pytest.fixture

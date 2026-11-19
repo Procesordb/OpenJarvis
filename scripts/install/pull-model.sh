@@ -3,7 +3,7 @@
 #
 # Usage: pull-model.sh <model-id>
 #
-# State files written under $OPENJARVIS_HOME/.state/models/v1/ use a
+# State files written under $AGI_PROCESOR_HOME/.state/models/v1/ use a
 # lowercase SHA-256 key so long IDs and path-special characters work across
 # filesystems, including case-insensitive ones. The first line of each state
 # marker holds the original model ID:
@@ -20,8 +20,8 @@ if [[ -z "$MODEL" ]]; then
     exit 2
 fi
 
-OPENJARVIS_HOME="${OPENJARVIS_HOME:-$HOME/.openjarvis}"
-STATE_DIR="$OPENJARVIS_HOME/.state/models"
+AGI_PROCESOR_HOME="${AGI_PROCESOR_HOME:-$HOME/.agi-procesor}"
+STATE_DIR="$AGI_PROCESOR_HOME/.state/models"
 MODEL_STATE_DIR="$STATE_DIR/v1"
 mkdir -p "$MODEL_STATE_DIR"
 

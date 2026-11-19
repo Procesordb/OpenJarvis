@@ -1,28 +1,28 @@
 #!/usr/bin/env bash
 # build-extension.sh — build the Rust maturin extension into the venv.
 #
-# State files under $OPENJARVIS_HOME/.state/:
+# State files under $AGI_PROCESOR_HOME/.state/:
 #   extension-built   — atomic marker written on success
 #   extension-failed  — written on failure with stderr tail
 #   extension-build.log — captured stderr/stdout
 
 set -euo pipefail
 
-OPENJARVIS_HOME="${OPENJARVIS_HOME:-$HOME/.openjarvis}"
+AGI_PROCESOR_HOME="${AGI_PROCESOR_HOME:-$HOME/.agi-procesor}"
 # Self-heal PATH for cargo and uv: install-rust.sh installs to ~/.cargo/bin
 # and install.sh installs uv to ~/.local/bin, but neither export propagates
 # to subsequent subprocess invocations.
 export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
-SRC_DIR="$OPENJARVIS_HOME/src"
-# The venv the runtime actually uses. jarvis-wrapper.sh execs
-# "$OPENJARVIS_HOME/.venv/bin/jarvis", so this — not a venv that `uv run`
+SRC_DIR="$AGI_PROCESOR_HOME/src"
+# The venv the runtime actually uses. agi-wrapper.sh execs
+# "$AGI_PROCESOR_HOME/.venv/bin/agi", so this — not a venv that `uv run`
 # happens to resolve from the cwd — is where the extension has to land.
-VENV_DIR="$OPENJARVIS_HOME/.venv"
-STATE_DIR="$OPENJARVIS_HOME/.state"
+VENV_DIR="$AGI_PROCESOR_HOME/.venv"
+STATE_DIR="$AGI_PROCESOR_HOME/.state"
 LOG="$STATE_DIR/extension-build.log"
 BUILT="$STATE_DIR/extension-built"
 FAILED="$STATE_DIR/extension-failed"
-MANIFEST="$SRC_DIR/rust/crates/openjarvis-python/Cargo.toml"
+MANIFEST="$SRC_DIR/rust/crates/agi-procesor-python/Cargo.toml"
 
 mkdir -p "$STATE_DIR"
 
@@ -49,12 +49,12 @@ if VIRTUAL_ENV="$VENV_DIR" uvx maturin develop --uv -m "$MANIFEST" >>"$LOG" 2>&1
     # into a different venv than the one that runs the server, which leaves
     # memory silently broken at runtime (#502). Only the import check below
     # proves the serving venv can load it.
-    if "$VENV_DIR/bin/python" -c "import openjarvis_rust" >>"$LOG" 2>&1; then
+    if "$VENV_DIR/bin/python" -c "import agi_procesor_rust" >>"$LOG" 2>&1; then
         :
     else
         rc=$?
         {
-            echo "build-extension.sh: maturin succeeded but 'import openjarvis_rust'"
+            echo "build-extension.sh: maturin succeeded but 'import agi_procesor_rust'"
             echo "failed in the serving venv ($VENV_DIR) — the extension was"
             echo "not installed where the server runs. (exit=$rc)"
             tail -n 50 "$LOG" 2>/dev/null || true

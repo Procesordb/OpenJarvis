@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  var SUPABASE_URL =
-    window.OPENJARVIS_SUPABASE_URL || "https://mtbtgpwzrbostweaanpr.supabase.co";
-  var SUPABASE_ANON_KEY = window.OPENJARVIS_SUPABASE_ANON_KEY || "";
+  // AGI PROCESOR: no default leaderboard service (see leaderboard-config.js).
+  var SUPABASE_URL = window.AGI_PROCESOR_SUPABASE_URL || "";
+  var SUPABASE_ANON_KEY = window.AGI_PROCESOR_SUPABASE_ANON_KEY || "";
 
   var PAGE_SIZE = 50;
   var allRows = [];

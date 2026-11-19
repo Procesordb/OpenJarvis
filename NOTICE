@@ -1,0 +1,22 @@
+AGI PROCESOR — Inteligencja AGI
+
+This product is a modified version of OpenJarvis
+(https://github.com/open-jarvis/OpenJarvis), Copyright 2025 The OpenJarvis Authors,
+licensed under the Apache License, Version 2.0. A copy of the license is in LICENSE.
+
+Modifications by AGI PROCESOR (procesor.com), 2026:
+
+- The project, Python package, command-line tool, Rust crates, desktop app,
+  configuration names, environment variables, identifiers and documentation were
+  renamed from OpenJarvis / Jarvis to AGI PROCESOR. Every file in this repository
+  may have been changed by that rename; scripts/rebrand/agi_procesor_rebrand.py
+  performs it and documents every rule.
+- Usage analytics, the savings leaderboard, the desktop auto-updater and the PyPI
+  update check no longer contact services of the upstream project; they stay off
+  until the owner of an installation configures services of their own.
+- Promotional content of the upstream project (a prize giveaway and the
+  Showcase of stories from OpenJarvis users) was removed.
+- The visual identity (logo, icons, colours, fonts) was replaced with that of
+  AGI PROCESOR, and the "inteligencja-agi" configuration preset was added.
+
+CHANGELOG.md is the unmodified history of the upstream project before the rename.

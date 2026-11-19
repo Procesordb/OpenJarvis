@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pytest
 
-from openjarvis.connectors._stubs import Document
-from openjarvis.connectors.pipeline import IngestionPipeline
-from openjarvis.connectors.store import KnowledgeStore
+from agi_procesor.connectors._stubs import Document
+from agi_procesor.connectors.pipeline import IngestionPipeline
+from agi_procesor.connectors.store import KnowledgeStore
 
 # ---------------------------------------------------------------------------
 # Helpers
@@ -473,12 +473,12 @@ def test_reingest_edited_document_replaces_stale_chunks(
     """
     doc_id = "obsidian:notes/setup.md"
     IngestionPipeline(store).ingest(
-        [_make_doc(doc_id=doc_id, content="Use jarvis connect obsidian --path.")]
+        [_make_doc(doc_id=doc_id, content="Use agi connect obsidian --path.")]
     )
     assert store.count() == 1
 
     n = IngestionPipeline(store).ingest(
-        [_make_doc(doc_id=doc_id, content="Use jarvis deep-research-setup instead.")]
+        [_make_doc(doc_id=doc_id, content="Use agi deep-research-setup instead.")]
     )
 
     assert n == 1

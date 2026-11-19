@@ -7,11 +7,14 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import App from './App';
 import { initApiBase } from './lib/api';
 import { initAnalytics } from './lib/analytics';
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/unbounded';
+import '@fontsource-variable/jetbrains-mono';
 import './index.css';
 
 function applyTheme() {
   try {
-    const raw = localStorage.getItem('openjarvis-settings');
+    const raw = localStorage.getItem('agi-procesor-settings');
     const settings = raw ? JSON.parse(raw) : {};
     const theme = settings.theme || 'system';
     if (theme === 'dark') {
@@ -27,7 +30,7 @@ function applyTheme() {
 applyTheme();
 
 // Fetch the API base URL from the Tauri backend before rendering.
-// This ensures JARVIS_PORT is defined in one place (the Rust backend).
+// This ensures AGI_PORT is defined in one place (the Rust backend).
 // In non-Tauri environments this is a no-op.
 initApiBase().finally(() => {
   // Kick off analytics init in the background — it's never awaited so

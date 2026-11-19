@@ -56,10 +56,17 @@ export function UpdateChecker() {
     // Local dev escape hatch: skip the auto-update poll if explicitly
     // disabled. Vite exposes any ``VITE_``-prefixed env var on
     // ``import.meta.env``, so a frontend dev can ``export
-    // VITE_OPENJARVIS_NO_UPDATER=1`` before ``npm run tauri dev`` to
+    // VITE_AGI_PROCESOR_NO_UPDATER=1`` before ``npm run tauri dev`` to
     // silence the 30-min poll. See docs/desktop-auto-update.md.
-    const noUpdater = (import.meta as any).env?.VITE_OPENJARVIS_NO_UPDATER;
+    const noUpdater = (import.meta as any).env?.VITE_AGI_PROCESOR_NO_UPDATER;
     if (noUpdater === '1' || noUpdater === 'true') {
+      return;
+    }
+    // AGI PROCESOR builds have no signed update feed yet, so polling stays off
+    // until a build sets VITE_AGI_PROCESOR_UPDATER=1 together with its own
+    // updater endpoint and public key in tauri.conf.json.
+    const updaterOn = (import.meta as any).env?.VITE_AGI_PROCESOR_UPDATER;
+    if (updaterOn !== '1' && updaterOn !== 'true') {
       return;
     }
 

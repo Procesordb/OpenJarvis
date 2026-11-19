@@ -1,11 +1,11 @@
-"""Regression tests for tool selection during ``jarvis serve`` startup."""
+"""Regression tests for tool selection during ``agi serve`` startup."""
 
 from __future__ import annotations
 
 import pytest
 
-from openjarvis.cli.serve import _resolve_allowed_tools, _resolve_server_cors_origins
-from openjarvis.core.config import JarvisConfig
+from agi_procesor.cli.serve import _resolve_allowed_tools, _resolve_server_cors_origins
+from agi_procesor.core.config import AgiConfig
 
 
 @pytest.mark.parametrize(
@@ -16,7 +16,7 @@ from openjarvis.core.config import JarvisConfig
     ],
 )
 def test_tools_enabled_is_used_by_serve(configured):
-    config = JarvisConfig()
+    config = AgiConfig()
     config.tools.enabled = configured
 
     allowed, explicit = _resolve_allowed_tools(config)
@@ -26,7 +26,7 @@ def test_tools_enabled_is_used_by_serve(configured):
 
 
 def test_tools_enabled_takes_precedence_over_legacy_agent_tools():
-    config = JarvisConfig()
+    config = AgiConfig()
     config.tools.enabled = "file_read"
     config.agent.tools = "calculator"
 
@@ -37,7 +37,7 @@ def test_tools_enabled_takes_precedence_over_legacy_agent_tools():
 
 
 def test_agent_tools_remains_a_backward_compatible_fallback():
-    config = JarvisConfig()
+    config = AgiConfig()
     config.agent.tools = "file_read"
 
     allowed, explicit = _resolve_allowed_tools(config)
@@ -47,7 +47,7 @@ def test_agent_tools_remains_a_backward_compatible_fallback():
 
 
 def test_serve_defaults_tools_when_no_selection_is_configured():
-    allowed, explicit = _resolve_allowed_tools(JarvisConfig())
+    allowed, explicit = _resolve_allowed_tools(AgiConfig())
 
     assert allowed == {"think", "calculator", "web_search"}
     assert explicit is False
@@ -55,7 +55,7 @@ def test_serve_defaults_tools_when_no_selection_is_configured():
 
 def test_cors_environment_overrides_configured_defaults(monkeypatch):
     monkeypatch.setenv(
-        "OPENJARVIS_CORS_ORIGINS",
+        "AGI_PROCESOR_CORS_ORIGINS",
         " https://frontend.example, https://admin.example ",
     )
 
@@ -65,7 +65,7 @@ def test_cors_environment_overrides_configured_defaults(monkeypatch):
 
 
 def test_cors_config_is_used_without_environment(monkeypatch):
-    monkeypatch.delenv("OPENJARVIS_CORS_ORIGINS", raising=False)
+    monkeypatch.delenv("AGI_PROCESOR_CORS_ORIGINS", raising=False)
 
     origins = _resolve_server_cors_origins(["http://localhost:5173"])
 
@@ -77,14 +77,14 @@ def _repopulate_cli_registries() -> None:
     import importlib
     import sys
 
-    import openjarvis.agents  # noqa: F401
-    import openjarvis.tools  # noqa: F401
-    import openjarvis.tools.storage  # noqa: F401
-    from openjarvis.core.registry import AgentRegistry, MemoryRegistry, ToolRegistry
+    import agi_procesor.agents  # noqa: F401
+    import agi_procesor.tools  # noqa: F401
+    import agi_procesor.tools.storage  # noqa: F401
+    from agi_procesor.core.registry import AgentRegistry, MemoryRegistry, ToolRegistry
 
     if not AgentRegistry.keys():
         for mod_name in list(sys.modules):
-            if mod_name.startswith("openjarvis.agents.") and not mod_name.endswith(
+            if mod_name.startswith("agi_procesor.agents.") and not mod_name.endswith(
                 "_stubs"
             ):
                 try:
@@ -95,7 +95,7 @@ def _repopulate_cli_registries() -> None:
     if not ToolRegistry.keys():
         for mod_name in list(sys.modules):
             if (
-                mod_name.startswith("openjarvis.tools.")
+                mod_name.startswith("agi_procesor.tools.")
                 and not mod_name.endswith("_stubs")
                 and not mod_name.endswith("agent_tools")
             ):
@@ -107,7 +107,7 @@ def _repopulate_cli_registries() -> None:
     if not MemoryRegistry.keys():
         for mod_name in list(sys.modules):
             if mod_name.startswith(
-                "openjarvis.tools.storage."
+                "agi_procesor.tools.storage."
             ) and not mod_name.endswith("_stubs"):
                 try:
                     importlib.reload(sys.modules[mod_name])
@@ -118,8 +118,8 @@ def _repopulate_cli_registries() -> None:
 def test_build_serve_tools_wires_memory_llm_and_channel_deps():
     from unittest.mock import MagicMock
 
-    from openjarvis.cli.serve import _build_serve_tools
-    from openjarvis.tools.storage._stubs import MemoryBackend, RetrievalResult
+    from agi_procesor.cli.serve import _build_serve_tools
+    from agi_procesor.tools.storage._stubs import MemoryBackend, RetrievalResult
 
     class _InMemoryBackend(MemoryBackend):
         backend_id = "in-memory-test"
@@ -147,7 +147,7 @@ def test_build_serve_tools_wires_memory_llm_and_channel_deps():
 
     _repopulate_cli_registries()
 
-    config = JarvisConfig()
+    config = AgiConfig()
     config.agent.tools = (
         "memory_store,memory_retrieve,memory_search,memory_index,"
         "retrieval,llm,channel_send"
@@ -201,14 +201,14 @@ def test_serve_injects_memory_and_channel_backends_into_resolved_tools(
     pytest.importorskip("fastapi")
     pytest.importorskip("uvicorn")
 
-    from openjarvis.cli import cli
-    from openjarvis.core.registry import MemoryRegistry
-    from openjarvis.system import JarvisSystem
+    from agi_procesor.cli import cli
+    from agi_procesor.core.registry import MemoryRegistry
+    from agi_procesor.system import AgiSystem
 
-    serve_mod = importlib.import_module("openjarvis.cli.serve")
+    serve_mod = importlib.import_module("agi_procesor.cli.serve")
     _repopulate_cli_registries()
 
-    config = JarvisConfig()
+    config = AgiConfig()
     config.agent.tools = "memory_store,memory_search,retrieval,channel_send"
     config.server.agent = "orchestrator"
     config.agent_manager.enabled = True
@@ -241,7 +241,7 @@ def test_serve_injects_memory_and_channel_backends_into_resolved_tools(
     monkeypatch.setattr(serve_mod, "discover_engines", lambda *a, **k: {})
     monkeypatch.setattr(serve_mod, "discover_models", lambda *a, **k: {})
     monkeypatch.setattr(
-        "openjarvis.system.builder.SystemBuilder._resolve_channel",
+        "agi_procesor.system.builder.SystemBuilder._resolve_channel",
         lambda *args, **kwargs: channel_backend,
     )
 
@@ -250,19 +250,19 @@ def test_serve_injects_memory_and_channel_backends_into_resolved_tools(
     sec.capability_policy = None
     sec.rate_limiter = None
     sec.audit_logger = None
-    monkeypatch.setattr("openjarvis.security.setup_security", lambda *a, **k: sec)
+    monkeypatch.setattr("agi_procesor.security.setup_security", lambda *a, **k: sec)
 
     captured: dict = {}
 
     def _capture_wire(self, channel):
         captured["channel_system"] = self
 
-    monkeypatch.setattr(JarvisSystem, "wire_channel", _capture_wire)
+    monkeypatch.setattr(AgiSystem, "wire_channel", _capture_wire)
     create_app = MagicMock(return_value=MagicMock())
 
     with (
-        patch("openjarvis.server.app.create_app", create_app),
-        patch("openjarvis.server.daemon.run_server", lambda *a, **k: None),
+        patch("agi_procesor.server.app.create_app", create_app),
+        patch("agi_procesor.server.daemon.run_server", lambda *a, **k: None),
     ):
         result = CliRunner().invoke(cli, ["serve"], catch_exceptions=False)
 

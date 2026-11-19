@@ -6,8 +6,8 @@ import os
 import shlex
 import tempfile
 
-from openjarvis.core import get_python_executable
-from openjarvis.security.subprocess_sandbox import (
+from agi_procesor.core import get_python_executable
+from agi_procesor.security.subprocess_sandbox import (
     build_safe_env,
     kill_process_tree,
     run_sandboxed,

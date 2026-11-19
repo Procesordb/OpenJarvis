@@ -12,18 +12,18 @@ import tomllib
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 
-from openjarvis.analytics.client import AnalyticsClient
-from openjarvis.core.config import JarvisConfig, load_config
-from openjarvis.core.events import EventBus, EventType
-from openjarvis.server import analytics_routes
-from openjarvis.server.auth_middleware import AuthMiddleware
+from agi_procesor.analytics.client import AnalyticsClient
+from agi_procesor.core.config import AgiConfig, load_config
+from agi_procesor.core.events import EventBus, EventType
+from agi_procesor.server import analytics_routes
+from agi_procesor.server.auth_middleware import AuthMiddleware
 
 
 @pytest.fixture
 def preference_app(tmp_path: Path, monkeypatch):
     path = tmp_path / "custom-config.toml"
     path.write_text('# Keep this comment\n[engine]\ndefault = "ollama"\n')
-    cfg = JarvisConfig()
+    cfg = AgiConfig()
     cfg._config_path = path
     cfg.analytics.anon_id_path = str(tmp_path / "anon_id")
 
@@ -89,23 +89,23 @@ def test_preference_persists_to_active_config(
     app, _, _ = preference_app
     home = tmp_path / "home"
     home.mkdir()
-    monkeypatch.setenv("OPENJARVIS_HOME", str(home))
-    monkeypatch.delenv("OPENJARVIS_CONFIG", raising=False)
+    monkeypatch.setenv("AGI_PROCESOR_HOME", str(home))
+    monkeypatch.delenv("AGI_PROCESOR_CONFIG", raising=False)
     default_path = home / "config.toml"
     path = default_path
     if config_source in ("environment", "explicit"):
         path = tmp_path / "deployment.toml"
         default_path.write_text("# Leave the default configuration alone\n")
     if config_source == "environment":
-        monkeypatch.setenv("OPENJARVIS_CONFIG", str(path))
+        monkeypatch.setenv("AGI_PROCESOR_CONFIG", str(path))
     elif config_source == "explicit":
         # An explicit load path takes precedence over the environment too.
-        monkeypatch.setenv("OPENJARVIS_CONFIG", str(tmp_path / "unused.toml"))
+        monkeypatch.setenv("AGI_PROCESOR_CONFIG", str(tmp_path / "unused.toml"))
     path.write_text(f"[analytics]\nenabled = {str(not enabled).lower()}\n")
     load_config.cache_clear()
     try:
         if config_source == "programmatic":
-            cfg = JarvisConfig()
+            cfg = AgiConfig()
             cfg.analytics.enabled = not enabled
         else:
             cfg = load_config(path if config_source == "explicit" else None)
@@ -199,3 +199,11 @@ def test_preference_uses_existing_api_authentication(preference_app):
     )
     assert response.status_code == 200
     assert tomllib.loads(path.read_text())["analytics"]["choice_recorded"] is True
+
+
+@pytest.fixture(autouse=True)
+def _configured_analytics_destination(monkeypatch):
+    # AGI PROCESOR ships without an analytics destination; these tests cover the
+    # consent and sharing flow once the owner of an installation configures one.
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_HOST", "https://analytics.example.com")
+    monkeypatch.setenv("AGI_PROCESOR_ANALYTICS_KEY", "phc_test_key")

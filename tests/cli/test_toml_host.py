@@ -11,7 +11,7 @@ from __future__ import annotations
 import pytest
 import tomllib
 
-from openjarvis.core.config import (
+from agi_procesor.core.config import (
     HardwareInfo,
     generate_default_toml,
     generate_minimal_toml,
@@ -83,7 +83,7 @@ class TestSetTomlHost:
 
     @staticmethod
     def _set_host(*args):
-        from openjarvis.core.config import _set_toml_host
+        from agi_procesor.core.config import _set_toml_host
 
         return _set_toml_host(*args)
 

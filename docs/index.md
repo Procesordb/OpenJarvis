@@ -1,5 +1,5 @@
 ---
-title: OpenJarvis
+title: AGI PROCESOR
 description: Personal AI, On Personal Devices
 search:
   boost: 2
@@ -10,29 +10,17 @@ hide:
 # Personal AI, On Personal Devices
 
 <p class="hero-tagline">
-OpenJarvis is a research framework for composable, on-device AI systems.
+AGI PROCESOR is a research framework for composable, on-device AI systems.
 Build personal AI that runs on your hardware. Cloud APIs are optional.
 </p>
 
-<div class="grid cards" markdown>
-
--   :material-image-multiple:{ .lg .middle } **See what people use it for**
-
-    ---
-
-    A gallery of real setups — morning briefs that summarize your overnight Slack and email, a Discord companion that knows your calendar, a code reviewer that works at 30,000 feet. Outcome-first, with links to the docs that explain how to build each one.
-
-    [:octicons-arrow-right-24: Browse the Showcase](showcase/index.md)
-
-</div>
-
 ---
 
-## Why OpenJarvis?
+## Why AGI PROCESOR?
 
-Personal AI agents are exploding in popularity, but nearly all of them still route intelligence through cloud APIs. Your "personal" AI continues to depend on someone else's server. At the same time, our [Intelligence Per Watt](https://www.intelligence-per-watt.ai/) research showed that local language models already handle 88.7% of single-turn chat and reasoning queries, with intelligence efficiency improving 5.3× from 2023 to 2025. The models and hardware are increasingly ready. What has been missing is the software stack to make local-first personal AI practical.
+Personal AI agents are exploding in popularity, but nearly all of them still route intelligence through cloud APIs. Your "personal" AI continues to depend on someone else's server. At the same time, the [Intelligence Per Watt](https://www.intelligence-per-watt.ai/) research showed that local language models already handle 88.7% of single-turn chat and reasoning queries, with intelligence efficiency improving 5.3× from 2023 to 2025. The models and hardware are increasingly ready. What has been missing is the software stack to make local-first personal AI practical.
 
-OpenJarvis is that stack. It is a framework for local-first personal AI, built around three core ideas: shared primitives for building on-device agents; evaluations that treat energy, FLOPs, latency, and dollar cost as first-class constraints alongside accuracy; and a learning loop that improves models using local trace data. The goal is simple: make it possible to build personal AI agents that run locally by default, calling the cloud only when truly necessary. OpenJarvis aims to be both a research platform and a production foundation for local AI, in the spirit of PyTorch.
+AGI PROCESOR is that stack. It is a framework for local-first personal AI, built around three core ideas: shared primitives for building on-device agents; evaluations that treat energy, FLOPs, latency, and dollar cost as first-class constraints alongside accuracy; and a learning loop that improves models using local trace data. The goal is simple: make it possible to build personal AI agents that run locally by default, calling the cloud only when truly necessary. AGI PROCESOR aims to be both a research platform and a production foundation for local AI, in the spirit of PyTorch.
 
 ---
 
@@ -43,8 +31,8 @@ OpenJarvis is that stack. It is a framework for local-first personal AI, built a
     Run the full chat UI locally with one script:
 
     ```bash
-    git clone https://github.com/open-jarvis/OpenJarvis.git
-    cd OpenJarvis
+    git clone https://github.com/Procesordb/OpenJarvis.git agi-procesor
+    cd agi-procesor
     ./scripts/quickstart.sh
     ```
 
@@ -53,35 +41,38 @@ OpenJarvis is that stack. It is a framework for local-first personal AI, built a
 
 === "Desktop App"
 
-    The desktop app is a native window for the OpenJarvis UI.
+    The desktop app is a native window for the AGI PROCESOR UI.
     The backend (Ollama + inference) runs on your machine — start it first, then open the app.
 
     **Step 1.** Start the backend:
 
     ```bash
-    git clone https://github.com/open-jarvis/OpenJarvis.git
-    cd OpenJarvis
+    git clone https://github.com/Procesordb/OpenJarvis.git agi-procesor
+    cd agi-procesor
     ./scripts/quickstart.sh
     ```
 
     **Step 2.** Download and open the desktop app:
 
-    [Download for macOS](https://github.com/open-jarvis/OpenJarvis/releases/latest/download/OpenJarvis_universal.dmg){ .md-button .md-button--primary }
+    !!! warning "No AGI PROCESOR desktop release yet"
+        These downloads work after the first AGI PROCESOR desktop release. Until then, use the browser app.
 
-    Also available for [Windows](https://github.com/open-jarvis/OpenJarvis/releases/latest/download/OpenJarvis_x64-setup.exe), [Linux (DEB)](https://github.com/open-jarvis/OpenJarvis/releases/latest/download/OpenJarvis_amd64.deb), and [Linux (RPM)](https://github.com/open-jarvis/OpenJarvis/releases/latest/download/OpenJarvis_x86_64.rpm). See the [Downloads](downloads.md) page for details.
+    [Download for macOS](https://github.com/Procesordb/OpenJarvis/releases/latest/download/AGI-PROCESOR_universal.dmg){ .md-button .md-button--primary }
+
+    Also available for [Windows](https://github.com/Procesordb/OpenJarvis/releases/latest/download/AGI-PROCESOR_x64-setup.exe), [Linux (DEB)](https://github.com/Procesordb/OpenJarvis/releases/latest/download/AGI-PROCESOR_amd64.deb), and [Linux (RPM)](https://github.com/Procesordb/OpenJarvis/releases/latest/download/AGI-PROCESOR_x86_64.rpm). See the [Downloads](downloads.md) page for details.
 
     The app connects to `http://localhost:8000` automatically.
 
     !!! warning "macOS first launch"
 
-        Run `xattr -cr /Applications/OpenJarvis.app` if the app shows as "damaged".
+        Run `xattr -cr /Applications/AGI-PROCESOR.app` if the app shows as "damaged".
 
 === "Python SDK"
 
     ```python
-    from openjarvis import Jarvis
+    from agi_procesor import AgiProcesor
 
-    j = Jarvis()                              # auto-detect engine
+    j = AgiProcesor()                              # auto-detect engine
     response = j.ask("Explain quicksort.")
     print(response)
     ```
@@ -101,23 +92,23 @@ OpenJarvis is that stack. It is a framework for local-first personal AI, built a
 === "CLI"
 
     ```bash
-    jarvis ask "What is the capital of France?"
+    agi ask "What is the capital of France?"
 
-    jarvis ask --agent orchestrator --tools calculator "What is 137 * 42?"
+    agi ask --agent orchestrator --tools calculator "What is 137 * 42?"
 
-    jarvis serve --port 8000
+    agi serve --port 8000
 
-    jarvis memory index ./docs/
-    jarvis memory search "configuration options"
+    agi memory index ./docs/
+    agi memory search "configuration options"
     ```
 
 ---
 
 ## Five Primitives for Personal AI
 
-OpenJarvis is built around five composable layers. Each has a clean interface and can be swapped independently.
+AGI PROCESOR is built around five composable layers. Each has a clean interface and can be swapped independently.
 
-1. **Intelligence** — Pick a model, or let OpenJarvis pick one for your hardware. Manages the full catalog of local models across providers.
+1. **Intelligence** — Pick a model, or let AGI PROCESOR pick one for your hardware. Manages the full catalog of local models across providers.
 2. **Engine** — The inference runtime: [Ollama](https://ollama.com), [vLLM](https://github.com/vllm-project/vllm), [SGLang](https://github.com/sgl-project/sglang), [llama.cpp](https://github.com/ggerganov/llama.cpp), cloud APIs, and more. Auto-detects your hardware and recommends the best fit.
 3. **Agents** — Multi-step reasoning with tool use. Eight built-in agent types from simple chat to orchestrated workflows.
 4. **Tools & Memory** — Web search, calculator, file I/O, code interpreter, retrieval, persistent local state, and any external MCP server.
@@ -157,7 +148,7 @@ OpenJarvis is built around five composable layers. Each has a clean interface an
 
     ---
 
-    `jarvis serve` starts a FastAPI server with SSE streaming. Drop-in replacement for OpenAI clients.
+    `agi serve` starts a FastAPI server with SSE streaming. Drop-in replacement for OpenAI clients.
 
 -   **Energy & Cost Tracking**
 
@@ -177,7 +168,7 @@ OpenJarvis is built around five composable layers. Each has a clean interface an
 
     ---
 
-    Install OpenJarvis, configure your first engine, and run your first query.
+    Install AGI PROCESOR, configure your first engine, and run your first query.
 
 -   **[User Guide](user-guide/cli.md)**
 
@@ -191,7 +182,7 @@ OpenJarvis is built around five composable layers. Each has a clean interface an
 
     Five-primitive design, registry pattern, query flow, and cross-cutting learning.
 
--   **[API Reference](api-reference/openjarvis/index.md)**
+-   **[API Reference](api-reference/agi_procesor/index.md)**
 
     ---
 
@@ -213,11 +204,11 @@ OpenJarvis is built around five composable layers. Each has a clean interface an
 
 ## Research
 
-OpenJarvis is part of [Intelligence Per Watt](https://www.intelligence-per-watt.ai/), a research initiative studying the efficiency of on-device AI systems. Developed at [Hazy Research](https://hazyresearch.stanford.edu/) and the [Scaling Intelligence Lab](https://scalingintelligence.stanford.edu/) at [Stanford SAIL](https://ai.stanford.edu/).
-
-Read the [blog post](https://openjarvis.stanford.edu/) for the full research motivation, architecture details, and experimental results.
+AGI PROCESOR is built on [OpenJarvis](https://github.com/open-jarvis/OpenJarvis), an open-source framework (Apache 2.0) from [Hazy Research](https://hazyresearch.stanford.edu/) and the [Scaling Intelligence Lab](https://scalingintelligence.stanford.edu/) at [Stanford SAIL](https://ai.stanford.edu/), part of the [Intelligence Per Watt](https://www.intelligence-per-watt.ai/) research initiative. The [upstream project site](https://openjarvis.stanford.edu/) describes the research motivation, architecture details, and experimental results.
 
 ## Citation
+
+Research that relies on the underlying framework should cite the upstream OpenJarvis paper:
 
 ```bibtex
 @misc{saadfalcon2026openjarvispersonalaipersonal,
@@ -230,17 +221,3 @@ Read the [blog post](https://openjarvis.stanford.edu/) for the full research mot
       url={https://arxiv.org/abs/2605.17172}, 
 }
 ```
-
-## Sponsors
-
-<p>
-  <a href="https://www.laude.org/">Laude Institute</a> &bull;
-  <a href="https://datascience.stanford.edu/marlowe">Stanford Marlowe</a> &bull;
-  <a href="https://cloud.google.com/">Google Cloud Platform</a> &bull;
-  <a href="https://lambda.ai/">Lambda Labs</a> &bull;
-  <a href="https://ollama.com/">Ollama</a> &bull;
-  <a href="https://research.ibm.com/">IBM Research</a> &bull;
-  <a href="https://hai.stanford.edu/">Stanford HAI</a>
-</p>
-
-Follow [@OpenJarvisAI](https://x.com/OpenJarvisAI) on X for updates.

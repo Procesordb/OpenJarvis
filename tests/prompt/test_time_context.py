@@ -6,9 +6,9 @@ from datetime import datetime, timezone
 
 import pytest
 
-from openjarvis.core.config import SystemPromptConfig
-from openjarvis.prompt.builder import SystemPromptBuilder
-from openjarvis.prompt.time_context import (
+from agi_procesor.core.config import SystemPromptConfig
+from agi_procesor.prompt.builder import SystemPromptBuilder
+from agi_procesor.prompt.time_context import (
     current_time_section,
     reset_request_timezone,
     set_request_timezone,
@@ -60,10 +60,10 @@ def test_unknown_zones_are_ignored(request_tz) -> None:
 def test_builder_appends_time_after_cached_prefix(tmp_path, request_tz) -> None:
     request_tz("Africa/Cairo")
     builder = SystemPromptBuilder(
-        "You are Jarvis.", system_prompt_config=SystemPromptConfig()
+        "You are AGI PROCESOR.", system_prompt_config=SystemPromptConfig()
     )
     prompt = builder.build()
-    assert prompt.startswith("You are Jarvis.\n\n## Current Time")
+    assert prompt.startswith("You are AGI PROCESOR.\n\n## Current Time")
     assert "Africa/Cairo" in prompt
     names = [s.name for s in builder.sections()]
     assert names[-1] == "current_time"
@@ -71,14 +71,14 @@ def test_builder_appends_time_after_cached_prefix(tmp_path, request_tz) -> None:
 
 def test_builder_can_turn_time_off() -> None:
     cfg = SystemPromptConfig(include_current_time=False)
-    builder = SystemPromptBuilder("You are Jarvis.", system_prompt_config=cfg)
-    assert builder.build() == "You are Jarvis."
+    builder = SystemPromptBuilder("You are AGI PROCESOR.", system_prompt_config=cfg)
+    assert builder.build() == "You are AGI PROCESOR."
     assert builder.current_time_section() == ""
 
 
 @pytest.mark.parametrize("enabled", [True, False])
 def test_time_settings_loaded_from_config(tmp_path, enabled):
-    from openjarvis.core.config import load_config
+    from agi_procesor.core.config import load_config
 
     path = tmp_path / "config.toml"
     path.write_text(
@@ -86,11 +86,13 @@ def test_time_settings_loaded_from_config(tmp_path, enabled):
         f"include_current_time = {str(enabled).lower()}\n"
     )
     config = load_config(path)
-    builder = SystemPromptBuilder("Jarvis", system_prompt_config=config.system_prompt)
+    builder = SystemPromptBuilder(
+        "AGI PROCESOR", system_prompt_config=config.system_prompt
+    )
     if enabled:
         assert "America/New_York" in builder.current_time_section()
     else:
-        assert builder.build() == "Jarvis"
+        assert builder.build() == "AGI PROCESOR"
 
 
 def test_background_runs_use_config_without_a_request() -> None:

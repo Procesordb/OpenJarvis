@@ -36,30 +36,30 @@
 
 /* ── Color Overrides (Light) ──────────────────────────────────────── */
 [data-md-color-scheme="default"] {
-  --md-primary-fg-color: #2b2b2b;
-  --md-primary-fg-color--light: #444444;
-  --md-primary-fg-color--dark: #1a1a1a;
-  --md-accent-fg-color: #3d5a80;
-  --md-accent-fg-color--transparent: rgba(61, 90, 128, 0.07);
-  --md-default-bg-color: #f8f7f4;
-  --md-default-fg-color: #2b2b2b;
-  --md-default-fg-color--light: #666666;
-  --md-typeset-a-color: #3d5a80;
-  --md-code-bg-color: #f0efeb;
+  --md-primary-fg-color: #0b1b2e;
+  --md-primary-fg-color--light: #1f3a58;
+  --md-primary-fg-color--dark: #000610;
+  --md-accent-fg-color: #1f6f9f;
+  --md-accent-fg-color--transparent: rgba(31, 111, 159, 0.08);
+  --md-default-bg-color: #f5f8fb;
+  --md-default-fg-color: #0b1b2e;
+  --md-default-fg-color--light: #4c6178;
+  --md-typeset-a-color: #1f6f9f;
+  --md-code-bg-color: #edf2f7;
 }
 
 /* ── Color Overrides (Dark) ───────────────────────────────────────── */
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color: #1a1a1a;
-  --md-primary-fg-color--light: #2b2b2b;
-  --md-primary-fg-color--dark: #0f0f0f;
-  --md-accent-fg-color: #8da9c4;
-  --md-accent-fg-color--transparent: rgba(141, 169, 196, 0.1);
-  --md-default-bg-color: #1a1a1a;
-  --md-default-fg-color: #e8e6e1;
-  --md-default-fg-color--light: #999999;
-  --md-typeset-a-color: #8da9c4;
-  --md-code-bg-color: #222222;
+  --md-primary-fg-color: #041122;
+  --md-primary-fg-color--light: #0a1c33;
+  --md-primary-fg-color--dark: #000610;
+  --md-accent-fg-color: #7ccbf2;
+  --md-accent-fg-color--transparent: rgba(124, 203, 242, 0.12);
+  --md-default-bg-color: #000610;
+  --md-default-fg-color: #eaf6ff;
+  --md-default-fg-color--light: #a9c4da;
+  --md-typeset-a-color: #7ccbf2;
+  --md-code-bg-color: #01060d;
 }
 
 /* ── Global Typography ───────────────────────────────────────────── */

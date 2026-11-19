@@ -8,16 +8,16 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from openjarvis.core.types import Trace
-from openjarvis.evals.core.types import EvalRecord
-from openjarvis.learning.optimize.personal.dataset import PersonalBenchmarkDataset
-from openjarvis.learning.optimize.personal.scorer import PersonalBenchmarkScorer
-from openjarvis.learning.optimize.personal.synthesizer import (
+from agi_procesor.core.types import Trace
+from agi_procesor.evals.core.types import EvalRecord
+from agi_procesor.learning.optimize.personal.dataset import PersonalBenchmarkDataset
+from agi_procesor.learning.optimize.personal.scorer import PersonalBenchmarkScorer
+from agi_procesor.learning.optimize.personal.synthesizer import (
     PersonalBenchmark,
     PersonalBenchmarkSample,
     PersonalBenchmarkSynthesizer,
 )
-from openjarvis.traces.store import TraceStore
+from agi_procesor.traces.store import TraceStore
 
 # ---------------------------------------------------------------------------
 # Helpers
