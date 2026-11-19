@@ -6,13 +6,16 @@ import json
 
 import pytest
 
-from openjarvis.tools.approval_store import (
+from agi_procesor.tools.approval_store import (
     STATUS_APPROVED,
     STATUS_EXECUTED,
     TIER_LOW,
     ApprovalStore,
 )
-from openjarvis.tools.proactive_tools import ExecutePendingActionsTool, QueueActionTool
+from agi_procesor.tools.proactive_tools import (
+    ExecutePendingActionsTool,
+    QueueActionTool,
+)
 
 
 def _approved_sms_draft(store: ApprovalStore, payload: dict[str, str]):

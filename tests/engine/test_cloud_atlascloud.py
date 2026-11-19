@@ -16,10 +16,10 @@ from unittest import mock
 
 import pytest
 
-from openjarvis.core.registry import EngineRegistry
-from openjarvis.core.types import Message, Role
-from openjarvis.engine._base import EngineConnectionError
-from openjarvis.engine.cloud import (
+from agi_procesor.core.registry import EngineRegistry
+from agi_procesor.core.types import Message, Role
+from agi_procesor.engine._base import EngineConnectionError
+from agi_procesor.engine.cloud import (
     _ATLASCLOUD_POPULAR,
     PRICING,
     CloudEngine,
@@ -30,8 +30,8 @@ from openjarvis.engine.cloud import (
     _is_openai_model,
     estimate_cost,
 )
-from openjarvis.intelligence.model_catalog import BUILTIN_MODELS
-from openjarvis.server import cloud_router
+from agi_procesor.intelligence.model_catalog import BUILTIN_MODELS
+from agi_procesor.server import cloud_router
 from tests.engine.conftest import CLOUD_KEY_ENV_VARS
 
 _ALL_CLOUD_KEYS = CLOUD_KEY_ENV_VARS

@@ -5,11 +5,11 @@ from __future__ import annotations
 import time
 from pathlib import Path
 
-from openjarvis.core.types import StepType, Trace, TraceStep
-from openjarvis.learning._stubs import RoutingContext
-from openjarvis.learning.routing.learned_router import LearnedRouterPolicy
-from openjarvis.traces.analyzer import TraceAnalyzer
-from openjarvis.traces.store import TraceStore
+from agi_procesor.core.types import StepType, Trace, TraceStep
+from agi_procesor.learning._stubs import RoutingContext
+from agi_procesor.learning.routing.learned_router import LearnedRouterPolicy
+from agi_procesor.traces.analyzer import TraceAnalyzer
+from agi_procesor.traces.store import TraceStore
 
 
 def _make_trace(
@@ -44,8 +44,8 @@ def _make_trace(
 
 class TestLearnedRouterPolicy:
     def test_registered_as_learned(self) -> None:
-        from openjarvis.core.registry import RouterPolicyRegistry
-        from openjarvis.learning.routing.learned_router import ensure_registered
+        from agi_procesor.core.registry import RouterPolicyRegistry
+        from agi_procesor.learning.routing.learned_router import ensure_registered
 
         ensure_registered()
         assert RouterPolicyRegistry.contains("learned")

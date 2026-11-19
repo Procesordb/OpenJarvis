@@ -7,8 +7,8 @@ export interface AgentEvent {
   data: Record<string, unknown>;
 }
 
-const WS_AUTH_PROTOCOL = 'openjarvis.auth.v1';
-const WS_KEY_PROTOCOL_PREFIX = 'openjarvis.key.b64url.';
+const WS_AUTH_PROTOCOL = 'agi_procesor.auth.v1';
+const WS_KEY_PROTOCOL_PREFIX = 'agi_procesor.key.b64url.';
 
 function utf8ToBase64Url(value: string): string {
   const bytes = new TextEncoder().encode(value);

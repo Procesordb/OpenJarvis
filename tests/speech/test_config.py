@@ -1,6 +1,6 @@
 """Tests for speech configuration."""
 
-from openjarvis.core.config import JarvisConfig, SpeechConfig
+from agi_procesor.core.config import AgiConfig, SpeechConfig
 
 
 def test_speech_config_defaults():
@@ -12,15 +12,15 @@ def test_speech_config_defaults():
     assert cfg.compute_type == "float16"
 
 
-def test_jarvis_config_has_speech():
-    cfg = JarvisConfig()
+def test_agi_config_has_speech():
+    cfg = AgiConfig()
     assert hasattr(cfg, "speech")
     assert isinstance(cfg.speech, SpeechConfig)
     assert cfg.speech.backend == "auto"
 
 
-def test_jarvis_system_has_speech_backend():
-    """JarvisSystem has a speech_backend attribute."""
-    from openjarvis.system import JarvisSystem
+def test_agi_system_has_speech_backend():
+    """AgiSystem has a speech_backend attribute."""
+    from agi_procesor.system import AgiSystem
 
-    assert "speech_backend" in JarvisSystem.__dataclass_fields__
+    assert "speech_backend" in AgiSystem.__dataclass_fields__

@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from openjarvis.core.config import (
+from agi_procesor.core.config import (
     AgentConfig,
+    AgiConfig,
     HardwareInfo,
-    JarvisConfig,
     ServerConfig,
     generate_default_toml,
 )
@@ -49,14 +49,14 @@ class TestServerConfig:
         assert cfg.port == 9000
 
 
-class TestJarvisConfig:
+class TestAgiConfig:
     def test_has_server(self):
-        cfg = JarvisConfig()
+        cfg = AgiConfig()
         assert hasattr(cfg, "server")
         assert isinstance(cfg.server, ServerConfig)
 
     def test_agent_config_expanded(self):
-        cfg = JarvisConfig()
+        cfg = AgiConfig()
         assert hasattr(cfg.agent, "default_tools")  # backward-compat property
         assert hasattr(cfg.agent, "tools")
         assert hasattr(cfg.agent, "objective")

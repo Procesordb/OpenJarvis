@@ -1,4 +1,4 @@
-"""Tests for ``jarvis ask --agent`` CLI integration."""
+"""Tests for ``agi ask --agent`` CLI integration."""
 
 from __future__ import annotations
 
@@ -9,12 +9,12 @@ from unittest.mock import MagicMock, patch
 import pytest
 from click.testing import CliRunner
 
-from openjarvis.agents._stubs import AgentContext, AgentResult, ToolUsingAgent
-from openjarvis.cli import cli
-from openjarvis.core.types import Role, StepType, ToolCall, ToolResult
-from openjarvis.tools._stubs import BaseTool, ToolSpec
+from agi_procesor.agents._stubs import AgentContext, AgentResult, ToolUsingAgent
+from agi_procesor.cli import cli
+from agi_procesor.core.types import Role, StepType, ToolCall, ToolResult
+from agi_procesor.tools._stubs import BaseTool, ToolSpec
 
-_ask_mod = importlib.import_module("openjarvis.cli.ask")
+_ask_mod = importlib.import_module("agi_procesor.cli.ask")
 
 
 def _mock_engine(content="Hello from engine"):
@@ -34,9 +34,9 @@ def _mock_engine(content="Hello from engine"):
 
 def _register_agents():
     """Re-register agents after registry clear."""
-    from openjarvis.agents.orchestrator import OrchestratorAgent
-    from openjarvis.agents.simple import SimpleAgent
-    from openjarvis.core.registry import AgentRegistry
+    from agi_procesor.agents.orchestrator import OrchestratorAgent
+    from agi_procesor.agents.simple import SimpleAgent
+    from agi_procesor.core.registry import AgentRegistry
 
     for name, cls in [
         ("simple", SimpleAgent),
@@ -48,12 +48,12 @@ def _register_agents():
 
 def _register_tools():
     """Re-register tools after registry clear."""
-    from openjarvis.core.registry import ToolRegistry
-    from openjarvis.tools.calculator import CalculatorTool
-    from openjarvis.tools.file_read import FileReadTool
-    from openjarvis.tools.llm_tool import LLMTool
-    from openjarvis.tools.retrieval import RetrievalTool
-    from openjarvis.tools.think import ThinkTool
+    from agi_procesor.core.registry import ToolRegistry
+    from agi_procesor.tools.calculator import CalculatorTool
+    from agi_procesor.tools.file_read import FileReadTool
+    from agi_procesor.tools.llm_tool import LLMTool
+    from agi_procesor.tools.retrieval import RetrievalTool
+    from agi_procesor.tools.think import ThinkTool
 
     for name, cls in [
         ("calculator", CalculatorTool),
@@ -107,11 +107,11 @@ class _EngineSetup:
 
 @pytest.fixture
 def agent_setup():
-    from openjarvis.core.config import JarvisConfig
-    from openjarvis.core.registry import AgentRegistry, ToolRegistry
+    from agi_procesor.core.config import AgiConfig
+    from agi_procesor.core.registry import AgentRegistry, ToolRegistry
 
     engine = _mock_engine("unused")
-    config = JarvisConfig()
+    config = AgiConfig()
     config.intelligence.default_model = "test-model"
     config.agent.max_turns = 3
     config.traces.enabled = False
@@ -153,9 +153,9 @@ def mock_setup():
         patch.object(_ask_mod, "register_builtin_models"),
         patch.object(_ask_mod, "merge_discovered_models"),
     ):
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.core.config import AgiConfig
 
-        config = JarvisConfig()
+        config = AgiConfig()
         config.traces.enabled = False
         mock_cfg.return_value = config
         mock_ge.return_value = ("mock", engine)
@@ -218,8 +218,8 @@ class TestAskAgentOption:
     def test_no_agent_flag_falls_back_to_config_default_agent(self, runner, mock_setup):
         """When --agent is omitted, ``config.agent.default_agent`` is used.
 
-        The default ``JarvisConfig`` sets ``default_agent = "simple"``, so
-        ``jarvis ask "..."`` should route through SimpleAgent rather than
+        The default ``AgiConfig`` sets ``default_agent = "simple"``, so
+        ``agi ask "..."`` should route through SimpleAgent rather than
         the direct-to-engine path. Without this fallback, persona settings
         (``default_system_prompt`` and SOUL.md/MEMORY.md/USER.md) would be
         silently bypassed.
@@ -239,9 +239,9 @@ class TestAskAgentOption:
     ):
         """When config's ``default_agent`` is blank and --agent is omitted,
         the original direct-to-engine path is preserved."""
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.core.config import AgiConfig
 
-        cfg = JarvisConfig()
+        cfg = AgiConfig()
         cfg.traces.enabled = False
         cfg.agent.default_agent = ""
         monkeypatch.setattr(_ask_mod, "load_config", lambda *a, **kw: cfg)
@@ -297,8 +297,8 @@ class TestAskSkillsAndTraces:
         runner,
         tmp_path,
     ):
-        from openjarvis.core.config import JarvisConfig
-        from openjarvis.traces.store import TraceStore
+        from agi_procesor.core.config import AgiConfig
+        from agi_procesor.traces.store import TraceStore
 
         skill_dir = tmp_path / "skills" / "hermes" / "llm-wiki"
         skill_dir.mkdir(parents=True)
@@ -316,7 +316,7 @@ class TestAskSkillsAndTraces:
             encoding="utf-8",
         )
 
-        config = JarvisConfig()
+        config = AgiConfig()
         config.intelligence.default_model = "test-model"
         config.agent.context_from_memory = False
         config.security.enabled = False
@@ -399,47 +399,47 @@ class TestAskSkillsAndTraces:
 
 class TestBuildTools:
     def test_build_calculator(self, mock_setup):
-        from openjarvis.cli.ask import _build_tools
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.cli.ask import _build_tools
+        from agi_procesor.core.config import AgiConfig
 
         _register_tools()
-        config = JarvisConfig()
+        config = AgiConfig()
         tools = _build_tools(["calculator"], config, mock_setup, "test-model")
         assert len(tools) == 1
         assert tools[0].tool_id == "calculator"
 
     def test_build_think(self, mock_setup):
-        from openjarvis.cli.ask import _build_tools
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.cli.ask import _build_tools
+        from agi_procesor.core.config import AgiConfig
 
         _register_tools()
-        config = JarvisConfig()
+        config = AgiConfig()
         tools = _build_tools(["think"], config, mock_setup, "test-model")
         assert len(tools) == 1
         assert tools[0].tool_id == "think"
 
     def test_build_unknown_tool_skipped(self, mock_setup):
-        from openjarvis.cli.ask import _build_tools
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.cli.ask import _build_tools
+        from agi_procesor.core.config import AgiConfig
 
-        config = JarvisConfig()
+        config = AgiConfig()
         tools = _build_tools(["nonexistent"], config, mock_setup, "test-model")
         assert len(tools) == 0
 
     def test_build_empty_names(self, mock_setup):
-        from openjarvis.cli.ask import _build_tools
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.cli.ask import _build_tools
+        from agi_procesor.core.config import AgiConfig
 
-        config = JarvisConfig()
+        config = AgiConfig()
         tools = _build_tools(["", " "], config, mock_setup, "test-model")
         assert len(tools) == 0
 
     def test_build_multiple_tools(self, mock_setup):
-        from openjarvis.cli.ask import _build_tools
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.cli.ask import _build_tools
+        from agi_procesor.core.config import AgiConfig
 
         _register_tools()
-        config = JarvisConfig()
+        config = AgiConfig()
         tools = _build_tools(["calculator", "think"], config, mock_setup, "test-model")
         assert len(tools) == 2
 
@@ -456,17 +456,17 @@ class TestPersonaFilesReachModel:
         self, runner, monkeypatch, tmp_path
     ):
         """SOUL.md content must appear in the system message sent to the engine."""
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.core.config import AgiConfig
 
         # Write a SOUL.md with a unique sentinel string we can grep for
         soul = tmp_path / "SOUL.md"
-        soul.write_text("PERSONA_SENTINEL_zh_jarvis", encoding="utf-8")
+        soul.write_text("PERSONA_SENTINEL_zh_agi", encoding="utf-8")
         memory = tmp_path / "MEMORY.md"
         memory.write_text("MEMORY_SENTINEL", encoding="utf-8")
         user = tmp_path / "USER.md"
         user.write_text("USER_SENTINEL", encoding="utf-8")
 
-        cfg = JarvisConfig()
+        cfg = AgiConfig()
         cfg.traces.enabled = False
         cfg.memory_files.soul_path = str(soul)
         cfg.memory_files.memory_path = str(memory)
@@ -503,7 +503,7 @@ class TestPersonaFilesReachModel:
         assert system_messages, f"No SYSTEM message in {messages!r}"
         joined = "\n".join(m.content for m in system_messages)
         assert "BASELINE_TEMPLATE" in joined
-        assert "PERSONA_SENTINEL_zh_jarvis" in joined
+        assert "PERSONA_SENTINEL_zh_agi" in joined
         assert "MEMORY_SENTINEL" in joined
         assert "USER_SENTINEL" in joined
 
@@ -511,12 +511,12 @@ class TestPersonaFilesReachModel:
         self, runner, monkeypatch, tmp_path
     ):
         """Orchestrator explicitly accepts and applies persona wiring."""
-        from openjarvis.core.config import JarvisConfig
+        from agi_procesor.core.config import AgiConfig
 
         soul = tmp_path / "SOUL.md"
         soul.write_text("ORCH_PERSONA_SENTINEL", encoding="utf-8")
 
-        cfg = JarvisConfig()
+        cfg = AgiConfig()
         cfg.memory_files.soul_path = str(soul)
         cfg.agent.context_from_memory = False
 
@@ -546,11 +546,11 @@ class _StopAfterMcpLoad(Exception):
 
 def test_ask_resolves_mcp_servers_file_against_config_dir(tmp_path, monkeypatch):
     """A file-based ``servers`` value is resolved next to the loaded config."""
-    from openjarvis.core.config import JarvisConfig
-    from openjarvis.core.events import EventBus
-    from openjarvis.core.registry import AgentRegistry
+    from agi_procesor.core.config import AgiConfig
+    from agi_procesor.core.events import EventBus
+    from agi_procesor.core.registry import AgentRegistry
 
-    ask_module = importlib.import_module("openjarvis.cli.ask")
+    ask_module = importlib.import_module("agi_procesor.cli.ask")
     AgentRegistry.register_value("mcp_config_dir_agent", _ConfirmingAgent)
     seen = {}
 
@@ -558,8 +558,10 @@ def test_ask_resolves_mcp_servers_file_against_config_dir(tmp_path, monkeypatch)
         seen.update(kwargs)
         raise _StopAfterMcpLoad
 
-    monkeypatch.setattr("openjarvis.mcp.loader.load_mcp_tools_from_config", fake_loader)
-    config = JarvisConfig()
+    monkeypatch.setattr(
+        "agi_procesor.mcp.loader.load_mcp_tools_from_config", fake_loader
+    )
+    config = AgiConfig()
     config._config_dir = tmp_path
 
     with pytest.raises(_StopAfterMcpLoad):

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from openjarvis.learning.routing._utils import classify_query
+from agi_procesor.learning.routing._utils import classify_query
 
 
 class TestClassifyQuery:

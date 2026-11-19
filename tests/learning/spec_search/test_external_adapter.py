@@ -1,4 +1,4 @@
-"""Tests for openjarvis.learning.spec_search.external_adapter."""
+"""Tests for agi_procesor.learning.spec_search.external_adapter."""
 
 from __future__ import annotations
 
@@ -6,11 +6,11 @@ from pathlib import Path
 
 import pytest
 
-from openjarvis.evals.core.types import EvalRecord
-from openjarvis.learning.spec_search.external_adapter import (
+from agi_procesor.evals.core.types import EvalRecord
+from agi_procesor.learning.spec_search.external_adapter import (
     write_external_records_as_traces,
 )
-from openjarvis.traces.store import TraceStore
+from agi_procesor.traces.store import TraceStore
 
 
 def _fake_records(n: int) -> list[EvalRecord]:

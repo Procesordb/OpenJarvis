@@ -1,0 +1,20 @@
+[package]
+name = "agi-procesor-agents"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+agi-procesor-core = { path = "../agi-procesor-core" }
+agi-procesor-engine = { path = "../agi-procesor-engine" }
+agi-procesor-tools = { path = "../agi-procesor-tools" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+regex = { workspace = true }
+sha2 = { workspace = true }
+once_cell = { workspace = true }
+parking_lot = { workspace = true }
+rig-core = { workspace = true }
+async-trait = { workspace = true }
+tokio = { workspace = true }

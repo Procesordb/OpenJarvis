@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from openjarvis.core.registry import ToolRegistry
-from openjarvis.tools.code_interpreter import CodeInterpreterTool
+from agi_procesor.core.registry import ToolRegistry
+from agi_procesor.tools.code_interpreter import CodeInterpreterTool
 
 
 class TestCodeInterpreterTool:

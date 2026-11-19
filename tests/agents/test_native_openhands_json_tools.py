@@ -5,9 +5,9 @@ from unittest.mock import MagicMock, Mock
 
 import pytest
 
-from openjarvis.agents.native_openhands import NativeOpenHandsAgent
-from openjarvis.core.types import ToolResult
-from openjarvis.tools._stubs import BaseTool, ToolSpec
+from agi_procesor.agents.native_openhands import NativeOpenHandsAgent
+from agi_procesor.core.types import ToolResult
+from agi_procesor.tools._stubs import BaseTool, ToolSpec
 
 
 @pytest.fixture

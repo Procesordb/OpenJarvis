@@ -2815,7 +2815,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "openjarvis-desktop"
+name = "agi-procesor-desktop"
 version = "1.0.1"
 dependencies = [
  "dispatch",

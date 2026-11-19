@@ -6,14 +6,14 @@ from unittest.mock import MagicMock
 
 import pytest
 
-import openjarvis.agents.hybrid.conductor as conductor_module
-import openjarvis.agents.hybrid.minions as minions_module
-from openjarvis.agents._stubs import AgentContext
-from openjarvis.agents.hybrid.advisors import AdvisorsAgent
-from openjarvis.agents.hybrid.conductor import ConductorAgent
-from openjarvis.agents.hybrid.minions import MinionsAgent
-from openjarvis.core.events import EventBus, EventType
-from openjarvis.security.capabilities import CapabilityPolicy
+import agi_procesor.agents.hybrid.conductor as conductor_module
+import agi_procesor.agents.hybrid.minions as minions_module
+from agi_procesor.agents._stubs import AgentContext
+from agi_procesor.agents.hybrid.advisors import AdvisorsAgent
+from agi_procesor.agents.hybrid.conductor import ConductorAgent
+from agi_procesor.agents.hybrid.minions import MinionsAgent
+from agi_procesor.core.events import EventBus, EventType
+from agi_procesor.security.capabilities import CapabilityPolicy
 
 
 class _Limiter:

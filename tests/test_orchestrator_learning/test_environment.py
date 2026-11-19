@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import pytest
 
-from openjarvis.core.events import EventBus, EventType
-from openjarvis.core.types import ToolResult
-from openjarvis.learning.intelligence.orchestrator.environment import (
+from agi_procesor.core.events import EventBus, EventType
+from agi_procesor.core.types import ToolResult
+from agi_procesor.learning.intelligence.orchestrator.environment import (
     OrchestratorEnvironment,
 )
-from openjarvis.learning.intelligence.orchestrator.types import OrchestratorAction
-from openjarvis.tools._stubs import BaseTool, ToolSpec
+from agi_procesor.learning.intelligence.orchestrator.types import OrchestratorAction
+from agi_procesor.tools._stubs import BaseTool, ToolSpec
 
 # -- Mock tool ---------------------------------------------------------------
 

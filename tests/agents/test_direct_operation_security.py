@@ -6,13 +6,13 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from openjarvis.agents.claude_code import ClaudeCodeAgent
-from openjarvis.agents.hybrid.baseline_cloud import BaselineCloudAgent
-from openjarvis.agents.hybrid.mini_swe_agent import MiniSWEAgent
-from openjarvis.agents.opencode import OpenCodeAgent
-from openjarvis.agents.openhands import OpenHandsAgent
-from openjarvis.core.events import EventBus, EventType
-from openjarvis.security.capabilities import CapabilityPolicy
+from agi_procesor.agents.claude_code import ClaudeCodeAgent
+from agi_procesor.agents.hybrid.baseline_cloud import BaselineCloudAgent
+from agi_procesor.agents.hybrid.mini_swe_agent import MiniSWEAgent
+from agi_procesor.agents.opencode import OpenCodeAgent
+from agi_procesor.agents.openhands import OpenHandsAgent
+from agi_procesor.core.events import EventBus, EventType
+from agi_procesor.security.capabilities import CapabilityPolicy
 
 
 class _RecordingLimiter:

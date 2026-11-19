@@ -6,9 +6,9 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from openjarvis.mcp.client import MCPClient
-from openjarvis.mcp.protocol import MCPRequest, MCPResponse
-from openjarvis.tools._stubs import ToolSpec
+from agi_procesor.mcp.client import MCPClient
+from agi_procesor.mcp.protocol import MCPRequest, MCPResponse
+from agi_procesor.tools._stubs import ToolSpec
 
 
 @pytest.fixture
@@ -35,7 +35,7 @@ class TestInitialize:
         assert req.method == "initialize"
         assert req.params["protocolVersion"] == "2025-03-26"
         assert req.params["capabilities"] == {}
-        assert req.params["clientInfo"]["name"] == "openjarvis"
+        assert req.params["clientInfo"]["name"] == "agi_procesor"
         assert req.params["clientInfo"]["version"] == "0.1.0"
 
     def test_sends_initialized_notification(self, mock_transport):

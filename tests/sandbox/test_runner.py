@@ -8,9 +8,9 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from openjarvis.agents._stubs import AgentResult, BaseAgent
-from openjarvis.core.events import EventBus, EventType
-from openjarvis.sandbox.runner import (
+from agi_procesor.agents._stubs import AgentResult, BaseAgent
+from agi_procesor.core.events import EventBus, EventType
+from agi_procesor.sandbox.runner import (
     _OUTPUT_END,
     _OUTPUT_START,
     ContainerRunner,

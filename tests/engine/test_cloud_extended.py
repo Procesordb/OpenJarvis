@@ -7,10 +7,10 @@ from unittest import mock
 
 import pytest
 
-from openjarvis.core.registry import EngineRegistry
-from openjarvis.core.types import Message, Role
-from openjarvis.engine._base import EngineConnectionError
-from openjarvis.engine.cloud import (
+from agi_procesor.core.registry import EngineRegistry
+from agi_procesor.core.types import Message, Role
+from agi_procesor.engine._base import EngineConnectionError
+from agi_procesor.engine.cloud import (
     _ANTHROPIC_MODELS,
     _GOOGLE_MODELS,
     _OPENAI_MODELS,

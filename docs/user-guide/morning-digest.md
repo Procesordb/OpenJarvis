@@ -4,11 +4,11 @@ A personalized daily briefing that collects data from your connected services, s
 
 ## Quickstart (5 minutes)
 
-### 1. Install and set up OpenJarvis
+### 1. Install and set up AGI PROCESOR
 
 ```bash
-git clone https://github.com/open-jarvis/OpenJarvis.git
-cd OpenJarvis
+git clone https://github.com/Procesordb/OpenJarvis.git agi-procesor
+cd agi-procesor
 uv sync --extra dev
 ```
 
@@ -21,7 +21,7 @@ ollama pull qwen3.5:9b    # or any model you prefer
 
 ### 3. Configure the digest
 
-Edit `~/.openjarvis/config.toml`:
+Edit `~/.agi-procesor/config.toml`:
 
 ```toml
 [engine]
@@ -34,7 +34,7 @@ default_model = "qwen3.5:9b"
 enabled = true
 schedule = "0 6 * * *"          # 6 AM daily (cron syntax)
 timezone = "America/Los_Angeles"
-persona = "jarvis"
+persona = "agi"
 honorific = "sir"               # or "ma'am", "boss", etc.
 tts_backend = "cartesia"        # or "openai"
 voice_id = "c8f7835e-28a3-4f0c-80d7-c1302ac62aae"  # Alistair (British male)
@@ -58,31 +58,31 @@ sources = ["weather", "hackernews", "news_rss"]
 
 ```bash
 # Google (one flow covers Gmail, Calendar, Tasks, Contacts, Drive)
-jarvis connect gdrive
+agi connect gdrive
 # Paste: <client_id>:<client_secret> — browser opens automatically
 
 # Oura Ring (personal access token)
-jarvis connect oura
+agi connect oura
 # Paste your token from https://cloud.ouraring.com/personal-access-tokens
 
 # Spotify
-jarvis connect spotify
+agi connect spotify
 
 # Strava
-jarvis connect strava
+agi connect strava
 ```
 
 For Weather, GitHub, and News — save credential files directly:
 
 ```bash
 # Weather (OpenWeatherMap — free at https://openweathermap.org/api)
-echo '{"api_key": "YOUR_KEY", "location": "San Francisco,CA,US"}' > ~/.openjarvis/connectors/weather.json
+echo '{"api_key": "YOUR_KEY", "location": "San Francisco,CA,US"}' > ~/.agi-procesor/connectors/weather.json
 
 # GitHub notifications (token from https://github.com/settings/tokens)
-echo '{"token": "ghp_YOUR_TOKEN"}' > ~/.openjarvis/connectors/github.json
+echo '{"token": "ghp_YOUR_TOKEN"}' > ~/.agi-procesor/connectors/github.json
 
 # News RSS (no auth needed — configure your feeds)
-cat > ~/.openjarvis/connectors/news_rss.json << 'EOF'
+cat > ~/.agi-procesor/connectors/news_rss.json << 'EOF'
 {"feeds": [
   {"name": "Arxiv CS.AI", "url": "https://rss.arxiv.org/rss/cs.AI"},
   {"name": "TechCrunch", "url": "https://techcrunch.com/feed/"},
@@ -107,7 +107,7 @@ export OPENAI_API_KEY="sk-proj-..."
 ### 6. Run your first digest
 
 ```bash
-CARTESIA_API_KEY="sk_car_..." jarvis digest --fresh
+CARTESIA_API_KEY="sk_car_..." agi digest --fresh
 ```
 
 The digest will:
@@ -119,18 +119,18 @@ The digest will:
 ## CLI Commands
 
 ```bash
-jarvis digest --fresh          # Generate a new digest now
-jarvis digest                  # Show today's cached digest
-jarvis digest --text-only      # Print text without audio
-jarvis digest --history        # Show past digests
-jarvis digest --schedule "0 6 * * *"   # Set daily schedule
-jarvis digest --schedule off   # Disable schedule
-jarvis digest --schedule       # Show current schedule
+agi digest --fresh          # Generate a new digest now
+agi digest                  # Show today's cached digest
+agi digest --text-only      # Print text without audio
+agi digest --history        # Show past digests
+agi digest --schedule "0 6 * * *"   # Set daily schedule
+agi digest --schedule off   # Disable schedule
+agi digest --schedule       # Show current schedule
 ```
 
 ## Saying "Good morning"
 
-When chatting with Jarvis (via CLI, desktop, or browser), saying "Good morning" or "morning digest" automatically triggers the digest — no need to use the `digest` command explicitly.
+When chatting with AGI PROCESOR (via CLI, desktop, or browser), saying "Good morning" or "morning digest" automatically triggers the digest — no need to use the `digest` command explicitly.
 
 ## Configuration Reference
 
@@ -150,7 +150,7 @@ The `sections` list controls what the digest covers, in order of priority:
 
 Cartesia uses `sonic-3` by default. Set `CARTESIA_MODEL` to use another
 supported model; an explicit backend constructor model takes precedence.
-For example: `CARTESIA_MODEL=sonic-3.5 jarvis digest --fresh`.
+For example: `CARTESIA_MODEL=sonic-3.5 agi digest --fresh`.
 
 **Cartesia** (recommended — natural, expressive):
 | Voice | ID | Description |
@@ -170,13 +170,13 @@ For example: `CARTESIA_MODEL=sonic-3.5 jarvis digest --fresh`.
 
 ### Persona
 
-The `persona` field loads a prompt file from `configs/openjarvis/prompts/personas/{name}.md`. The default `jarvis` persona delivers briefings with dry British wit, prioritizes urgent items, and interprets health data as trends rather than raw numbers.
+The `persona` field loads a prompt file from `configs/agi_procesor/prompts/personas/{name}.md`. The default `agi` persona delivers briefings with dry British wit, prioritizes urgent items, and interprets health data as trends rather than raw numbers.
 
 To create a custom persona, add a new `.md` file in the personas directory.
 
 ### News Feeds
 
-Add any RSS or Atom feed to `~/.openjarvis/connectors/news_rss.json`:
+Add any RSS or Atom feed to `~/.agi-procesor/connectors/news_rss.json`:
 
 ```json
 {"feeds": [
@@ -195,7 +195,7 @@ Add any RSS or Atom feed to `~/.openjarvis/connectors/news_rss.json`:
 The digest is also available via the FastAPI server:
 
 ```bash
-jarvis serve  # Start the server
+agi serve  # Start the server
 
 # GET  /api/digest           — Get today's digest text
 # GET  /api/digest/audio     — Stream the digest audio (MP3)
@@ -211,9 +211,9 @@ The desktop and browser apps show an inline audio player when a digest is genera
 
 ## Troubleshooting
 
-**"No digest for today"** — Run `jarvis digest --fresh` to generate one.
+**"No digest for today"** — Run `agi digest --fresh` to generate one.
 
-**Empty sections** — Check connector status with `jarvis connect --list`. Ensure tokens haven't expired (Google/Spotify tokens expire after 1 hour and are auto-refreshed on next use).
+**Empty sections** — Check connector status with `agi connect --list`. Ensure tokens haven't expired (Google/Spotify tokens expire after 1 hour and are auto-refreshed on next use).
 
 **Weather not working** — OpenWeatherMap API keys can take up to 2 hours to activate after creation. Use the format `City,State,Country` (e.g., `Palo Alto,CA,US`).
 
@@ -222,7 +222,7 @@ The desktop and browser apps show an inline audio player when a digest is genera
 **Audio not playing** — Ensure `CARTESIA_API_KEY` or `OPENAI_API_KEY` is set. Check credits at https://play.cartesia.ai or https://platform.openai.com.
 
 On native Windows, install the playback dependencies with
-`pip install "openjarvis[speech]"`. If an external audio player is unavailable,
+`pip install "agi_procesor[speech]"`. If an external audio player is unavailable,
 the digest command decodes the saved file and plays it through PortAudio. The
 command shows the digest text first, waits for playback to finish, and reports
 playback errors. Use `--text-only` to skip audio or Ctrl+C to stop playback.

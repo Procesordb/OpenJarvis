@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from openjarvis.core.config import MemoryFilesConfig
-from openjarvis.core.paths import get_config_dir
-from openjarvis.prompt.builder import SystemPromptBuilder
+from agi_procesor.core.config import MemoryFilesConfig
+from agi_procesor.core.paths import get_config_dir
+from agi_procesor.prompt.builder import SystemPromptBuilder
 
 
 def test_empty_persona_passes_through_global_defaults():
@@ -41,9 +41,9 @@ def test_none_persona_build_does_not_raise(tmp_path, monkeypatch):
     """
     import dataclasses
 
-    from openjarvis.core.config import load_config
+    from agi_procesor.core.config import load_config
 
-    monkeypatch.setenv("OPENJARVIS_HOME", str(tmp_path / "home"))
+    monkeypatch.setenv("AGI_PROCESOR_HOME", str(tmp_path / "home"))
     cfg = load_config(tmp_path / "missing-config.toml")
     mf = dataclasses.replace(cfg.memory_files, persona_name="none")
     builder = SystemPromptBuilder(

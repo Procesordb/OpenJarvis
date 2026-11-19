@@ -1,60 +1,60 @@
 ---
 title: Configuration
-description: Complete reference for OpenJarvis configuration
+description: Complete reference for AGI PROCESOR configuration
 ---
 
 # Configuration
 
-OpenJarvis uses a TOML configuration file to control engine selection, model identity, memory backends, agent behavior, and more. This page is the complete reference for every configuration option, organized by primitive.
+AGI PROCESOR uses a TOML configuration file to control engine selection, model identity, memory backends, agent behavior, and more. This page is the complete reference for every configuration option, organized by primitive.
 
 ## Config File Location
 
 The configuration file lives at:
 
 ```
-~/.openjarvis/config.toml
+~/.agi-procesor/config.toml
 ```
 
-OpenJarvis creates the `~/.openjarvis/` directory and populates it with a default config when you run `jarvis init`.
+AGI PROCESOR creates the `~/.agi-procesor/` directory and populates it with a default config when you run `agi init`.
 
-## Relocating the OpenJarvis directory
+## Relocating the AGI PROCESOR directory
 
-OpenJarvis keeps **all** of its state — config, databases, caches, logs,
+AGI PROCESOR keeps **all** of its state — config, databases, caches, logs,
 credentials, skills, recipes, connectors — under a **single root** so it never
 clutters your home directory beyond one folder. By default that root is
-`~/.openjarvis`, but you can move it.
+`~/.agi-procesor`, but you can move it.
 
 The root is resolved in priority order:
 
-1. **`$OPENJARVIS_HOME`** — explicit override. Honored by both the installer
+1. **`$AGI_PROCESOR_HOME`** — explicit override. Honored by both the installer
    and the Python runtime.
-2. **`$XDG_DATA_HOME/openjarvis`** — used when `$XDG_DATA_HOME` is set (a single
-   `openjarvis` directory nested under it, per the XDG Base Directory spec).
-3. **`~/.openjarvis`** — the default. With no environment variables set, the
+2. **`$XDG_DATA_HOME/agi_procesor`** — used when `$XDG_DATA_HOME` is set (a single
+   `agi_procesor` directory nested under it, per the XDG Base Directory spec).
+3. **`~/.agi-procesor`** — the default. With no environment variables set, the
    resolved path is exactly this, so existing installs are untouched.
 
 ```bash
 # Relocate the whole install + runtime tree at install time:
-OPENJARVIS_HOME=~/apps/openjarvis curl -fsSL https://open-jarvis.github.io/OpenJarvis/install.sh | bash
+AGI_PROCESOR_HOME=~/apps/agi_procesor curl -fsSL https://procesordb.github.io/OpenJarvis/install.sh | bash
 
 # Or for a single run / your shell profile:
-export OPENJARVIS_HOME=~/apps/openjarvis
+export AGI_PROCESOR_HOME=~/apps/agi_procesor
 ```
 
 Confirm where your data lives with:
 
 ```bash
-jarvis config path
+agi config path
 ```
 
 !!! note "Migration"
     Because the default is unchanged, **no data migration is required** for
-    existing installs. If you set `OPENJARVIS_HOME` (or `XDG_DATA_HOME`) on a
-    machine that already has data in `~/.openjarvis`, OpenJarvis will look in
+    existing installs. If you set `AGI_PROCESOR_HOME` (or `XDG_DATA_HOME`) on a
+    machine that already has data in `~/.agi-procesor`, AGI PROCESOR will look in
     the new location and not see your old data — move it yourself if you want
-    to keep it: `mv ~/.openjarvis "$OPENJARVIS_HOME"`.
+    to keep it: `mv ~/.agi-procesor "$AGI_PROCESOR_HOME"`.
 
-`$OPENJARVIS_CONFIG` still points at an explicit `config.toml` file
+`$AGI_PROCESOR_CONFIG` still points at an explicit `config.toml` file
 independently of the root, if you need to override just the config file path.
 
 ## Generating Configuration
@@ -62,21 +62,21 @@ independently of the root, if you need to override just the config file path.
 ### First-Time Setup
 
 ```bash
-jarvis init
+agi init
 ```
 
 This command:
 
 1. Runs hardware auto-detection (GPU vendor/model/VRAM, CPU brand/cores, RAM)
 2. Selects the recommended engine based on your hardware
-3. Writes `~/.openjarvis/config.toml` with sensible defaults
+3. Writes `~/.agi-procesor/config.toml` with sensible defaults
 
 ### Regenerating Configuration
 
 To overwrite an existing config:
 
 ```bash
-jarvis init --force
+agi init --force
 ```
 
 !!! warning
@@ -142,7 +142,7 @@ host = "http://localhost:30000"
 | `binary_path` | string | `""` | Path to the llama.cpp binary, if not on `$PATH`. |
 
 !!! tip "Engine fallback"
-    If the configured default engine is unreachable, OpenJarvis automatically probes all registered engines and falls back to any healthy one.
+    If the configured default engine is unreachable, AGI PROCESOR automatically probes all registered engines and falls back to any healthy one.
 
 !!! note "Backward compatibility"
     The old flat field names (`ollama_host`, `vllm_host`, `llamacpp_host`, `llamacpp_path`, `sglang_host`) are still accepted as backward-compatible properties. New configurations should use the nested sub-section format.
@@ -193,7 +193,7 @@ max_tokens = 1024
 | `repetition_penalty` | float | `1.0` | Penalize repeated tokens. Values > 1 reduce repetition. |
 | `stop_sequences` | string | `""` | Comma-separated stop strings. Generation halts when any stop string is produced. |
 
-When both `default_model` and `fallback_model` are empty, OpenJarvis uses the configured router policy (see `[learning]`) to select a model from those available on the active engine.
+When both `default_model` and `fallback_model` are empty, AGI PROCESOR uses the configured router policy (see `[learning]`) to select a model from those available on the active engine.
 
 ### Engine Selection Priority
 
@@ -360,7 +360,7 @@ policy = "heuristic"
 You can also override the router policy per-query via the CLI:
 
 ```bash
-jarvis ask --router heuristic "Hello"
+agi ask --router heuristic "Hello"
 ```
 
 !!! note "Backward compatibility"
@@ -375,7 +375,7 @@ Controls the storage backend used for document memory and context injection. The
 ```toml
 [tools.storage]
 default_backend = "sqlite"
-db_path = "~/.openjarvis/memory.db"
+db_path = "~/.agi-procesor/memory.db"
 context_top_k = 5
 context_min_score = 0.1
 context_max_tokens = 2048
@@ -386,7 +386,7 @@ chunk_overlap = 64
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `default_backend` | string | `"sqlite"` | Storage backend. Available: `sqlite` (FTS5), `faiss`, `colbert`, `bm25`, `hybrid`. |
-| `db_path` | string | `~/.openjarvis/memory.db` | Path to the SQLite memory database. Used by the `sqlite` backend. |
+| `db_path` | string | `~/.agi-procesor/memory.db` | Path to the SQLite memory database. Used by the `sqlite` backend. |
 | `context_top_k` | int | `5` | Number of top memory results to inject as context. |
 | `context_min_score` | float | `0.1` | Minimum relevance score for a memory result to be included in context. |
 | `context_max_tokens` | int | `2048` | Maximum number of tokens to use for injected context. |
@@ -457,7 +457,7 @@ environment variable is present.
 
 ### `[server]` — API Server
 
-Controls the OpenAI-compatible API server started by `jarvis serve`.
+Controls the OpenAI-compatible API server started by `agi serve`.
 
 ```toml
 [server]
@@ -479,14 +479,14 @@ workers = 1
 CLI options override config values:
 
 ```bash
-jarvis serve --host 127.0.0.1 --port 9000 --model qwen3:8b --agent simple
+agi serve --host 127.0.0.1 --port 9000 --model qwen3:8b --agent simple
 ```
 
 ---
 
 ### `[analytics]` — Optional External Usage Analytics
 
-External analytics default to off. Interactive Bash installation and `jarvis
+External analytics default to off. Interactive Bash installation and `agi
 init` ask whether to share: **Press Enter or Y to consent, or N to decline**.
 Unattended runs do not consent automatically; `--analytics` explicitly enables
 sharing and `--no-analytics` declines it.
@@ -496,7 +496,7 @@ sharing and `--no-analytics` declines it.
 enabled = false
 ```
 
-Use `jarvis config set analytics.enabled true` to enable sharing or `false` to
+Use `agi config set analytics.enabled true` to enable sharing or `false` to
 disable it, then restart the server and reload the frontend. This setting is
 independent of local telemetry and leaderboard participation. See
 [Telemetry](../telemetry.md) for the event catalog and sharing details.
@@ -508,13 +508,13 @@ Controls whether inference telemetry is recorded and where it is stored.
 ```toml
 [telemetry]
 enabled = true
-db_path = "~/.openjarvis/telemetry.db"
+db_path = "~/.agi-procesor/telemetry.db"
 ```
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `enabled` | bool | `true` | Whether to record telemetry for each inference call. Records timing, token counts, model, engine, and cost. |
-| `db_path` | string | `~/.openjarvis/telemetry.db` | Path to the SQLite telemetry database. |
+| `db_path` | string | `~/.agi-procesor/telemetry.db` | Path to the SQLite telemetry database. |
 
 !!! info "Telemetry is local-only"
     All telemetry data is stored locally in a SQLite database. No data is ever sent to external services.
@@ -528,13 +528,13 @@ Controls the trace system that records full interaction sequences for the learni
 ```toml
 [traces]
 enabled = false
-db_path = "~/.openjarvis/traces.db"
+db_path = "~/.agi-procesor/traces.db"
 ```
 
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `enabled` | bool | `false` | Whether to record traces for each agent interaction. |
-| `db_path` | string | `~/.openjarvis/traces.db` | Path to the SQLite trace database. |
+| `db_path` | string | `~/.agi-procesor/traces.db` | Path to the SQLite trace database. |
 
 ---
 
@@ -545,7 +545,7 @@ Controls the skills system — reusable compositions of tools and agent instruct
 ```toml
 [skills]
 enabled = true
-skills_dir = "~/.openjarvis/skills/"
+skills_dir = "~/.agi-procesor/skills/"
 active = "*"
 auto_discover = true
 auto_sync = false
@@ -556,7 +556,7 @@ sandbox_dangerous = true
 | Field | Type | Default | Description |
 |-------|------|---------|-------------|
 | `enabled` | bool | `true` | Whether to enable the skills system. When disabled, no skills are loaded or exposed to agents. |
-| `skills_dir` | string | `~/.openjarvis/skills/` | Directory where skills are installed. |
+| `skills_dir` | string | `~/.agi-procesor/skills/` | Directory where skills are installed. |
 | `active` | string | `"*"` | Comma-separated list of skill names to activate, or `"*"` for all discovered skills. |
 | `auto_discover` | bool | `true` | Whether to scan `skills_dir` for skills on startup. |
 | `auto_sync` | bool | `false` | Whether to pull from configured sources on session start (checks freshness every 24h). |
@@ -600,7 +600,7 @@ auto_optimize = false
 optimizer = "dspy"
 min_traces_per_skill = 20
 optimization_interval_seconds = 86400
-overlay_dir = "~/.openjarvis/learning/skills/"
+overlay_dir = "~/.agi-procesor/learning/skills/"
 ```
 
 | Field | Type | Default | Description |
@@ -609,7 +609,7 @@ overlay_dir = "~/.openjarvis/learning/skills/"
 | `optimizer` | string | `"dspy"` | Optimization policy: `"dspy"` (bootstrap few-shot) or `"gepa"` (evolutionary). |
 | `min_traces_per_skill` | int | `20` | Minimum trace count for a skill to be eligible for optimization. |
 | `optimization_interval_seconds` | int | `86400` | Run optimization at most once per this interval (default: once per day). |
-| `overlay_dir` | string | `~/.openjarvis/learning/skills/` | Where optimized skill overlays are stored. |
+| `overlay_dir` | string | `~/.agi-procesor/learning/skills/` | Where optimized skill overlays are stored. |
 
 ---
 
@@ -681,7 +681,7 @@ enforce_tool_confirmation = true
 
 ## Hardware Auto-Detection
 
-When you run `jarvis init`, OpenJarvis probes your system to detect available hardware. The detection runs in this order:
+When you run `agi init`, AGI PROCESOR probes your system to detect available hardware. The detection runs in this order:
 
 ### GPU Detection
 
@@ -767,11 +767,11 @@ graph TD
 Start an MLX server with the same model ID used in the configuration:
 
 ```bash
-jarvis host mlx-community/Qwen2.5-7B-4bit --backend mlx --port 8080
+agi host mlx-community/Qwen2.5-7B-4bit --backend mlx --port 8080
 ```
 
 ```toml
-# ~/.openjarvis/config.toml
+# ~/.agi-procesor/config.toml
 # Apple Silicon MacBook Pro (M3 Max, 128 GB unified memory)
 
 [engine]
@@ -812,7 +812,7 @@ enabled = true
 ### NVIDIA Datacenter (Multi-GPU)
 
 ```toml
-# ~/.openjarvis/config.toml
+# ~/.agi-procesor/config.toml
 # 8x NVIDIA A100 80GB server
 
 [engine]
@@ -864,7 +864,7 @@ enabled = true
 ### CPU-Only (No GPU)
 
 ```toml
-# ~/.openjarvis/config.toml
+# ~/.agi-procesor/config.toml
 # CPU-only machine
 
 [engine]
@@ -908,7 +908,7 @@ enabled = true
 ### Trace-Driven Learning Enabled
 
 ```toml
-# ~/.openjarvis/config.toml
+# ~/.agi-procesor/config.toml
 # Research setup with trace-driven learning active
 
 [engine]
@@ -963,7 +963,7 @@ enabled = true
 
 ## Migration Guide
 
-If you have an existing `~/.openjarvis/config.toml` from a previous version, here is what changed and how to update it.
+If you have an existing `~/.agi-procesor/config.toml` from a previous version, here is what changed and how to update it.
 
 ### Engine: Nested Sub-Sections
 
@@ -1102,22 +1102,22 @@ The `default_tools` name still works via a backward-compatible property.
 
 ## Programmatic Configuration
 
-You can configure OpenJarvis entirely from Python without a TOML file:
+You can configure AGI PROCESOR entirely from Python without a TOML file:
 
 ```python
-from openjarvis import Jarvis
-from openjarvis.core.config import (
+from agi_procesor import AgiProcesor
+from agi_procesor.core.config import (
     AgentConfig,
     EngineConfig,
     IntelligenceConfig,
-    JarvisConfig,
+    AgiConfig,
     LearningConfig,
     OllamaEngineConfig,
     StorageConfig,
     ToolsConfig,
 )
 
-config = JarvisConfig(
+config = AgiConfig(
     engine=EngineConfig(
         default="ollama",
         ollama=OllamaEngineConfig(host="http://my-server:11434"),
@@ -1140,7 +1140,7 @@ config = JarvisConfig(
     ),
 )
 
-j = Jarvis(config=config)
+j = AgiProcesor(config=config)
 response = j.ask("Hello")
 j.close()
 ```
@@ -1148,14 +1148,14 @@ j.close()
 Or load from a custom path:
 
 ```python
-j = Jarvis(config_path="/path/to/my-config.toml")
+j = AgiProcesor(config_path="/path/to/my-config.toml")
 ```
 
 ---
 
 ## Environment Variables
 
-OpenJarvis respects the following environment variables:
+AGI PROCESOR respects the following environment variables:
 
 | Variable | Description |
 |----------|-------------|
@@ -1169,9 +1169,9 @@ OpenJarvis respects the following environment variables:
 | `SERPLY_API_KEY` | API key for the Serply web search engine, which proxies Google. Optional. When set and no other search key is, `auto` engine selection prefers Serply over the keyless tier. Keys: [serply.io](https://serply.io). |
 | `SERPLY_PROXY_LOCATION` | Two-letter country code asking Serply for that country's Google result set, for example `DE`. Optional. Unset means the API answers from its own default region. See [serply.io/docs](https://serply.io/docs). |
 | `FXMACRODATA_API_KEY` | API key for the `fx_macro_data` tool. Optional: recent USD releases, the USD release calendar and every currency's indicator catalogue work without it. The key unlocks other currencies, full history and FX rates. Keys: [fxmacrodata.com](https://fxmacrodata.com/subscribe). |
-| `FIRECRAWL_API_KEY` | API key for the Firecrawl web search engine. Optional. When set and no other search key is, `auto` engine selection prefers Firecrawl over the keyless tier, and URL queries return the page or PDF as markdown. Keys: [firecrawl.dev](https://www.firecrawl.dev/app/api-keys?utm_source=openjarvis&utm_medium=integration). |
+| `FIRECRAWL_API_KEY` | API key for the Firecrawl web search engine. Optional. When set and no other search key is, `auto` engine selection prefers Firecrawl over the keyless tier, and URL queries return the page or PDF as markdown. Keys: [firecrawl.dev](https://www.firecrawl.dev/app/api-keys?utm_source=agi_procesor&utm_medium=integration). |
 | `FIRECRAWL_API_URL` | Base URL of the Firecrawl API, for example a [self-hosted Firecrawl](https://docs.firecrawl.dev/contributing/self-host). Optional. Defaults to `https://api.firecrawl.dev`. Any other URL enables the Firecrawl engine without a key, for instances that run without auth. |
-| `OPENJARVIS_WEB_SEARCH_ENGINE` | Web search engine for the `web_search` tool: `auto` (default), `youcom`, `tavily`, `serply`, `firecrawl`, or `duckduckgo`. |
+| `AGI_PROCESOR_WEB_SEARCH_ENGINE` | Web search engine for the `web_search` tool: `auto` (default), `youcom`, `tavily`, `serply`, `firecrawl`, or `duckduckgo`. |
 
 In the desktop app, you can save `ATLASCLOUD_API_KEY` in **Cloud Models** or
 **Settings → API Keys** instead of setting an environment variable.

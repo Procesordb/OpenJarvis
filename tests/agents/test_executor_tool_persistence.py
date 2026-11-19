@@ -6,11 +6,11 @@ import json
 
 import pytest
 
-from openjarvis.agents._stubs import AgentResult
-from openjarvis.agents.executor import AgentExecutor, _tool_calls_for_storage
-from openjarvis.agents.manager import AgentManager
-from openjarvis.core.events import EventBus
-from openjarvis.core.types import ToolResult
+from agi_procesor.agents._stubs import AgentResult
+from agi_procesor.agents.executor import AgentExecutor, _tool_calls_for_storage
+from agi_procesor.agents.manager import AgentManager
+from agi_procesor.core.events import EventBus
+from agi_procesor.core.types import ToolResult
 
 
 def test_tool_results_are_serialized_for_managed_messages() -> None:

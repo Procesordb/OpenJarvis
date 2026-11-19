@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from openjarvis.tools.agent_tools import (
+from agi_procesor.tools.agent_tools import (
     _SPAWNED_AGENTS,
     AgentKillTool,
     AgentListTool,

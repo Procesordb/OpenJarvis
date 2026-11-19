@@ -1,8 +1,8 @@
-"""Tests for the LLM-backed fact extractor (openjarvis.memory.extractor)."""
+"""Tests for the LLM-backed fact extractor (agi_procesor.memory.extractor)."""
 
 from __future__ import annotations
 
-from openjarvis.memory.extractor import FactExtractor
+from agi_procesor.memory.extractor import FactExtractor
 
 
 class FakeEngine:

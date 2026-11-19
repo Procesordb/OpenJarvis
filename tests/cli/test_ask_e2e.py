@@ -1,4 +1,4 @@
-"""End-to-end tests for ``jarvis ask``."""
+"""End-to-end tests for ``agi ask``."""
 
 from __future__ import annotations
 
@@ -10,11 +10,11 @@ from unittest import mock
 
 from click.testing import CliRunner
 
-from openjarvis.cli import cli
-from openjarvis.core.config import JarvisConfig
+from agi_procesor.cli import cli
+from agi_procesor.core.config import AgiConfig
 
 # Import the actual module (not the Click command attribute)
-_ask_mod = importlib.import_module("openjarvis.cli.ask")
+_ask_mod = importlib.import_module("agi_procesor.cli.ask")
 
 
 def _mock_engine_response():
@@ -34,15 +34,15 @@ def _mock_engine_response():
 def _patch_ask(monkeypatch, tmp_path, *, engine_result=None, no_engine=False):
     """Set up common mocks for ask tests."""
     # Re-register SimpleAgent after the autouse `_clean_registries` conftest
-    # fixture clears it. ``JarvisConfig().agent.default_agent`` defaults to
-    # ``"simple"``, so ``jarvis ask "..."`` (no --agent) routes through it.
-    from openjarvis.agents.simple import SimpleAgent
-    from openjarvis.core.registry import AgentRegistry
+    # fixture clears it. ``AgiConfig().agent.default_agent`` defaults to
+    # ``"simple"``, so ``agi ask "..."`` (no --agent) routes through it.
+    from agi_procesor.agents.simple import SimpleAgent
+    from agi_procesor.core.registry import AgentRegistry
 
     if not AgentRegistry.contains("simple"):
         AgentRegistry.register_value("simple", SimpleAgent)
 
-    cfg = JarvisConfig()
+    cfg = AgiConfig()
     cfg.telemetry.db_path = str(tmp_path / "telemetry.db")
     cfg.traces.enabled = False
 
@@ -94,10 +94,10 @@ class TestAskCommand:
         _patch_ask(monkeypatch, tmp_path)
         cfg = _ask_mod.load_config()
 
-        # A startup warning (e.g. missing openjarvis_rust) goes to stderr and
+        # A startup warning (e.g. missing agi_procesor_rust) goes to stderr and
         # must not end up in the JSON on stdout (#1115).
         def _load_config_with_warning():
-            logging.getLogger("openjarvis.security").warning(
+            logging.getLogger("agi_procesor.security").warning(
                 "Failed to set up rate limiter"
             )
             return cfg

@@ -1,0 +1,12 @@
+[package]
+name = "agi-procesor-scheduler"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+agi-procesor-core = { path = "../agi-procesor-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+rusqlite = { workspace = true }
+uuid = { workspace = true }
+time = { workspace = true }
