@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Dashboard route — serves the savings dashboard HTML page."""
 
 from __future__ import annotations
@@ -13,7 +15,7 @@ DASHBOARD_HTML = """\
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OpenJarvis — Savings Dashboard</title>
+<title>AGI PROCESOR — Savings Dashboard</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -146,7 +148,7 @@ DASHBOARD_HTML = """\
 <body>
 
 <div class="header">
-  <h1><span>OpenJarvis</span> Savings Dashboard</h1>
+  <h1><span>AGI PROCESOR</span> Savings Dashboard</h1>
   <div class="status">
     <div class="dot"></div>
     <span id="status-text">Live — refreshing every 5s</span>

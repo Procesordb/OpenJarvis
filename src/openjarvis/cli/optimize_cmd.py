@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis optimize`` — LLM-driven configuration optimization CLI."""
 
 from __future__ import annotations
@@ -77,7 +79,7 @@ def optimize_run(
     max_samples: int,
     output_dir: str,
 ) -> None:
-    """Run an optimization loop over OpenJarvis configuration."""
+    """Run an optimization loop over AGI PROCESOR configuration."""
     console = Console(stderr=True)
 
     # Load config data if provided

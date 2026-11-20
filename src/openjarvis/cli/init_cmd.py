@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis init`` — detect hardware, generate config, write to disk."""
 
 from __future__ import annotations
@@ -522,7 +524,10 @@ sources = ["hackernews", "news_rss"]
     soul_path = DEFAULT_CONFIG_DIR / "SOUL.md"
     if not soul_path.exists():
         soul_path.write_text(
-            "# Agent Persona\n\nYou are Jarvis, a helpful personal AI assistant.\n",
+            "# Agent Persona\n\n"
+            "You are AGI PROCESOR, a helpful local AI assistant. AGI PROCESOR is a "
+            "product name, not a claim that you are true artificial general "
+            "intelligence.\n",
             encoding="utf-8",
         )
 

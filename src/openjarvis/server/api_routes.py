@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Extended API routes for agents, workflows, memory, traces, etc."""
 
 from __future__ import annotations
@@ -1293,8 +1295,10 @@ def include_all_routes(app) -> None:
     from openjarvis.server.approval_routes import (
         router as approval_router,  # noqa: PLC0415
     )
+    from openjarvis.server.fomo_routes import router as fomo_router  # noqa: PLC0415
 
     app.include_router(approval_router)
+    app.include_router(fomo_router)
     app.include_router(agents_router)
     app.include_router(memory_router)
     app.include_router(traces_router)

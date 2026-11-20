@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Tests for the post-command "new version available" hint."""
 
 from __future__ import annotations
@@ -221,25 +223,37 @@ class TestGetLatestVersion:
 
 
 class TestCheckForUpdates:
+    def test_branded_build_never_checks_upstream(self):
+        with (
+            patch("openjarvis.cli._version_check._do_check") as check,
+            patch("urllib.request.urlopen") as network,
+        ):
+            check_for_updates("ask")
+        check.assert_not_called()
+        network.assert_not_called()
+
     @pytest.mark.parametrize(
         "version", ["0.0.0+unknown", "0.0.1.dev1+unknown.gc1af3c94"]
     )
     def test_unknown_source_version_never_prompts_or_fetches(
         self, monkeypatch, version
     ):
+        monkeypatch.setattr(_version_check, "_UPSTREAM_UPDATE_CHECK_ENABLED", True)
         monkeypatch.setattr("openjarvis.__version__", version)
         with patch("openjarvis.cli._version_check._get_latest_version") as latest:
             _version_check._do_check()
         latest.assert_not_called()
 
     @patch("openjarvis.cli._version_check._do_check")
-    def test_runs_for_ask_command(self, mock_do):
+    def test_runs_for_ask_command(self, mock_do, monkeypatch):
+        monkeypatch.setattr(_version_check, "_UPSTREAM_UPDATE_CHECK_ENABLED", True)
         check_for_updates("ask")
         mock_do.assert_called_once()
 
     @patch("openjarvis.cli._version_check._do_check")
-    def test_runs_for_doctor_command(self, mock_do):
+    def test_runs_for_doctor_command(self, mock_do, monkeypatch):
         """Widened list: doctor wasn't checked before."""
+        monkeypatch.setattr(_version_check, "_UPSTREAM_UPDATE_CHECK_ENABLED", True)
         check_for_updates("doctor")
         mock_do.assert_called_once()
 
@@ -258,7 +272,8 @@ class TestCheckForUpdates:
         "openjarvis.cli._version_check._do_check",
         side_effect=Exception("boom"),
     )
-    def test_exception_in_do_check_never_propagates(self, mock_do):
+    def test_exception_in_do_check_never_propagates(self, mock_do, monkeypatch):
         # Best-effort: a broken check must not break the user's command.
+        monkeypatch.setattr(_version_check, "_UPSTREAM_UPDATE_CHECK_ENABLED", True)
         check_for_updates("ask")
         mock_do.assert_called_once()

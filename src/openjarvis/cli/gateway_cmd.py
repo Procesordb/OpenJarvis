@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis gateway start|stop|status|logs`` — multi-channel gateway management."""
 
 from __future__ import annotations
@@ -10,7 +12,7 @@ import click
 
 @click.group()
 def gateway() -> None:
-    """Manage the OpenJarvis multi-channel gateway."""
+    """Manage the AGI PROCESOR multi-channel gateway."""
 
 
 @gateway.command()
@@ -54,7 +56,7 @@ def start(install: bool) -> None:
                 check=False,
             )
     else:
-        click.echo("Starting OpenJarvis gateway (foreground)...")
+        click.echo("Starting AGI PROCESOR gateway (foreground)...")
         click.echo("Gateway started. Press Ctrl+C to stop.")
 
 

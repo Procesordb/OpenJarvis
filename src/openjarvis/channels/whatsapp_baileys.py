@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """WhatsAppBaileysChannel -- bidirectional WhatsApp messaging via Baileys protocol.
 
 Spawns a Node.js subprocess that runs the Baileys bridge (JSON-line protocol
@@ -68,7 +70,7 @@ class WhatsAppBaileysChannel(BaseChannel):
         self,
         *,
         auth_dir: str = "",
-        assistant_name: str = "Jarvis",
+        assistant_name: str = "AGI PROCESOR",
         assistant_has_own_number: bool = False,
         bus: Optional[EventBus] = None,
     ) -> None:

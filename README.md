@@ -1,7 +1,9 @@
-<div align="center">
-  <img alt="OpenJarvis" src="assets/OpenJarvis_Horizontal_Logo.png" width="400">
+<!-- Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md. -->
 
-  <p><i>Personal AI, On Personal Devices.</i></p>
+<div align="center">
+  <h1>AGI PROCESOR</h1>
+
+  <p><i>Local-first AI for explainable market research and risk awareness.</i></p>
 
   <p>
     <a href="https://arxiv.org/abs/2605.17172"><img src="https://img.shields.io/badge/arXiv-2605.17172-b31b1b.svg" alt="arXiv"></a>
@@ -13,6 +15,58 @@
     <a href="https://x.com/OpenJarvisAI"><img src="https://img.shields.io/badge/X-@OpenJarvisAI-black?logo=x&logoColor=white" alt="X / Twitter"></a>
   </p>
 </div>
+
+> [!IMPORTANT]
+> **AGI PROCESOR is an AI product name, not a claim that the software has
+> achieved artificial general intelligence.** The current MVP provides
+> educational market analysis, explainable risk signals, and paper trading.
+> It does not promise returns, hold user funds, access Fomo accounts, scrape
+> Fomo, or execute trades.
+
+AGI PROCESOR is derived from
+[OpenJarvis](https://github.com/open-jarvis/OpenJarvis), a local-first personal
+AI framework published under the Apache License 2.0. The internal Python
+namespace and `jarvis` CLI remain unchanged so security fixes and upstream
+improvements can continue to be integrated. OpenJarvis and Stanford do not
+endorse this fork.
+
+## AGI PROCESOR MVP
+
+The `agi-procesor-mvp` branch adds:
+
+- an AGI PROCESOR identity across the assistant, web UI, desktop shell, and CLI;
+- an explainable FOMO Radar that evaluates user-supplied market snapshots;
+- deterministic risk flags rather than guaranteed buy/sell claims;
+- local paper trading with explicit fees and auditable P&L;
+- a clearly disclosed affiliate link that opens Fomo for a manual user action;
+- no Fomo credentials, private keys, session cookies, scraping, or automated
+  trading.
+
+The safest product flow is:
+
+`public/authorized market data -> risk assessment -> user review -> paper trade
+or manual visit to Fomo`
+
+Affiliate disclosure shown in the product:
+
+> Materiał reklamowy / link afiliacyjny. AGI PROCESOR może otrzymać część
+> opłat transakcyjnych. To nie jest rekomendacja inwestycyjna ani obietnica
+> zysku.
+
+### Build the MVP from source
+
+```bash
+uv sync --extra dev --extra server
+cd frontend
+npm install
+npm run build
+cd ..
+uv run jarvis gui
+```
+
+The upstream installers linked below install OpenJarvis, not the AGI PROCESOR
+branded MVP. Use the source workflow above until this fork publishes its own
+signed release channel.
 
 ---
 

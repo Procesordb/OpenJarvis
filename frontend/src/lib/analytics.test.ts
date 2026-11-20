@@ -1,4 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 const mocks = vi.hoisted(() => ({
   apiFetch: vi.fn(),
@@ -30,6 +32,7 @@ const response = (enabled: boolean) => ({
 });
 
 beforeEach(() => {
+  vi.stubEnv('VITE_AGI_ENABLE_EXTERNAL_ANALYTICS', 'true');
   vi.resetModules();
   vi.clearAllMocks();
   let sdkInitialized = false;
@@ -40,8 +43,27 @@ beforeEach(() => {
     config.loaded(mocks);
   });
 });
+afterEach(() => vi.unstubAllEnvs());
 
 describe('analytics sharing choice', () => {
+  it('hard-disables initialization and opt-in when the build flag is absent', async () => {
+    vi.stubEnv('VITE_AGI_ENABLE_EXTERNAL_ANALYTICS', '');
+    vi.resetModules();
+    mocks.apiFetch.mockResolvedValue(response(true));
+    const analytics = await import('./analytics');
+
+    await analytics.initAnalytics(true);
+    await expect(analytics.saveAnalyticsPreference(true)).rejects.toThrow(
+      'disabled in this AGI PROCESOR build',
+    );
+    analytics.track('app_opened');
+
+    expect(mocks.apiFetch).not.toHaveBeenCalled();
+    expect(mocks.init).not.toHaveBeenCalled();
+    expect(mocks.capture).not.toHaveBeenCalled();
+    expect(analytics.isAnalyticsEnabled()).toBe(false);
+  });
+
   it('does not initialize or send when the backend reports sharing off', async () => {
     mocks.apiFetch.mockResolvedValue(response(false));
     const analytics = await import('./analytics');

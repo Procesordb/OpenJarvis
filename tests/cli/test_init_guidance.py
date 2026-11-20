@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Tests for ``jarvis init`` next-steps guidance."""
 
 from __future__ import annotations
@@ -101,11 +103,14 @@ class TestMinimalConfig:
             result = CliRunner().invoke(cli, ["init", "--engine", "ollama", _NO_DL])
         assert result.exit_code == 0
         content = config_path.read_text()
+        soul = (config_dir / "SOUL.md").read_text()
         # Minimal config should be short
         lines = [ln for ln in content.splitlines() if ln.strip()]
         assert len(lines) <= 30
         # Should have the reference hint
         assert "jarvis init --full" in content
+        assert "AGI PROCESOR" in soul
+        assert "You are Jarvis" not in soul
 
     def test_init_full_generates_verbose_config(self, tmp_path: Path) -> None:
         """jarvis init --full produces the full reference config."""

@@ -1,7 +1,9 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 [package]
 name = "openjarvis-desktop"
 version = "1.0.1"
-description = "OpenJarvis Desktop — Native AI assistant with energy monitoring, trace debugging, and learning visualization"
+description = "AGI PROCESOR Desktop — local AI assistant with transparent decision support"
 edition = "2021"
 license = "MIT"
 
@@ -15,7 +17,6 @@ tauri-plugin-notification = "2"
 tauri-plugin-shell = "2"
 tauri-plugin-global-shortcut = "2"
 tauri-plugin-autostart = "2"
-tauri-plugin-updater = "2"
 tauri-plugin-single-instance = "2"
 tauri-plugin-process = "2"
 tauri-plugin-dialog = "2"

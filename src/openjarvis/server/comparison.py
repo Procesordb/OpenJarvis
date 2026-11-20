@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Comparison page -- static cost comparison of local vs cloud inference."""
 
 from __future__ import annotations
@@ -13,7 +15,7 @@ COMPARISON_HTML = """\
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OpenJarvis — Cost Comparison</title>
+<title>AGI PROCESOR — Cost Comparison</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -184,7 +186,7 @@ COMPARISON_HTML = """\
 <body>
 
 <div class="header">
-  <h1><span>OpenJarvis</span> Cost Comparison</h1>
+  <h1><span>AGI PROCESOR</span> Cost Comparison</h1>
   <div class="nav">
     <a href="/dashboard">Dashboard</a>
     <a href="/comparison">Comparison</a>
@@ -199,7 +201,7 @@ COMPARISON_HTML = """\
     <div class="annual" id="hero-annual">$0</div>
     <div class="annual-label">estimated annual savings vs cloud APIs</div>
     <div class="sub">
-      OpenJarvis runs models on your own hardware. Every inference call that would
+      AGI PROCESOR runs models on your own hardware. Every inference call that would
       cost money on a cloud API is completely free when running locally.
     </div>
   </div>
@@ -214,7 +216,7 @@ COMPARISON_HTML = """\
       <thead>
         <tr>
           <th></th>
-          <th>OpenJarvis (Local)</th>
+          <th>AGI PROCESOR (Local)</th>
           <th>GPT-5.6 Sol</th>
           <th>Claude Fable 5</th>
           <th>Gemini 3.1 Pro</th>
@@ -257,7 +259,7 @@ COMPARISON_HTML = """\
     </div>
     <div class="calc-results">
       <div class="calc-card free">
-        <div class="cc-label">OpenJarvis</div>
+        <div class="cc-label">AGI PROCESOR</div>
         <div class="cc-value">$0.00/mo</div>
       </div>
       <div class="calc-card cloud">
@@ -278,11 +280,12 @@ COMPARISON_HTML = """\
   <!-- CTA -->
   <div class="cta">
     <h3>Start Saving Today</h3>
-    <div class="cta-sub">Install OpenJarvis and run AI locally
+    <div class="cta-sub">Install AGI PROCESOR and run AI locally
       with zero API costs.</div>
     <div class="code-block">
-      <code>git clone https://github.com/open-jarvis/OpenJarvis.git
-&& cd OpenJarvis && uv sync</code>
+      <code>git clone --branch agi-procesor-mvp
+https://github.com/Procesordb/OpenJarvis.git AGI-PROCESOR
+&& cd AGI-PROCESOR && uv sync</code>
       <button class="copy-btn" id="copy-btn">Copy</button>
     </div>
   </div>
@@ -424,8 +427,9 @@ tpcSlider.addEventListener('input', updateCalc);
 
 // -- Copy button --
 document.getElementById('copy-btn').addEventListener('click', () => {
-  const cmd = 'git clone https://github.com/open-jarvis/'
-    + 'OpenJarvis.git && cd OpenJarvis && uv sync';
+  const cmd = 'git clone --branch agi-procesor-mvp '
+    + 'https://github.com/Procesordb/OpenJarvis.git AGI-PROCESOR '
+    + '&& cd AGI-PROCESOR && uv sync';
   navigator.clipboard.writeText(cmd).then(() => {
     const btn = document.getElementById('copy-btn');
     btn.textContent = 'Copied!';

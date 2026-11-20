@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 from __future__ import annotations
 
 import json
@@ -169,7 +171,7 @@ def test_scan_data_boundaries_strict_passes_with_info_only(
     result = CliRunner().invoke(scan, ["--data-boundaries", "--strict"])
 
     assert result.exit_code == 0
-    assert "OpenJarvis Data-Boundary Scan" in result.output
+    assert "AGI PROCESOR Data-Boundary Scan" in result.output
 
 
 def test_scan_data_boundaries_init_defaults_strict_exits_on_warn(
@@ -325,7 +327,7 @@ def test_existing_scan_quick_text_still_works(monkeypatch):
     result = CliRunner().invoke(scan, ["--quick"])
 
     assert result.exit_code == 0
-    assert "OpenJarvis Security Scan" in result.output
+    assert "AGI PROCESOR Security Scan" in result.output
 
 
 def test_data_boundary_loader_honors_openjarvis_config(

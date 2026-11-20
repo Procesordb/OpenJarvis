@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis host`` — download and serve a model locally with auto backend setup."""
 
 from __future__ import annotations
@@ -397,7 +399,7 @@ def host(
     if backend != "ollama":
         console.print(f"[dim]The model server will be available at {host_url}[/dim]")
         console.print(
-            "[dim]OpenJarvis will auto-discover it. Press Ctrl+C to stop.[/dim]\n"
+            "[dim]AGI PROCESOR will auto-discover it. Press Ctrl+C to stop.[/dim]\n"
         )
 
     try:

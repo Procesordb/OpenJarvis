@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """FastAPI routes for the Agent Manager."""
 
 from __future__ import annotations
@@ -2543,7 +2545,7 @@ def create_agent_manager_router(
             payload: Dict[str, str] = {
                 "number": to_number,
                 "content": (
-                    "Hello from your OpenJarvis agent! "
+                    "Hello from your AGI PROCESOR agent! "
                     "Text this number anytime to search your "
                     "personal data. Reply with any question to try it."
                 ),

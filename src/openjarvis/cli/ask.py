@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis ask`` — send a query to the assistant."""
 
 from __future__ import annotations
@@ -820,7 +822,7 @@ def ask(
     capture_screen: bool = False,
     router_policy: str | None = None,
 ) -> None:
-    """Ask Jarvis a question."""
+    """Ask AGI PROCESOR a question."""
     quiet = (ctx.obj or {}).get("quiet", False) or output_json
     print_banner(quiet=quiet)
     console = Console(stderr=True)

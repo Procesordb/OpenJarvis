@@ -1,3 +1,5 @@
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 // Must stay the first import: fills in crypto.randomUUID before any module uses it.
 import './lib/polyfills';
 import { StrictMode } from 'react';
@@ -30,9 +32,13 @@ applyTheme();
 // This ensures JARVIS_PORT is defined in one place (the Rust backend).
 // In non-Tauri environments this is a no-op.
 initApiBase().finally(() => {
-  // Kick off analytics init in the background — it's never awaited so
-  // a slow/failed identity fetch never delays UI render.
-  void initAnalytics();
+  // External analytics are disabled in AGI PROCESOR unless the operator
+  // explicitly enables them at build time. Backend analytics remain off by
+  // default as well, so a legacy OpenJarvis preference cannot silently start
+  // the browser sender in this branded build.
+  if (import.meta.env.VITE_AGI_ENABLE_EXTERNAL_ANALYTICS === 'true') {
+    void initAnalytics();
+  }
 
   createRoot(document.getElementById('root')!).render(
     <StrictMode>

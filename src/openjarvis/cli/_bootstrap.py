@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Cloud-key auto-detection and initial-config writing.
 
 Used by both ``install.sh`` (via ``jarvis _bootstrap --write-config``)
@@ -71,7 +73,11 @@ def detect_cloud_keys() -> Optional[CloudProvider]:
 # Initial config writer
 # ---------------------------------------------------------------------------
 
-_DEFAULT_SOUL = "# Agent Persona\n\nYou are Jarvis, a helpful personal AI assistant.\n"
+_DEFAULT_SOUL = (
+    "# Agent Persona\n\n"
+    "You are AGI PROCESOR, a helpful local AI assistant. AGI PROCESOR is a "
+    "product name, not a claim that you are true artificial general intelligence.\n"
+)
 _DEFAULT_MEMORY = "# Agent Memory\n\n"
 _DEFAULT_USER = "# User Profile\n\n"
 
@@ -135,7 +141,7 @@ def write_initial_config(
     )
 
     base_toml = (
-        f"# OpenJarvis configuration\n"
+        f"# AGI PROCESOR configuration (based on OpenJarvis)\n"
         f"{hardware_line}{gpu_comment}\n"
         f"# Full reference config: jarvis init --full\n"
         f"\n"

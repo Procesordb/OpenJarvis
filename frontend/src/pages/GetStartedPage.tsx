@@ -1,12 +1,12 @@
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import {
   Sparkles,
-  Download,
   Terminal,
   Globe,
   Monitor,
-  Apple,
   ChevronDown,
   ChevronRight,
   Copy,
@@ -18,54 +18,8 @@ import {
 } from 'lucide-react';
 import { isTauri, checkHealth } from '../lib/api';
 
-const GITHUB_BASE =
-  'https://github.com/open-jarvis/OpenJarvis/releases/latest/download';
-
-interface Platform {
-  id: string;
-  label: string;
-  shortLabel: string;
-  file: string;
-  icon: typeof Apple;
-}
-
-const PLATFORMS: Platform[] = [
-  {
-    id: 'mac-arm',
-    label: 'macOS (Apple Silicon)',
-    shortLabel: 'macOS (Apple Silicon)',
-    file: 'OpenJarvis_universal.dmg',
-    icon: Apple,
-  },
-  {
-    id: 'mac-intel',
-    label: 'macOS (Intel)',
-    shortLabel: 'macOS (Intel)',
-    file: 'OpenJarvis_universal.dmg',
-    icon: Apple,
-  },
-  {
-    id: 'windows',
-    label: 'Windows (64-bit)',
-    shortLabel: 'Windows (64-bit)',
-    file: 'OpenJarvis_x64-setup.exe',
-    icon: Monitor,
-  },
-  {
-    id: 'linux-deb',
-    label: 'Linux (DEB)',
-    shortLabel: 'Linux (DEB)',
-    file: 'OpenJarvis_amd64.deb',
-    icon: Terminal,
-  },
-  {
-    id: 'linux-rpm',
-    label: 'Linux (RPM)',
-    shortLabel: 'Linux (RPM)',
-    file: 'OpenJarvis_x86_64.rpm',
-    icon: Terminal,
-  },
-];
+const AGI_SOURCE_REPO =
+  'https://github.com/Procesordb/OpenJarvis/tree/agi-procesor-mvp';
 
 type DeployContext = 'hosted' | 'desktop' | 'selfhosted';
 
@@ -76,30 +30,6 @@ function detectContext(): DeployContext {
     return 'selfhosted';
   }
   return 'hosted';
-}
-
-function detectPlatform(): string {
-  const ua = navigator.userAgent.toLowerCase();
-  const platform = navigator.platform?.toLowerCase() || '';
-
-  if (platform.includes('mac') || ua.includes('macintosh')) {
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl');
-      if (gl) {
-        const ext = gl.getExtension('WEBGL_debug_renderer_info');
-        if (ext) {
-          const renderer = gl.getParameter(ext.UNMASKED_RENDERER_WEBGL);
-          if (renderer && /apple m/i.test(renderer)) return 'mac-arm';
-        }
-      }
-    } catch {}
-    return 'mac-arm';
-  }
-  if (platform.includes('win') || ua.includes('windows')) return 'windows';
-  if (ua.includes('ubuntu') || ua.includes('debian')) return 'linux-deb';
-  if (ua.includes('linux')) return 'linux-deb';
-  return 'mac-arm';
 }
 
 function CodeBlock({ code }: { code: string }) {
@@ -199,7 +129,7 @@ function HostedView() {
         <Sparkles size={32} />
       </div>
       <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-text)' }}>
-        OpenJarvis
+        AGI PROCESOR
       </h1>
       <p
         className="text-sm mb-6 leading-relaxed max-w-md mx-auto"
@@ -263,7 +193,7 @@ function DesktopView() {
           <Sparkles size={32} />
         </div>
         <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-text)' }}>
-          OpenJarvis Desktop
+          AGI PROCESOR Desktop
         </h1>
         <p
           className="text-sm mb-4 leading-relaxed max-w-md mx-auto"
@@ -321,10 +251,6 @@ function DesktopView() {
 // Self-hosted view: running on localhost (manual setup)
 // ---------------------------------------------------------------------------
 function SelfHostedView() {
-  const detectedId = useMemo(() => detectPlatform(), []);
-  const primary = PLATFORMS.find((p) => p.id === detectedId) || PLATFORMS[0];
-  const others = PLATFORMS.filter((p) => p.id !== primary.id);
-
   return (
     <>
       {/* Hero */}
@@ -336,7 +262,7 @@ function SelfHostedView() {
           <Sparkles size={32} />
         </div>
         <h1 className="text-3xl font-bold mb-2" style={{ color: 'var(--color-text)' }}>
-          OpenJarvis
+          AGI PROCESOR
         </h1>
         <p
           className="text-sm mb-4 leading-relaxed max-w-md mx-auto"
@@ -353,7 +279,7 @@ function SelfHostedView() {
         </span>
       </div>
 
-      {/* Desktop Download */}
+      {/* Desktop source */}
       <div className="mb-10">
         <div
           className="rounded-xl p-8 text-center"
@@ -362,41 +288,25 @@ function SelfHostedView() {
           <div className="flex items-center justify-center gap-2 mb-1">
             <Monitor size={18} style={{ color: 'var(--color-text-secondary)' }} />
             <h2 className="text-base font-semibold" style={{ color: 'var(--color-text)' }}>
-              Desktop App
+              Desktop MVP
             </h2>
           </div>
           <p className="text-xs mb-6" style={{ color: 'var(--color-text-tertiary)' }}>
-            One-click install. Bundles Ollama and the server &mdash; no setup required.
+            The branded installer is not published yet. Build the verified MVP from source.
           </p>
 
           <a
-            href={`${GITHUB_BASE}/${primary.file}`}
+            href={AGI_SOURCE_REPO}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-medium transition-opacity cursor-pointer"
             style={{ background: 'var(--color-accent)', color: 'var(--color-on-accent)' }}
             onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
           >
-            <Download size={18} />
-            Download for {primary.label}
+            <Terminal size={18} />
+            Open AGI PROCESOR source
           </a>
-
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-            <span className="text-[11px]" style={{ color: 'var(--color-text-tertiary)' }}>
-              Or
-            </span>
-            {others.map((p) => (
-              <a
-                key={p.id}
-                href={`${GITHUB_BASE}/${p.file}`}
-                className="text-[11px] underline underline-offset-2 transition-colors"
-                style={{ color: 'var(--color-text-secondary)' }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
-                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--color-text-secondary)')}
-              >
-                {p.shortLabel}
-              </a>
-            ))}
-          </div>
         </div>
       </div>
 
@@ -404,20 +314,20 @@ function SelfHostedView() {
       <div className="flex flex-col gap-3 mb-10">
         <Section icon={Terminal} title="Command Line (macOS / Linux)" defaultOpen>
           <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
-            Clone and install (Python 3.10+ required):
+            Clone and install (Python 3.11–3.13 required):
           </p>
-          <CodeBlock code={"git clone https://github.com/open-jarvis/OpenJarvis.git\ncd OpenJarvis\nuv sync"} />
+          <CodeBlock code={"git clone --branch agi-procesor-mvp https://github.com/Procesordb/OpenJarvis.git AGI-PROCESOR\ncd AGI-PROCESOR\nuv sync --extra dev --extra server"} />
           <p className="text-xs mt-1" style={{ color: 'var(--color-text-secondary)' }}>
             Then get started:
           </p>
-          <CodeBlock code={"jarvis init\njarvis doctor\njarvis chat"} />
+          <CodeBlock code={"uv run jarvis init\nuv run jarvis doctor\nuv run jarvis chat"} />
         </Section>
 
         <Section icon={Globe} title="Browser App (Self-Hosted)">
           <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
             Launch the API server to get the full UI in your browser:
           </p>
-          <CodeBlock code={"git clone https://github.com/open-jarvis/OpenJarvis.git\ncd OpenJarvis\nuv sync --extra desktop\njarvis serve --port 8000"} />
+          <CodeBlock code={"git clone --branch agi-procesor-mvp https://github.com/Procesordb/OpenJarvis.git AGI-PROCESOR\ncd AGI-PROCESOR\nuv sync --extra desktop\nuv run jarvis gui"} />
           <p className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>
             The chat, dashboard, energy profiling, and cost comparison all run
             locally on your machine.
@@ -428,7 +338,7 @@ function SelfHostedView() {
           <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>
             Deploy with Docker Compose for a zero-setup hosted instance:
           </p>
-          <CodeBlock code={"git clone https://github.com/open-jarvis/OpenJarvis.git\ncd OpenJarvis\ndocker compose -f deploy/docker/docker-compose.yml up -d"} />
+          <CodeBlock code={"git clone --branch agi-procesor-mvp https://github.com/Procesordb/OpenJarvis.git AGI-PROCESOR\ncd AGI-PROCESOR\ndocker compose -f deploy/docker/docker-compose.yml up -d"} />
           <p className="text-xs" style={{ color: 'var(--color-text-tertiary)' }}>
             This starts both the API server and Ollama. The web UI is bundled and
             served automatically at port 8000.
@@ -450,11 +360,11 @@ function SelfHostedView() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs" style={{ color: 'var(--color-text-secondary)' }}>
           <div>
             <div className="font-medium mb-0.5" style={{ color: 'var(--color-text)' }}>Desktop App</div>
-            No prerequisites &mdash; everything is bundled
+            MVP build from source: Git, uv, and Python 3.11–3.13
           </div>
           <div>
             <div className="font-medium mb-0.5" style={{ color: 'var(--color-text)' }}>CLI / Self-Hosted</div>
-            Python 3.10+ and an inference engine (Ollama recommended)
+            Git, uv, Python 3.11–3.13, and an inference engine (Ollama recommended)
           </div>
           <div>
             <div className="font-medium mb-0.5" style={{ color: 'var(--color-text)' }}>Memory</div>

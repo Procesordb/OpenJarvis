@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Tests for configuration, hardware detection, and engine recommendation."""
 
 from __future__ import annotations
@@ -247,12 +249,13 @@ class TestAgentConfigNew:
         )
 
     def test_default_system_prompt_anchors_identity(self) -> None:
-        """#540: the hardened wording must name OpenJarvis and explicitly
+        """The hardened wording must name AGI PROCESOR and explicitly
         deny the model's training identity so distilled models stop
         claiming to be Claude/ChatGPT/etc."""
         prompt = AgentConfig().default_system_prompt
-        assert "OpenJarvis" in prompt
+        assert "AGI PROCESOR" in prompt
         assert "not Claude" in prompt
+        assert "do not claim" in prompt
 
 
 class TestNestedEngineConfig:
@@ -553,7 +556,7 @@ class TestWhatsAppBaileysChannelConfig:
     def test_defaults(self) -> None:
         wc = WhatsAppBaileysChannelConfig()
         assert wc.auth_dir == ""
-        assert wc.assistant_name == "Jarvis"
+        assert wc.assistant_name == "AGI PROCESOR"
         assert wc.assistant_has_own_number is False
 
     def test_custom_values(self) -> None:

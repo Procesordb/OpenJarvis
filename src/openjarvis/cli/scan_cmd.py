@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis scan`` — audit your environment for privacy and security risks."""
 
 from __future__ import annotations
@@ -492,7 +494,7 @@ def _render_results(results: List[ScanResult]) -> None:
 
     console = Console()
     console.print()
-    console.print("[bold]OpenJarvis Security Scan[/bold]")
+    console.print("[bold]AGI PROCESOR Security Scan[/bold]")
     console.print()
 
     table = Table(show_header=True, header_style="bold", show_lines=True)
@@ -523,7 +525,7 @@ def _render_results(results: List[ScanResult]) -> None:
     if fail_count:
         console.print(
             "[red bold]Action required:[/red bold] address critical findings "
-            "before storing sensitive data with OpenJarvis."
+            "before storing sensitive data with AGI PROCESOR."
         )
         console.print()
     elif warn_count:
@@ -545,7 +547,7 @@ def _render_data_boundary_report(
 
     console = Console()
     console.print()
-    console.print("[bold]OpenJarvis Data-Boundary Scan[/bold]")
+    console.print("[bold]AGI PROCESOR Data-Boundary Scan[/bold]")
     console.print(f"Verdict: [bold]{report.verdict}[/bold]")
     console.print()
 

@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """FastAPI application factory for the OpenJarvis API server."""
 
 from __future__ import annotations
@@ -247,8 +249,8 @@ def create_app(
     )
 
     app = FastAPI(
-        title="OpenJarvis API",
-        description="OpenAI-compatible API server for OpenJarvis",
+        title="AGI PROCESOR API",
+        description="Local AI API built on the OpenJarvis framework",
         version="0.1.0",
     )
 

@@ -1,4 +1,6 @@
-"""Check for newer OpenJarvis releases on PyPI."""
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
+"""Legacy upstream version checker, disabled for the AGI PROCESOR fork."""
 
 from __future__ import annotations
 
@@ -16,6 +18,11 @@ logger = logging.getLogger(__name__)
 _CACHE_PATH = get_config_dir() / "version-check.json"
 _CACHE_TTL = 86400  # 24 hours
 _PYPI_API = "https://pypi.org/pypi/openjarvis/json"
+
+# A package named ``openjarvis`` on PyPI belongs to the upstream project.
+# Comparing against it, or suggesting its installer, could replace this fork
+# with different code. Keep both public and internal entry points guarded.
+_UPSTREAM_UPDATE_CHECK_ENABLED = False
 
 
 def _config_path() -> Path:
@@ -105,6 +112,8 @@ def check_for_updates(command_name: str) -> None:
     truthy value (``1``, ``true``, ``yes``, ``on``) disables both the
     PyPI poll and the banner. See ``_check_disabled`` for the full list.
     """
+    if not _UPSTREAM_UPDATE_CHECK_ENABLED:
+        return
     if command_name not in _CHECK_COMMANDS:
         return
     if _check_disabled():
@@ -116,6 +125,9 @@ def check_for_updates(command_name: str) -> None:
 
 
 def _do_check() -> None:
+    if not _UPSTREAM_UPDATE_CHECK_ENABLED:
+        return
+
     import openjarvis
 
     current = openjarvis.__version__
@@ -138,7 +150,7 @@ def _do_check() -> None:
                 "" if cmd == "jarvis self-update" else "Or run: jarvis self-update\n"
             )
             sys.stderr.write(
-                f"\033[33mA new version of OpenJarvis is available "
+                f"\033[33mA new upstream OpenJarvis version is available "
                 f"(v{current} → v{latest})\n"
                 f"Update: {cmd}\n"
                 f"{alternative}\033[0m\n"

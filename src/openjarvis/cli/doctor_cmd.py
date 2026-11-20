@@ -1,4 +1,6 @@
-"""``jarvis doctor`` — run diagnostic checks on the OpenJarvis installation."""
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
+"""``jarvis doctor`` — run diagnostic checks on the AGI PROCESOR installation."""
 
 from __future__ import annotations
 
@@ -470,7 +472,7 @@ def _results_to_dicts(checks: List[CheckResult]) -> List[Dict[str, Any]]:
     help="Also probe engines outside this device (including LAN endpoints).",
 )
 def doctor(as_json: bool, probe_remote: bool) -> None:
-    """Run diagnostic checks on your OpenJarvis installation."""
+    """Run diagnostic checks on your AGI PROCESOR installation."""
     checks = _run_all_checks(probe_remote=probe_remote)
 
     if as_json:
@@ -479,7 +481,7 @@ def doctor(as_json: bool, probe_remote: bool) -> None:
 
     console = Console()
     console.print()
-    console.print("[bold]OpenJarvis Doctor[/bold]")
+    console.print("[bold]AGI PROCESOR Doctor[/bold]")
     console.print()
 
     table = Table(show_header=True, header_style="bold")

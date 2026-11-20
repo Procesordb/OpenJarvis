@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Tests for the CLI skeleton."""
 
 from __future__ import annotations
@@ -55,7 +57,7 @@ class TestCLI:
     def test_help(self) -> None:
         result = CliRunner().invoke(cli, ["--help"])
         assert result.exit_code == 0
-        assert "OpenJarvis" in result.output
+        assert "AGI PROCESOR" in result.output
 
     def test_version(self) -> None:
         result = CliRunner().invoke(cli, ["--version"])

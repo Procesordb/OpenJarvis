@@ -1,15 +1,11 @@
-"""`jarvis self-update` — upgrade OpenJarvis to the latest release.
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
 
-Runs the right upgrade command for how the user installed OpenJarvis:
+"""``jarvis self-update`` — enforce the AGI PROCESOR update policy.
 
-- PyPI installs get ``pip install --upgrade openjarvis``.
-- uv-tool installs get ``uv tool upgrade openjarvis``.
-- Editable Git checkouts recover release-tag history, fast-forward, and rebuild
-  OpenJarvis in the running environment. The inexact sync preserves packages
-  previously installed through extras and dependency groups.
-
-The detection logic is shared with the post-command "new version
-available" hint in ``_version_check.py`` so both surfaces stay in sync.
+The public command is deliberately blocked because the upstream PyPI package
+does not contain the AGI PROCESOR modifications. Legacy updater helpers remain
+below only for compatibility tests and cannot be reached without deliberately
+patching the private guard in-process.
 """
 
 from __future__ import annotations
@@ -24,6 +20,12 @@ import click
 
 import openjarvis
 from openjarvis.cli._install_detect import detect_install
+
+# The ``openjarvis`` package and its release channel belong to the upstream
+# project. Running that updater in this branded fork could silently replace AGI
+# PROCESOR with upstream code. This private constant has no environment/config
+# override; tests may monkeypatch it only to exercise the retained legacy code.
+_UPSTREAM_SELF_UPDATE_ENABLED = False
 
 
 def _update_git_checkout(repo_root: Path) -> int:
@@ -92,10 +94,9 @@ def _update_git_checkout(repo_root: Path) -> int:
 @click.command(
     "self-update",
     help=(
-        "Upgrade OpenJarvis to the latest release. Detects how you "
-        "installed (pip, uv tool, editable git) and runs the right "
-        "command. Use --check to only print the upgrade command "
-        "without running it."
+        "Show the AGI PROCESOR update policy. Automatic upstream updates "
+        "are disabled so this fork cannot be replaced by the OpenJarvis "
+        "package from PyPI."
     ),
 )
 @click.option(
@@ -110,6 +111,15 @@ def _update_git_checkout(repo_root: Path) -> int:
     help="Skip the interactive confirmation prompt.",
 )
 def self_update(check: bool, yes: bool) -> None:
+    if not _UPSTREAM_SELF_UPDATE_ENABLED:
+        click.echo(f"Current AGI PROCESOR version: v{openjarvis.__version__}")
+        raise click.ClickException(
+            "Automatic self-update is disabled for this AGI PROCESOR fork. "
+            "The upstream OpenJarvis updater could replace this fork with a "
+            "different package. Update only from the trusted AGI PROCESOR "
+            "repository after reviewing its changes."
+        )
+
     info = detect_install()
     current = openjarvis.__version__
 

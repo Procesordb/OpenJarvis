@@ -1,3 +1,5 @@
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 import { useState } from 'react';
 import {
   CheckCircle2,
@@ -231,7 +233,7 @@ function LocalPanel({
     <div className="flex flex-col gap-4">
       <p className="text-sm" style={{ color: 'var(--color-text-secondary)' }}>
         {displayName} reads data directly from your Mac. Make sure the app is installed and
-        Full Disk Access is granted to OpenJarvis in System Settings.
+        Full Disk Access is granted to AGI PROCESOR in System Settings.
       </p>
       <div
         className="px-4 py-3 rounded-lg text-sm"
@@ -241,7 +243,7 @@ function LocalPanel({
         }}
       >
         <strong>System Settings</strong> → Privacy &amp; Security → Full Disk Access →
-        enable OpenJarvis
+        enable AGI PROCESOR
       </div>
       <button
         onClick={() => onConnect({})}

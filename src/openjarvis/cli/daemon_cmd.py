@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis start|stop|restart|status`` — daemon management commands."""
 
 from __future__ import annotations
@@ -367,7 +369,7 @@ def clear_server_state(pid: int) -> None:
 
 @click.group()
 def daemon() -> None:
-    """Manage the OpenJarvis server daemon."""
+    """Manage the AGI PROCESOR server daemon."""
 
 
 @daemon.command()
@@ -383,7 +385,7 @@ def start(
     model_name: str | None,
     agent_name: str | None,
 ) -> None:
-    """Start the OpenJarvis server as a background daemon."""
+    """Start the AGI PROCESOR server as a background daemon."""
     console = Console(stderr=True)
 
     existing = _read_pid()
@@ -468,7 +470,7 @@ def start(
         raise click.ClickException(str(registration_error)) from registration_error
 
     console.print(
-        f"[green]OpenJarvis server starting[/green] (launch PID {proc.pid})\n"
+        f"[green]AGI PROCESOR server starting[/green] (launch PID {proc.pid})\n"
         f"  Requested URL: {_server_url(bind_host, bind_port)}\n"
         f"  Log: {_LOG_FILE}"
     )
@@ -476,7 +478,7 @@ def start(
 
 @daemon.command()
 def stop() -> None:
-    """Stop the running OpenJarvis server daemon."""
+    """Stop the running AGI PROCESOR server daemon."""
     console = Console(stderr=True)
     # Stop the graphical frontend too. It is a sibling process, not a child of
     # the daemon, so it otherwise outlives `stop` and keeps holding its port —
@@ -506,7 +508,7 @@ def stop() -> None:
 @daemon.command()
 @click.pass_context
 def restart(ctx: click.Context) -> None:
-    """Restart the OpenJarvis server daemon."""
+    """Restart the AGI PROCESOR server daemon."""
     console = Console(stderr=True)
     pid = _read_pid()
     previous = _read_state() if pid is not None else {}
@@ -526,7 +528,7 @@ def restart(ctx: click.Context) -> None:
 
 @daemon.command()
 def status() -> None:
-    """Show status of the OpenJarvis server daemon."""
+    """Show status of the AGI PROCESOR server daemon."""
     console = Console(stderr=True)
     pid = _read_pid()
     if pid is None:

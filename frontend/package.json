@@ -1,5 +1,6 @@
 {
   "name": "openjarvis-chat",
+  "description": "Modified AGI PROCESOR frontend distribution derived from OpenJarvis in 2026",
   "private": true,
   "version": "1.0.1",
   "type": "module",
@@ -27,7 +28,6 @@
     "@tauri-apps/plugin-notification": "^2",
     "@tauri-apps/plugin-process": "^2",
     "@tauri-apps/plugin-shell": "^2",
-    "@tauri-apps/plugin-updater": "^2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "katex": "^0.19.1",

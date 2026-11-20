@@ -1,3 +1,5 @@
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 use std::sync::Arc;
 use std::time::Duration;
 use tauri::menu::{MenuBuilder, MenuItemBuilder};
@@ -284,7 +286,7 @@ fn resolve_bin(name: &str) -> String {
     name.to_string()
 }
 
-/// Find the OpenJarvis project root (contains pyproject.toml).
+/// Find the AGI PROCESOR/OpenJarvis project root (contains pyproject.toml).
 /// Checks OPENJARVIS_ROOT env var, the checkout beside the executable,
 /// then walks up from the executable before probing common clone locations.
 fn find_project_root() -> Option<std::path::PathBuf> {
@@ -307,6 +309,11 @@ fn find_project_root() -> Option<std::path::PathBuf> {
     // 3. Fallback: well-known direct paths
     let home = home_dir();
     let direct = [
+        format!("{home}/AGI-PROCESOR"),
+        format!("{home}/projects/AGI-PROCESOR"),
+        format!("{home}/src/AGI-PROCESOR"),
+        format!("{home}/Documents/AGI-PROCESOR"),
+        format!("{home}/Desktop/AGI-PROCESOR"),
         format!("{home}/OpenJarvis"),
         format!("{home}/projects/hazy/OpenJarvis"),
         format!("{home}/projects/OpenJarvis"),
@@ -327,8 +334,8 @@ fn find_project_root() -> Option<std::path::PathBuf> {
         }
     }
 
-    // 4. Shallow scan: look for OpenJarvis one level inside common parent dirs.
-    //    This catches clones like ~/Documents/my-stuff/OpenJarvis without
+    // 4. Shallow scan: look for AGI-PROCESOR or OpenJarvis one level inside
+    //    common parent dirs. This catches nested source checkouts without
     //    needing to enumerate every possible intermediate folder.
     let scan_parents = [
         format!("{home}/Documents"),
@@ -346,13 +353,16 @@ fn find_project_root() -> Option<std::path::PathBuf> {
         let parent_path = std::path::PathBuf::from(parent);
         if let Ok(entries) = std::fs::read_dir(&parent_path) {
             for entry in entries.flatten() {
-                let candidate = entry.path().join("OpenJarvis");
-                if candidate.join("pyproject.toml").exists() {
-                    return Some(candidate);
+                for source_name in ["AGI-PROCESOR", "OpenJarvis"] {
+                    let candidate = entry.path().join(source_name);
+                    if candidate.join("pyproject.toml").exists() {
+                        return Some(candidate);
+                    }
                 }
-                // Also check if the entry itself is OpenJarvis (case-insensitive match)
+                // Also check if the entry itself is a recognised checkout.
                 if let Some(name) = entry.file_name().to_str() {
-                    if name.eq_ignore_ascii_case("openjarvis")
+                    if (name.eq_ignore_ascii_case("agi-procesor")
+                        || name.eq_ignore_ascii_case("openjarvis"))
                         && entry.path().join("pyproject.toml").exists()
                     {
                         return Some(entry.path());
@@ -504,7 +514,7 @@ impl Default for SetupStatus {
     fn default() -> Self {
         Self {
             phase: "awaiting_source".into(),
-            detail: "Choose where OpenJarvis should run models.".into(),
+            detail: "Choose where AGI PROCESOR should run models.".into(),
             ollama_ready: false,
             server_ready: false,
             model_ready: false,
@@ -894,7 +904,7 @@ fn prepare_subprocess_for_appimage(cmd: &mut tokio::process::Command) {
 fn format_uv_sync_spawn_error(root: &std::path::Path, uv_bin: &str, err: &str) -> String {
     format!(
         "Could not run `uv sync`: {}. Verify uv is installed at \
-         `{}` and the OpenJarvis repo is at `{}`.",
+         `{}` and the AGI PROCESOR source checkout is at `{}`.",
         err,
         uv_bin,
         root.display(),
@@ -1029,7 +1039,7 @@ fn port_owner_hint() -> String {
 fn format_port_unavailable(port: u16, reason: &str) -> String {
     format!(
         "Port {} is not available: {}. Stop the process using that port or \
-         change the OpenJarvis port, then relaunch.\n\nTo identify it:\n  {}",
+         change the AGI PROCESOR port, then relaunch.\n\nTo identify it:\n  {}",
         port,
         reason,
         port_owner_hint(),
@@ -1296,14 +1306,14 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
             return;
         }
 
-        let target_path = std::path::PathBuf::from(home_dir()).join("OpenJarvis");
+        let target_path = std::path::PathBuf::from(home_dir()).join("AGI-PROCESOR");
         let clone_target = target_path.display().to_string();
 
         // If the directory exists but is not a valid project, don't overwrite
         if target_path.exists() && !target_path.join("pyproject.toml").exists() {
             let mut s = status.lock().await;
             s.error = Some(format!(
-                "{} exists but is not a valid OpenJarvis project. \
+                "{} exists but is not a valid AGI PROCESOR project. \
                  Remove it and relaunch, or set OPENJARVIS_ROOT to the correct path.",
                 clone_target,
             ));
@@ -1312,7 +1322,7 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
 
         {
             let mut s = status.lock().await;
-            s.detail = "Downloading OpenJarvis (first launch)...".into();
+            s.detail = "Downloading AGI PROCESOR (first launch)...".into();
         }
 
         let mut clone_cmd = tokio::process::Command::new(&git_bin);
@@ -1321,7 +1331,9 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
                 "clone",
                 "--depth",
                 "1",
-                "https://github.com/open-jarvis/OpenJarvis.git",
+                "--branch",
+                "agi-procesor-mvp",
+                "https://github.com/Procesordb/OpenJarvis.git",
                 &clone_target,
             ])
             .stdout(std::process::Stdio::null())
@@ -1338,8 +1350,8 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
                     let stderr = String::from_utf8_lossy(&output.stderr);
                     let mut s = status.lock().await;
                     s.error = Some(format!(
-                        "Failed to download OpenJarvis: {}. \
-                         Clone manually: git clone https://github.com/open-jarvis/OpenJarvis.git {}",
+                        "Failed to download AGI PROCESOR: {}. \
+                         Clone manually: git clone --branch agi-procesor-mvp https://github.com/Procesordb/OpenJarvis.git {}",
                         stderr.trim(),
                         clone_target,
                     ));
@@ -1348,8 +1360,8 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
                 Err(e) => {
                     let mut s = status.lock().await;
                     s.error = Some(format!(
-                        "Failed to download OpenJarvis: {}. \
-                         Clone manually: git clone https://github.com/open-jarvis/OpenJarvis.git {}",
+                        "Failed to download AGI PROCESOR: {}. \
+                         Clone manually: git clone --branch agi-procesor-mvp https://github.com/Procesordb/OpenJarvis.git {}",
                         e, clone_target,
                     ));
                     return;
@@ -1426,7 +1438,7 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
                         Ok(true) => {
                             let mut s = status.lock().await;
                             s.error = Some(format!(
-                                "An API server is already running on port {}, but OpenJarvis cannot securely apply your new inference API key to a server it did not start. Stop that server, then try setup again.",
+                                "An API server is already running on port {}, but AGI PROCESOR cannot securely apply your new inference API key to a server it did not start. Stop that server, then try setup again.",
                                 JARVIS_PORT,
                             ));
                             return;
@@ -1479,7 +1491,7 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
                 s.error = Some(format!(
                     "Port {} is already in use by another service (it answered \
                      /health with HTTP {}). Stop that service or change the \
-                     OpenJarvis port, then relaunch.\n\nTo identify it:\n  {}",
+                      AGI PROCESOR port, then relaunch.\n\nTo identify it:\n  {}",
                     JARVIS_PORT,
                     resp.status(),
                     port_owner_hint(),
@@ -1636,7 +1648,7 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
             let mut s = status.lock().await;
             s.error = Some(format!(
                 "Could not start jarvis server: {}. \
-                 Make sure uv is installed (https://astral.sh/uv) and the OpenJarvis repo is cloned at {}",
+                 Make sure uv is installed (https://astral.sh/uv) and the AGI PROCESOR source is cloned at {}",
                 e,
                 root.display(),
             ));
@@ -1650,7 +1662,7 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
         JarvisStartResult::ServiceUnavailable(body) => {
             let mut s = status.lock().await;
             s.error = Some(format!(
-                "Jarvis server is running but the inference engine is not available \
+                "AGI PROCESOR backend is running but the inference engine is not available \
                  (HTTP 503). This usually means the configured model couldn't be loaded.\n\n\
                  Check the server logs, or run 'uv run jarvis serve --port {}{}' \
                  from {} to see the engine error.\n\n\
@@ -1678,10 +1690,10 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
             let mut s = status.lock().await;
             s.error = Some(if stderr.is_empty() {
                 format!(
-                    "Jarvis server exited (code {}) before becoming ready.\n\n\
+                    "AGI PROCESOR backend exited (code {}) before becoming ready.\n\n\
                      No stderr output. Check that:\n\
                      1. uv is installed ({})\n\
-                     2. The OpenJarvis repo is at {}\n\
+                     2. The AGI PROCESOR source checkout is at {}\n\
                      3. 'uv sync' completes in that directory",
                     code_str,
                     uv_bin,
@@ -1689,7 +1701,7 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
                 )
             } else {
                 format!(
-                    "Jarvis server exited (code {}) before becoming ready.\n\nStderr:\n{}",
+                    "AGI PROCESOR backend exited (code {}) before becoming ready.\n\nStderr:\n{}",
                     code_str, stderr,
                 )
             });
@@ -1700,16 +1712,16 @@ async fn boot_backend(backend: SharedBackend, status: SharedStatus) {
             let mut s = status.lock().await;
             s.error = Some(if stderr.is_empty() {
                 format!(
-                    "Jarvis server did not become ready within 10 minutes. Check that:\n\
+                    "AGI PROCESOR backend did not become ready within 10 minutes. Check that:\n\
                      1. uv is installed ({})\n\
-                     2. The OpenJarvis repo is at {}\n\
+                     2. The AGI PROCESOR source checkout is at {}\n\
                      3. Run 'uv sync' in that directory",
                     uv_bin,
                     root.display(),
                 )
             } else {
                 format!(
-                    "Jarvis server did not become ready within 10 minutes.\n\nStderr:\n{}",
+                    "AGI PROCESOR backend did not become ready within 10 minutes.\n\nStderr:\n{}",
                     stderr,
                 )
             });
@@ -1765,7 +1777,7 @@ async fn start_backend(
 ) -> Result<(), String> {
     if read_configured_inference_config().is_none() {
         *status.lock().await = SetupStatus::default();
-        return Err("Choose an inference source before starting OpenJarvis.".into());
+        return Err("Choose an inference source before starting AGI PROCESOR.".into());
     }
     let b = backend.inner().clone();
     let s = status.inner().clone();
@@ -3365,7 +3377,6 @@ pub fn run() {
             MacosLauncher::LaunchAgent,
             Some(vec!["--hidden"]),
         ))
-        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_process::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
@@ -3379,7 +3390,7 @@ pub fn run() {
             let health = MenuItemBuilder::with_id("health", "Health: starting...")
                 .enabled(false)
                 .build(app)?;
-            let quit = MenuItemBuilder::with_id("quit", "Quit OpenJarvis").build(app)?;
+            let quit = MenuItemBuilder::with_id("quit", "Quit AGI PROCESOR").build(app)?;
 
             let menu = MenuBuilder::new(app)
                 .item(&show)
@@ -3391,7 +3402,7 @@ pub fn run() {
 
             let _tray = TrayIconBuilder::with_id("main")
                 .icon(app.default_window_icon().unwrap().clone())
-                .tooltip("OpenJarvis")
+                .tooltip("AGI PROCESOR")
                 .menu(&menu)
                 .on_menu_event(move |app, event| match event.id().as_ref() {
                     "show" => {
@@ -3477,7 +3488,7 @@ pub fn run() {
             get_overlay_conversation,
         ])
         .build(tauri::generate_context!())
-        .expect("error while building OpenJarvis Desktop")
+        .expect("error while building AGI PROCESOR Desktop")
         .run(move |_app, event| {
             if let tauri::RunEvent::ExitRequested { .. } = event {
                 let b = backend.clone();

@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """Tests for openjarvis.cli._bootstrap.write_initial_config."""
 
 from __future__ import annotations
@@ -65,6 +67,10 @@ def test_writes_seed_files_if_absent(tmp_openjarvis_home: Path) -> None:
     assert (tmp_openjarvis_home / "MEMORY.md").exists()
     assert (tmp_openjarvis_home / "USER.md").exists()
     assert (tmp_openjarvis_home / "skills").is_dir()
+    soul = (tmp_openjarvis_home / "SOUL.md").read_text()
+    assert "AGI PROCESOR" in soul
+    assert "not a claim" in soul
+    assert "You are Jarvis" not in soul
 
 
 def test_does_not_overwrite_existing_seeds(tmp_openjarvis_home: Path) -> None:

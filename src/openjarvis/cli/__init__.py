@@ -1,4 +1,6 @@
-"""Command-line interface for OpenJarvis (Click-based)."""
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
+"""AGI PROCESOR command-line interface (OpenJarvis-compatible Click CLI)."""
 
 from __future__ import annotations
 
@@ -35,7 +37,7 @@ def _should_skip_update_check(ctx: click.Context, argv: list[str]) -> bool:
 
 
 @click.group(
-    help="OpenJarvis — modular AI assistant backend",
+    help="AGI PROCESOR — modular local AI assistant",
     invoke_without_command=True,
 )
 @click.version_option(version=openjarvis.__version__, prog_name="jarvis")

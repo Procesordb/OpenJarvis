@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """TUI dashboard — terminal-based system monitoring via textual."""
 
 from __future__ import annotations
@@ -55,9 +57,9 @@ class DashboardApp:
             )
 
         class JarvisDashboard(App):
-            """OpenJarvis TUI Dashboard."""
+            """AGI PROCESOR TUI Dashboard."""
 
-            TITLE = "OpenJarvis Dashboard"
+            TITLE = "AGI PROCESOR Dashboard"
             CSS_PATH = None
             CSS = """
             Screen {

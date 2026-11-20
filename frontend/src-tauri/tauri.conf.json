@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "OpenJarvis",
+  "productName": "AGI PROCESOR",
   "version": "1.0.1",
-  "identifier": "com.openjarvis.desktop",
+  "identifier": "com.procesor.agiprocesor",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "OpenJarvis",
+        "title": "AGI PROCESOR",
         "width": 1280,
         "height": 800,
         "minWidth": 900,
@@ -40,8 +40,8 @@
       "icons/icon.png"
     ],
     "category": "Utility",
-    "shortDescription": "On-device AI assistant with energy monitoring and trace debugging",
-    "longDescription": "OpenJarvis Desktop wraps the OpenJarvis research framework in a native desktop application with real-time energy monitoring, trace debugging, learning curve visualization, and memory browsing.",
+    "shortDescription": "Local, risk-aware AI assistant with transparent decision support",
+    "longDescription": "Modified AGI PROCESOR distribution, derived from the Apache-2.0 OpenJarvis framework in 2026, with transparent analysis, risk-aware decision support, energy monitoring, trace debugging, and memory browsing.",
     "macOS": {
       "entitlements": "Entitlements.plist",
       "minimumSystemVersion": "10.15",
@@ -56,13 +56,6 @@
     }
   },
   "plugins": {
-    "updater": {
-      "active": true,
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDFFNzUzMzhEOEY2MjNEMDMKUldRRFBXS1BqVE4xSG8vK0lkUWN4WnZQYVIrbmc4RmpoOGlJWTBLTE15RlIya3JvQisvdUR3a0QK",
-      "endpoints": [
-        "https://github.com/open-jarvis/OpenJarvis/releases/download/desktop-latest/latest.json"
-      ]
-    },
     "deep-link": {
       "desktop": {
         "schemes": ["openjarvis"]

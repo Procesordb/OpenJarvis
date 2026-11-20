@@ -1,3 +1,5 @@
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 /**
  * Frontend analytics client.
  *
@@ -51,6 +53,12 @@ const KNOWN_EVENTS = new Set<string>([
 // TODO: wire to Vite define() so this comes from package.json at build time.
 const APP_VERSION = '0.1.0';
 
+// AGI PROCESOR never starts an external analytics sender merely because a
+// legacy OpenJarvis config or localStorage value says it was enabled. The
+// distributor must make a separate, explicit build-time decision as well.
+const EXTERNAL_ANALYTICS_ALLOWED =
+  import.meta.env.VITE_AGI_ENABLE_EXTERNAL_ANALYTICS === 'true';
+
 export interface AnalyticsIdentity {
   enabled: boolean;
   anon_id: string;
@@ -72,6 +80,11 @@ export async function fetchAnalyticsIdentity(): Promise<AnalyticsIdentity> {
 }
 
 export async function saveAnalyticsPreference(enabled: boolean): Promise<void> {
+  if (enabled && !EXTERNAL_ANALYTICS_ALLOWED) {
+    enabledState = false;
+    cachedAnonId = '';
+    throw new Error('External analytics are disabled in this AGI PROCESOR build.');
+  }
   if (!enabled) {
     // Stop the browser sender before waiting for the persistence request.
     generation += 1;
@@ -98,6 +111,11 @@ export async function saveAnalyticsPreference(enabled: boolean): Promise<void> {
  * Idempotent — safe to call multiple times.
  */
 export async function initAnalytics(force = false): Promise<void> {
+  if (!EXTERNAL_ANALYTICS_ALLOWED) {
+    enabledState = false;
+    cachedAnonId = '';
+    return;
+  }
   if (initialized && !force) return;
   const currentGeneration = ++generation;
   initialized = true; // claim the slot even on failure paths

@@ -1,7 +1,16 @@
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 import { useState, useEffect, useCallback } from 'react';
 import type React from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { LEADERBOARD_ENABLED, SUPABASE_ANON_KEY, SUPABASE_URL } from '../../lib/supabase';
+
+// Upstream leaderboard sharing is excluded from AGI PROCESOR by default.
+// It can only be restored by an operator who deliberately supplies both the
+// upstream credentials and this explicit build-time switch.
+const UPSTREAM_LEADERBOARD_ENABLED =
+  LEADERBOARD_ENABLED &&
+  import.meta.env.VITE_AGI_ENABLE_OPENJARVIS_LEADERBOARD === 'true';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -294,7 +303,7 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
   const [emailInput, setEmailInput] = useState(localStorage.getItem(OPTIN_EMAIL_KEY) || '');
   const [nameError, setNameError] = useState('');
   const [showOptIn, setShowOptIn] = useState(false);
-  const anonId = getOrCreateAnonId();
+  const anonId = UPSTREAM_LEADERBOARD_ENABLED ? getOrCreateAnonId() : '';
 
   const fetchData = useCallback(async () => {
     try {
@@ -319,7 +328,7 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
   // Share savings to Supabase when opted in and data changes. Skipped entirely
   // when no anon key was built in (leaderboard disabled).
   useEffect(() => {
-    if (!LEADERBOARD_ENABLED || !optInEnabled || !displayName || !data) return;
+    if (!UPSTREAM_LEADERBOARD_ENABLED || !optInEnabled || !displayName || !data) return;
     const dollarSavings = data.per_provider.reduce((s, p) => s + p.total_cost, 0);
     const energySaved = data.per_provider.reduce((s, p) => s + (p.energy_wh || 0), 0);
     const flopsSaved = data.per_provider.reduce((s, p) => s + (p.flops || 0), 0);
@@ -416,14 +425,14 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
 
       {error && <div style={styles.errorBanner}>{error}</div>}
 
-      {/* Leaderboard Opt-in */}
-      {showOptIn ? (
+      {/* Upstream leaderboard is hidden unless explicitly enabled at build time. */}
+      {UPSTREAM_LEADERBOARD_ENABLED && (showOptIn ? (
         <div style={{ ...styles.statCard, marginBottom: 24, padding: 20 }}>
           <div style={{ fontSize: 16, fontWeight: 600, marginBottom: 8, color: colors.text }}>
             Share Your Savings
           </div>
           <div style={{ fontSize: 13, color: colors.textMuted, marginBottom: 14, lineHeight: 1.5 }}>
-            Opt in to privately share your savings for the chance to win a Mac Mini!
+            Optional upstream sharing sends your display name, email, and savings data outside AGI PROCESOR.
           </div>
           <div style={{ marginBottom: 8 }}>
             <input
@@ -551,7 +560,7 @@ export function SavingsDashboard({ apiUrl }: { apiUrl: string }) {
             View Leaderboard ↗
           </a>
         </div>
-      )}
+      ))}
 
       {/* Stat cards row */}
       <div style={styles.statsGrid}>

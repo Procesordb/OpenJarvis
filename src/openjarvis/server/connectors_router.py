@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """FastAPI router for /v1/connectors — connector management endpoints."""
 
 from __future__ import annotations
@@ -876,7 +878,7 @@ def create_connectors_router():
             content=(
                 f"<html><body style='{_style}'>"
                 "<h2 style='color:#22c55e'>Connected!</h2>"
-                "<p>You can close this tab and return to OpenJarvis.</p>"
+                "<p>You can close this tab and return to AGI PROCESOR.</p>"
                 "<script>setTimeout(()=>window.close(),2000)</script>"
                 "</body></html>"
             )

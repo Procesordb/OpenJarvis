@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis compose`` — unified composition CLI for discrete agents and operators."""
 
 from __future__ import annotations
@@ -12,7 +14,7 @@ from rich.table import Table
 
 @click.group()
 def compose() -> None:
-    """Compose, run, benchmark, and deploy OpenJarvis configurations.
+    """Compose, run, benchmark, and deploy AGI PROCESOR configurations.
 
     Recipes are unified TOML configs that wire all five primitives
     (Intelligence, Engine, Agent, Tools, Learning).  They come in two

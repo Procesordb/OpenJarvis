@@ -1,3 +1,5 @@
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 """``jarvis config`` — configuration inspection commands."""
 
 from __future__ import annotations
@@ -278,9 +280,9 @@ config.add_command(show_group, "show")
 
 @config.command("path")
 def show_path() -> None:
-    """Print the resolved OpenJarvis directories (home, config, cache).
+    """Print the resolved AGI PROCESOR directories (home, config, cache).
 
-    All OpenJarvis state lives under a single root, resolved in priority
+    All AGI PROCESOR state lives under a single root, resolved in priority
     order: ``$OPENJARVIS_HOME`` > ``$XDG_DATA_HOME/openjarvis`` >
     ``~/.openjarvis``. Use this to confirm where your data is stored after
     setting an override.

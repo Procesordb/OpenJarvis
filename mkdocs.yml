@@ -1,12 +1,14 @@
-site_name: OpenJarvis
-site_url: https://open-jarvis.github.io/OpenJarvis/
-site_description: Personal AI, On Personal Devices
-site_author: OpenJarvis Contributors
-repo_url: https://github.com/open-jarvis/OpenJarvis
-repo_name: open-jarvis/OpenJarvis
-edit_uri: edit/main/docs/
+# Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
 
-copyright: Copyright &copy; 2026 OpenJarvis Contributors
+site_name: AGI PROCESOR
+site_url: https://procesordb.github.io/OpenJarvis/
+site_description: Local-first AI for explainable market research and risk awareness
+site_author: AGI PROCESOR and OpenJarvis contributors
+repo_url: https://github.com/Procesordb/OpenJarvis
+repo_name: Procesordb/OpenJarvis
+edit_uri: edit/agi-procesor-mvp/docs/
+
+copyright: AGI PROCESOR modifications &copy; 2026; derived from OpenJarvis
 
 theme:
   name: material
@@ -177,6 +179,8 @@ nav:
       - Design Principles: architecture/design-principles.md
   - API Reference: api-reference/
   - User Guide:
+      - AGI PROCESOR FOMO Radar: user-guide/agi-procesor-fomo-radar.md
+      - AGI PROCESOR — model zarabiania: user-guide/agi-procesor-business-model.md
       - CLI: user-guide/cli.md
       - Pearl CLI: user-guide/pearl.md
       - Pearl Mining: user-guide/mining.md

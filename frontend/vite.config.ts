@@ -1,3 +1,5 @@
+// Modified by the AGI PROCESOR project in 2026; see AGI_PROCESSOR_CHANGES.md.
+
 import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
@@ -25,9 +27,9 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'OpenJarvis',
-        short_name: 'Jarvis',
-        description: 'On-device AI assistant',
+        name: 'AGI PROCESOR',
+        short_name: 'AGI PROCESOR',
+        description: 'Local, risk-aware AI assistant',
         theme_color: '#161618',
         background_color: '#161618',
         display: 'standalone',
