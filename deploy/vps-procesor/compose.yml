@@ -1,0 +1,116 @@
+# Created by the AGI PROCESOR project in 2026.
+
+name: agi-procesor-alerts
+
+services:
+  agi-procesor:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    command:
+      - serve
+      - --host
+      - 0.0.0.0
+      - --port
+      - "8000"
+      - --engine
+      - ollama
+    env_file:
+      - ${AGI_PROCESOR_ENV_FILE:-.env}
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OPENJARVIS_API_KEY: ${OPENJARVIS_API_KEY:?Set OPENJARVIS_API_KEY in deploy/vps-procesor/.env}
+      AGI_PROCESOR_PAPER_LEDGER_PATH: /home/openjarvis/.openjarvis/agi-procesor/paper-ledger.json
+      AGI_PROCESOR_FOMO_REFERRAL_URL: ${AGI_PROCESOR_FOMO_REFERRAL_URL:-https://fomo.family/r/AGIPROCESOR}
+      AGI_PROCESOR_ALERTS_STORE_PATH: /home/openjarvis/.openjarvis/agi-procesor/alerts.json
+      AGI_PROCESOR_ALERTS_SCHEDULER_ENABLED: ${AGI_PROCESOR_ALERTS_SCHEDULER_ENABLED:-false}
+      AGI_PROCESOR_ALERTS_MAX_SNAPSHOT_AGE_SECONDS: ${AGI_PROCESOR_ALERTS_MAX_SNAPSHOT_AGE_SECONDS:-900}
+      AGI_PROCESOR_ALERTS_MAX_FUTURE_SKEW_SECONDS: ${AGI_PROCESOR_ALERTS_MAX_FUTURE_SKEW_SECONDS:-60}
+      AGI_PROCESOR_ALERTS_DELIVERY_LEASE_SECONDS: ${AGI_PROCESOR_ALERTS_DELIVERY_LEASE_SECONDS:-120}
+      AGI_PROCESOR_ALERTS_MAX_ATTEMPTS_PER_CHANNEL: ${AGI_PROCESOR_ALERTS_MAX_ATTEMPTS_PER_CHANNEL:-3}
+      AGI_PROCESOR_ALERTS_RETRY_BACKOFF_SECONDS: ${AGI_PROCESOR_ALERTS_RETRY_BACKOFF_SECONDS:-60}
+      AGI_PROCESOR_ALERTS_SMTP_HOST: ${AGI_PROCESOR_ALERTS_SMTP_HOST:-}
+      AGI_PROCESOR_ALERTS_SMTP_PORT: ${AGI_PROCESOR_ALERTS_SMTP_PORT:-587}
+      AGI_PROCESOR_ALERTS_SMTP_USERNAME: ${AGI_PROCESOR_ALERTS_SMTP_USERNAME:-}
+      AGI_PROCESOR_ALERTS_SMTP_PASSWORD: ${AGI_PROCESOR_ALERTS_SMTP_PASSWORD:-}
+      AGI_PROCESOR_ALERTS_SMTP_FROM: ${AGI_PROCESOR_ALERTS_SMTP_FROM:-}
+      AGI_PROCESOR_ALERTS_SMTP_USE_SSL: ${AGI_PROCESOR_ALERTS_SMTP_USE_SSL:-false}
+      AGI_PROCESOR_ALERTS_SMTP_STARTTLS: ${AGI_PROCESOR_ALERTS_SMTP_STARTTLS:-true}
+      AGI_PROCESOR_ALERTS_EMAIL_TO: ${AGI_PROCESOR_ALERTS_EMAIL_TO:-}
+      AGI_PROCESOR_ALERTS_TELEGRAM_BOT_TOKEN: ${AGI_PROCESOR_ALERTS_TELEGRAM_BOT_TOKEN:-}
+      AGI_PROCESOR_ALERTS_TELEGRAM_CHAT_ID: ${AGI_PROCESOR_ALERTS_TELEGRAM_CHAT_ID:-}
+      AGI_PROCESOR_ALERTS_NTFY_URL: ${AGI_PROCESOR_ALERTS_NTFY_URL:-}
+      AGI_PROCESOR_ALERTS_NTFY_TOKEN: ${AGI_PROCESOR_ALERTS_NTFY_TOKEN:-}
+      AGI_PROCESOR_ALERTS_SMS_MODE: ${AGI_PROCESOR_ALERTS_SMS_MODE:-}
+      AGI_PROCESOR_ALERTS_SMS_EMAIL_TO: ${AGI_PROCESOR_ALERTS_SMS_EMAIL_TO:-}
+      AGI_PROCESOR_ALERTS_SMS_HTTP_URL: ${AGI_PROCESOR_ALERTS_SMS_HTTP_URL:-}
+      AGI_PROCESOR_ALERTS_SMS_HTTP_TOKEN: ${AGI_PROCESOR_ALERTS_SMS_HTTP_TOKEN:-}
+      AGI_PROCESOR_ALERTS_SMS_TO: ${AGI_PROCESOR_ALERTS_SMS_TO:-}
+      AGI_PROCESOR_ALERTS_SMS_ALLOWED_HOSTS: ${AGI_PROCESOR_ALERTS_SMS_ALLOWED_HOSTS:-}
+      AGI_PROCESOR_ALERTS_SMS_MAX_CHARS: ${AGI_PROCESOR_ALERTS_SMS_MAX_CHARS:-300}
+      AGI_PROCESOR_ALERTS_SMS_ALLOW_MULTIPART: ${AGI_PROCESOR_ALERTS_SMS_ALLOW_MULTIPART:-false}
+    ports:
+      - "127.0.0.1:${AGI_PROCESOR_HOST_PORT:-8088}:8000"
+    volumes:
+      - agi-procesor-data:/home/openjarvis/.openjarvis
+    depends_on:
+      ollama:
+        condition: service_healthy
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - >-
+          import urllib.request;
+          urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).read()
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 45s
+    restart: unless-stopped
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+    read_only: true
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - internal
+
+  ollama:
+    image: ollama/ollama:0.30.10@sha256:bfc9c6d53cc6989aa5131a6fde6b162b2802d4d337657f3253b5f69579bddeee
+    volumes:
+      - ollama-models:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    restart: unless-stopped
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - internal
+
+volumes:
+  agi-procesor-data:
+  ollama-models:
+
+networks:
+  internal:
+    driver: bridge

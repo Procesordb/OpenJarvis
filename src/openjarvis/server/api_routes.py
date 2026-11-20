@@ -1292,11 +1292,13 @@ async def start_optimize_run(req: OptimizeRunRequest, request: Request):
 
 def include_all_routes(app) -> None:
     """Include all extended API routers in a FastAPI app."""
+    from openjarvis.server.alert_routes import router as alert_router  # noqa: PLC0415
     from openjarvis.server.approval_routes import (
         router as approval_router,  # noqa: PLC0415
     )
     from openjarvis.server.fomo_routes import router as fomo_router  # noqa: PLC0415
 
+    app.include_router(alert_router)
     app.include_router(approval_router)
     app.include_router(fomo_router)
     app.include_router(agents_router)

@@ -8,6 +8,10 @@ This file records the main classes of changes made by the AGI PROCESOR project:
 - product-facing names, assistant identity, UI copy, and desktop metadata;
 - an educational market-risk analysis module;
 - a local paper-trading ledger;
+- a non-transactional alert subsystem with explicit WATCH, CAUTION, and AVOID
+  states, atomic local persistence, cooldown/deduplication, and explicitly
+  confirmed delivery adapters for email, Telegram, ntfy, and optional SMS
+  gateways;
 - a disclosed affiliate call-to-action;
 - removal of the inherited giveaway prompt and automatic leaderboard sharing;
 - external browser analytics disabled unless the operator explicitly builds
